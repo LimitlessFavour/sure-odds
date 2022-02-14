@@ -26,10 +26,27 @@ class AppRouter {
           builder: (_) => const AppStartupScreen(),
           settings: const RouteSettings(name: Routes.AppStartupScreenRoute),
         );
+      default:
+        return _errorRoute();
     }
   }
 
-    /// This method is used to navigate to a screen using it's name
+  /// This method returns an error page to indicate redirection to an
+  /// unknown route.
+  static Route<dynamic> _errorRoute() {
+    return MaterialPageRoute<dynamic>(
+      builder: (_) => Scaffold(
+        appBar: AppBar(
+          title: const Text('Unknown Route'),
+        ),
+        body: const Center(
+          child: Text('Unknown Route'),
+        ),
+      ),
+    );
+  }
+
+  /// This method is used to navigate to a screen using it's name
   static Future<dynamic> pushNamed(String routeName, {dynamic args}) {
     return navigatorKey.currentState!.pushNamed(routeName, arguments: args);
   }

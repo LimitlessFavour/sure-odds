@@ -3,14 +3,9 @@ import 'dart:convert';
 //services
 import 'key_value_storage_base.dart';
 
-//models
-import '../../models/user_model.dart';
-
 //helpers
 import '../../helper/typedefs.dart';
 
-//states
-import '../../providers/states/auth_state.dart';
 
 /// A service class for providing methods to store and retrieve key-value data
 /// from common or secure storage.
