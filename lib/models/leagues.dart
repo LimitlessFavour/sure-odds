@@ -20,5 +20,5 @@ class Leagues with _$Leagues {
 
 
   factory Leagues.fromJson(JSON json) =>
-      _$Leagues(json);
+      _$LeaguesFromJson(json);
 }

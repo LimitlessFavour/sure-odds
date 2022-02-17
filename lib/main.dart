@@ -1,8 +1,10 @@
+import 'package:clock/clock.dart';
+import 'package:device_preview/device_preview.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:clock/clock.dart';
 
-import 'helper/local_storage/key_value_storage_base.dart';
+import 'services/local_storage/key_value_storage_base.dart';
+import 'views/screens/test_screen.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -27,10 +29,20 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Sure Odds',
-      initialRoute: AppRouter.initialRoute,
-      theme: CustomTheme.mainTheme,
+    return DevicePreview(
+      enabled: !kReleaseMode,
+      builder: (context) => MaterialApp(
+        title: 'Sure Odds',
+        // initialRoute: AppRouter.initialRoute,
+        theme: ThemeData.light(),
+        //
+        home: const TestScreen(),
+        useInheritedMediaQuery: true,
+        locale: DevicePreview.locale(context),
+        builder: DevicePreview.appBuilder,
+        //
+        // theme: CustomTheme.mainTheme,
+      ),
     );
   }
 }

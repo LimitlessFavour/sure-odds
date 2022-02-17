@@ -1,10 +1,9 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 import '../helper/typedefs.dart';
-import 'prediction.dart';
 
 
-part 'leagues.freezed.dart';
-part 'leagues.g.dart';
+part 'teams.freezed.dart';
+part 'teams.g.dart';
 
 @freezed
 class Teams with _$Teams {
@@ -17,7 +16,7 @@ class Teams with _$Teams {
 
 
   factory Teams.fromJson(JSON json) =>
-      _$Teams(json);
+      _$TeamsFromJson(json);
 }
 
 
@@ -38,7 +37,7 @@ class Team with _$Team {
 
 
   factory Team.fromJson(JSON json) =>
-      _$Team(json);
+      _$TeamFromJson(json);
 }
 
 @freezed
@@ -54,7 +53,7 @@ class Last5 with _$Last5 {
 
 
   factory Last5.fromJson(JSON json) =>
-      _$Last5(json);
+      _$Last5FromJson(json);
 }
 
 @freezed
@@ -68,5 +67,5 @@ class RecentLeagueMatches with _$RecentLeagueMatches {
 
 
   factory RecentLeagueMatches.fromJson(JSON json) =>
-      _$RecentLeagueMatches(json);
+      _$RecentLeagueMatchesFromJson(json);
 }

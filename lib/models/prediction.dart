@@ -1,5 +1,6 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 import '../helper/typedefs.dart';
+import 'teams.dart';
 
 
 part 'prediction.freezed.dart';
@@ -12,13 +13,11 @@ class Prediction with _$Prediction {
   const factory Prediction({
   @JsonKey(name: 'predictions') required PredictionDetails details,
   required Teams teams,
-
-
   }) = _Prediction;
 
 
   factory Prediction.fromJson(JSON json) =>
-      _$Prediction(json);
+      _$PredictionFromJson(json);
 }
 
 @freezed
@@ -37,7 +36,7 @@ class PredictionDetails with _$PredictionDetails {
 
 
   factory PredictionDetails.fromJson(JSON json) =>
-      _$PredictionDetails(json);
+      _$PredictionDetailsFromJson(json);
 }
 
 @freezed
@@ -52,7 +51,7 @@ class Winner with _$Winner {
 
 
   factory Winner.fromJson(JSON json) =>
-      _$Winner(json);
+      _$WinnerFromJson(json);
 }
 
 @freezed
@@ -66,7 +65,7 @@ class Goals with _$Goals {
 
 
   factory Goals.fromJson(JSON json) =>
-      _$Goals(json);
+      _$GoalsFromJson(json);
 }
 
 @freezed
@@ -81,5 +80,5 @@ class Percent with _$Percent {
 
 
   factory Percent.fromJson(JSON json) =>
-      _$Percent(json);
+      _$PercentFromJson(json);
 }
