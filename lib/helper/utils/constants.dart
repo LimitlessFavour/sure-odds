@@ -1,3 +1,5 @@
+// ignore_for_file: constant_identifier_names
+
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -7,6 +9,46 @@ import 'package:google_fonts/google_fonts.dart';
 @immutable
 class Constants {
   const Constants._();
+
+  ///admob app ids.
+  ///android
+  static const admobAndroidAppId = 'ca-app-pub-3499190199800216~4772334006';
+
+  ///ios
+  static const admobIOSAppId = 'ca-app-pub-3499190199800216~3459252331';
+
+  ///admob unit lists.
+  /// should be One unit id for each Ad placement.
+
+  /// Test list
+  static const List<String> admob_unit_id_list_android_test = [
+    //banner
+    'ca-app-pub-3940256099942544/6300978111',
+    //interstitial
+    '	ca-app-pub-3940256099942544/1033173712',
+  ];
+
+  static const List<String> admob_unit_id_list_ios_test = [
+    //banner
+    'ca-app-pub-3940256099942544/2934735716',
+    //interstitial
+    '	ca-app-pub-3940256099942544/4411468910',
+  ];
+
+  /// Production list
+  static const List<String> admob_unit_id_list_android = [
+    //banner
+    'ca-app-pub-3499190199800216/3602900175',
+    //interstitial
+    'ca-app-pub-3499190199800216/6202811657',
+  ];
+
+  static const List<String> admob_unit_id_list_ios = [
+    //banner
+    'ca-app-pub-3499190199800216/2918172767',
+    //interstitial
+    'ca-app-pub-3499190199800216/9292009420',
+  ];
 
   /// The main orange-red color used for theming the app.
   static const Color primaryColor = Color(0xff800020);
@@ -93,9 +135,8 @@ class Constants {
   /// The TextStyle for Roboto font in the app.
   static TextStyle robotoFont = GoogleFonts.roboto();
 
-    /// The TextStyle for Roboto font in the app.
+  /// The TextStyle for Roboto font in the app.
   static TextStyle solwayFont = GoogleFonts.solway();
-
 
   /// The default [Duration] value for animations in the app.
   static const Duration defaultAnimationDuration = Duration(milliseconds: 300);

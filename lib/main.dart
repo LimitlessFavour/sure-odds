@@ -3,6 +3,7 @@ import 'package:device_preview/device_preview.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:sure_odds/firebase_options.dart';
 
 import 'helper/utils/custom_theme.dart';
@@ -12,6 +13,7 @@ import 'views/screens/test_screen.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  MobileAds.instance.initialize();
   debugPrint = setDebugPrint;
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   await KeyValueStorageBase.init();
