@@ -6,16 +6,16 @@ part 'api_response.freezed.dart';
 part 'api_response.g.dart';
 
 @freezed
-class ApiResponseModel with _$ApiResponseModel {
+class PredictionsResponseModel with _$PredictionsResponseModel {
 
- factory ApiResponseModel({
+ factory PredictionsResponseModel({
      required int status, //1 for good, 0 for issh
     @Default('') String message,
     @JsonKey(name: 'data') Leagues? leagues,
-  }) = _ApiResponseModel;
+  }) = _PredictionsResponseModel;
 
 
-  factory ApiResponseModel.fromJson(JSON json) =>
-      _$ApiResponseModelFromJson(json);
+  factory PredictionsResponseModel.fromJson(JSON json) =>
+      _$PredictionsResponseModelFromJson(json);
 }
 

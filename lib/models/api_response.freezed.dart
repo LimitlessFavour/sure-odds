@@ -14,35 +14,36 @@ T _$identity<T>(T value) => value;
 final _privateConstructorUsedError = UnsupportedError(
     'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more informations: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
-ApiResponseModel _$ApiResponseModelFromJson(Map<String, dynamic> json) {
-  return _ApiResponseModel.fromJson(json);
+PredictionsResponseModel _$PredictionsResponseModelFromJson(
+    Map<String, dynamic> json) {
+  return _PredictionsResponseModel.fromJson(json);
 }
 
 /// @nodoc
-class _$ApiResponseModelTearOff {
-  const _$ApiResponseModelTearOff();
+class _$PredictionsResponseModelTearOff {
+  const _$PredictionsResponseModelTearOff();
 
-  _ApiResponseModel call(
+  _PredictionsResponseModel call(
       {required int status,
       String message = '',
       @JsonKey(name: 'data') Leagues? leagues}) {
-    return _ApiResponseModel(
+    return _PredictionsResponseModel(
       status: status,
       message: message,
       leagues: leagues,
     );
   }
 
-  ApiResponseModel fromJson(Map<String, Object?> json) {
-    return ApiResponseModel.fromJson(json);
+  PredictionsResponseModel fromJson(Map<String, Object?> json) {
+    return PredictionsResponseModel.fromJson(json);
   }
 }
 
 /// @nodoc
-const $ApiResponseModel = _$ApiResponseModelTearOff();
+const $PredictionsResponseModel = _$PredictionsResponseModelTearOff();
 
 /// @nodoc
-mixin _$ApiResponseModel {
+mixin _$PredictionsResponseModel {
   int get status => throw _privateConstructorUsedError; //1 for good, 0 for issh
   String get message => throw _privateConstructorUsedError;
   @JsonKey(name: 'data')
@@ -50,15 +51,15 @@ mixin _$ApiResponseModel {
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
-  $ApiResponseModelCopyWith<ApiResponseModel> get copyWith =>
+  $PredictionsResponseModelCopyWith<PredictionsResponseModel> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class $ApiResponseModelCopyWith<$Res> {
-  factory $ApiResponseModelCopyWith(
-          ApiResponseModel value, $Res Function(ApiResponseModel) then) =
-      _$ApiResponseModelCopyWithImpl<$Res>;
+abstract class $PredictionsResponseModelCopyWith<$Res> {
+  factory $PredictionsResponseModelCopyWith(PredictionsResponseModel value,
+          $Res Function(PredictionsResponseModel) then) =
+      _$PredictionsResponseModelCopyWithImpl<$Res>;
   $Res call(
       {int status, String message, @JsonKey(name: 'data') Leagues? leagues});
 
@@ -66,13 +67,13 @@ abstract class $ApiResponseModelCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$ApiResponseModelCopyWithImpl<$Res>
-    implements $ApiResponseModelCopyWith<$Res> {
-  _$ApiResponseModelCopyWithImpl(this._value, this._then);
+class _$PredictionsResponseModelCopyWithImpl<$Res>
+    implements $PredictionsResponseModelCopyWith<$Res> {
+  _$PredictionsResponseModelCopyWithImpl(this._value, this._then);
 
-  final ApiResponseModel _value;
+  final PredictionsResponseModel _value;
   // ignore: unused_field
-  final $Res Function(ApiResponseModel) _then;
+  final $Res Function(PredictionsResponseModel) _then;
 
   @override
   $Res call({
@@ -109,11 +110,11 @@ class _$ApiResponseModelCopyWithImpl<$Res>
 }
 
 /// @nodoc
-abstract class _$ApiResponseModelCopyWith<$Res>
-    implements $ApiResponseModelCopyWith<$Res> {
-  factory _$ApiResponseModelCopyWith(
-          _ApiResponseModel value, $Res Function(_ApiResponseModel) then) =
-      __$ApiResponseModelCopyWithImpl<$Res>;
+abstract class _$PredictionsResponseModelCopyWith<$Res>
+    implements $PredictionsResponseModelCopyWith<$Res> {
+  factory _$PredictionsResponseModelCopyWith(_PredictionsResponseModel value,
+          $Res Function(_PredictionsResponseModel) then) =
+      __$PredictionsResponseModelCopyWithImpl<$Res>;
   @override
   $Res call(
       {int status, String message, @JsonKey(name: 'data') Leagues? leagues});
@@ -123,15 +124,16 @@ abstract class _$ApiResponseModelCopyWith<$Res>
 }
 
 /// @nodoc
-class __$ApiResponseModelCopyWithImpl<$Res>
-    extends _$ApiResponseModelCopyWithImpl<$Res>
-    implements _$ApiResponseModelCopyWith<$Res> {
-  __$ApiResponseModelCopyWithImpl(
-      _ApiResponseModel _value, $Res Function(_ApiResponseModel) _then)
-      : super(_value, (v) => _then(v as _ApiResponseModel));
+class __$PredictionsResponseModelCopyWithImpl<$Res>
+    extends _$PredictionsResponseModelCopyWithImpl<$Res>
+    implements _$PredictionsResponseModelCopyWith<$Res> {
+  __$PredictionsResponseModelCopyWithImpl(_PredictionsResponseModel _value,
+      $Res Function(_PredictionsResponseModel) _then)
+      : super(_value, (v) => _then(v as _PredictionsResponseModel));
 
   @override
-  _ApiResponseModel get _value => super._value as _ApiResponseModel;
+  _PredictionsResponseModel get _value =>
+      super._value as _PredictionsResponseModel;
 
   @override
   $Res call({
@@ -139,7 +141,7 @@ class __$ApiResponseModelCopyWithImpl<$Res>
     Object? message = freezed,
     Object? leagues = freezed,
   }) {
-    return _then(_ApiResponseModel(
+    return _then(_PredictionsResponseModel(
       status: status == freezed
           ? _value.status
           : status // ignore: cast_nullable_to_non_nullable
@@ -158,14 +160,14 @@ class __$ApiResponseModelCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$_ApiResponseModel implements _ApiResponseModel {
-  _$_ApiResponseModel(
+class _$_PredictionsResponseModel implements _PredictionsResponseModel {
+  _$_PredictionsResponseModel(
       {required this.status,
       this.message = '',
       @JsonKey(name: 'data') this.leagues});
 
-  factory _$_ApiResponseModel.fromJson(Map<String, dynamic> json) =>
-      _$$_ApiResponseModelFromJson(json);
+  factory _$_PredictionsResponseModel.fromJson(Map<String, dynamic> json) =>
+      _$$_PredictionsResponseModelFromJson(json);
 
   @override
   final int status;
@@ -178,14 +180,14 @@ class _$_ApiResponseModel implements _ApiResponseModel {
 
   @override
   String toString() {
-    return 'ApiResponseModel(status: $status, message: $message, leagues: $leagues)';
+    return 'PredictionsResponseModel(status: $status, message: $message, leagues: $leagues)';
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _ApiResponseModel &&
+            other is _PredictionsResponseModel &&
             const DeepCollectionEquality().equals(other.status, status) &&
             const DeepCollectionEquality().equals(other.message, message) &&
             const DeepCollectionEquality().equals(other.leagues, leagues));
@@ -200,23 +202,24 @@ class _$_ApiResponseModel implements _ApiResponseModel {
 
   @JsonKey(ignore: true)
   @override
-  _$ApiResponseModelCopyWith<_ApiResponseModel> get copyWith =>
-      __$ApiResponseModelCopyWithImpl<_ApiResponseModel>(this, _$identity);
+  _$PredictionsResponseModelCopyWith<_PredictionsResponseModel> get copyWith =>
+      __$PredictionsResponseModelCopyWithImpl<_PredictionsResponseModel>(
+          this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_ApiResponseModelToJson(this);
+    return _$$_PredictionsResponseModelToJson(this);
   }
 }
 
-abstract class _ApiResponseModel implements ApiResponseModel {
-  factory _ApiResponseModel(
+abstract class _PredictionsResponseModel implements PredictionsResponseModel {
+  factory _PredictionsResponseModel(
       {required int status,
       String message,
-      @JsonKey(name: 'data') Leagues? leagues}) = _$_ApiResponseModel;
+      @JsonKey(name: 'data') Leagues? leagues}) = _$_PredictionsResponseModel;
 
-  factory _ApiResponseModel.fromJson(Map<String, dynamic> json) =
-      _$_ApiResponseModel.fromJson;
+  factory _PredictionsResponseModel.fromJson(Map<String, dynamic> json) =
+      _$_PredictionsResponseModel.fromJson;
 
   @override
   int get status;
@@ -227,6 +230,6 @@ abstract class _ApiResponseModel implements ApiResponseModel {
   Leagues? get leagues;
   @override
   @JsonKey(ignore: true)
-  _$ApiResponseModelCopyWith<_ApiResponseModel> get copyWith =>
+  _$PredictionsResponseModelCopyWith<_PredictionsResponseModel> get copyWith =>
       throw _privateConstructorUsedError;
 }

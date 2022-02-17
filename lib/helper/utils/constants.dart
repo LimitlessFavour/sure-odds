@@ -9,7 +9,7 @@ class Constants {
   const Constants._();
 
   /// The main orange-red color used for theming the app.
-  static const Color primaryColor = Color(0xFFf03400);
+  static const Color primaryColor = Color(0xff800020);
 
   /// The color value for red color in the app.
   static const Color redColor = Color(0xFFed0000);
@@ -111,9 +111,6 @@ class Constants {
   /// behind the android system navigation.
   /// Used to prevent overlapping of android navigation with the button.
   static const double bottomInsetsLow = 48;
-
-
-
 
   static T? toNull<T>(Object? _) => null;
 }

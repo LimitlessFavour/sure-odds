@@ -1,6 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:sure_odds/services/repositories/predictions_repository.dart';
 
 import '../services/local_storage/key_value_storage_service.dart';
 import '../services/networking/api_endpoint.dart';

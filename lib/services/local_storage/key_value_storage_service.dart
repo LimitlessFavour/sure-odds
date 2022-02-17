@@ -25,16 +25,16 @@ class KeyValueStorageService {
   //   return UserModel.fromJson(jsonDecode(user) as JSON);
   // }
 
-  ApiResponseModel? getTodaysFixtures() {
+  PredictionsResponseModel? getTodaysFixtures() {
     final fixtures = _keyValueStorage.getCommon<String>(_todays_fixtures_Key);
     if (fixtures == null) return null;
-    return ApiResponseModel.fromJson(jsonDecode(fixtures) as JSON);
+    return PredictionsResponseModel.fromJson(jsonDecode(fixtures) as JSON);
   }
 
-  ApiResponseModel? getTomorrowsFixtures() {
+  PredictionsResponseModel? getTomorrowsFixtures() {
     final fixtures = _keyValueStorage.getCommon<String>(_tomorrows_fixtures_Key);
     if (fixtures == null) return null;
-    return ApiResponseModel.fromJson(jsonDecode(fixtures) as JSON);
+    return PredictionsResponseModel.fromJson(jsonDecode(fixtures) as JSON);
   }
 
   /// Sets the authenticated user to this value. Even though this method is
@@ -47,11 +47,11 @@ class KeyValueStorageService {
 
 
   //TODO Find a way to save it with the date.
-  void saveTodaysFixtures(ApiResponseModel fixtures) {
+  void saveTodaysFixtures(PredictionsResponseModel fixtures) {
     _keyValueStorage.setCommon<String>(_todays_fixtures_Key, jsonEncode(fixtures.toJson()));
   }
 
-  void saveTomorrowsFixtures(ApiResponseModel fixtures) {
+  void saveTomorrowsFixtures(PredictionsResponseModel fixtures) {
     _keyValueStorage.setCommon<String>(_tomorrows_fixtures_Key, jsonEncode(fixtures.toJson()));
   }
 
