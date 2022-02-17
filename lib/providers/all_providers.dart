@@ -1,8 +1,8 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:sure_odds/services/repositories/predictions_repository.dart';
 
+import '../helper/utils/ad_manager.dart';
 import '../services/local_storage/key_value_storage_service.dart';
 import '../services/networking/api_endpoint.dart';
 import '../services/networking/api_service.dart';
@@ -10,11 +10,17 @@ import '../services/networking/dio_service.dart';
 import '../services/networking/interceptors/api_interceptor.dart';
 import '../services/networking/interceptors/logging_interceptor.dart';
 import '../services/networking/interceptors/refresh_token_interceptor.dart';
+import '../services/repositories/ads_repository.dart';
+import '../services/repositories/predictions_repository.dart';
 
 //Services
 
 final keyValueStorageServiceProvider = Provider<KeyValueStorageService>(
   (ref) => KeyValueStorageService(),
+);
+
+final _adManagerProvider = Provider<AdManager>(
+  (ref) => AdManager(),
 );
 
 final _dioProvider = Provider<Dio>((ref) {
@@ -46,3 +52,10 @@ final _predictionsRepositoryProvider = Provider<PredictionsRepository>((ref) {
   final _apiService = ref.watch(_apiServiceProvider);
   return PredictionsRepository(apiService: _apiService);
 });
+
+final _adsRepositoryProvider = Provider<AdsRepository>(
+  (ref) {
+    final _adManager = ref.watch(_adManagerProvider);
+    return AdsRepository(adManager: _adManager);
+  },
+);
