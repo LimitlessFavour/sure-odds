@@ -1,10 +1,14 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:sure_odds/enums/enums.dart';
-import 'package:sure_odds/helper/extensions/context_extensions.dart';
-import 'package:sure_odds/helper/extensions/string_extension.dart';
-import 'package:sure_odds/helper/utils/constants.dart';
-import 'package:sure_odds/models/leagues.dart';
-import 'package:sure_odds/models/prediction.dart';
+import 'package:gap/gap.dart';
+import 'package:sure_odds/views/screens/match_info_screen.dart';
+
+import '../../enums/enums.dart';
+import '../../helper/extensions/context_extensions.dart';
+import '../../helper/extensions/string_extension.dart';
+import '../../helper/utils/constants.dart';
+import '../../models/leagues.dart';
+import '../../models/prediction.dart';
 
 class TestScreen extends StatelessWidget {
   const TestScreen({Key? key}) : super(key: key);
@@ -31,7 +35,7 @@ class TestScreen extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: const [
-                  DrawerIcon(),
+                  DrawerButton(),
                   DateSwitch(),
                 ],
               ),
@@ -93,7 +97,7 @@ class TabItem extends StatelessWidget {
           children: [
             //Text
             Text(items.modifiedName),
-            const SizedBox(height: 8),
+            const Gap(8),
             //bar
             Visibility(
               visible: isActive,
@@ -113,8 +117,30 @@ class TabItem extends StatelessWidget {
   }
 }
 
-class DrawerIcon extends StatelessWidget {
-  const DrawerIcon({Key? key}) : super(key: key);
+class DrawerButton extends StatelessWidget {
+  const DrawerButton({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return CustomIconButton(
+      onPressed: () {
+        //TODO
+        print('show drawer');
+      },
+      iconData: Icons.menu,
+    );
+  }
+}
+
+class CustomIconButton extends StatelessWidget {
+  const CustomIconButton({
+    Key? key,
+    required this.onPressed,
+    required this.iconData,
+  }) : super(key: key);
+
+  final VoidCallback onPressed;
+  final IconData iconData;
 
   @override
   Widget build(BuildContext context) {
@@ -218,32 +244,44 @@ class PredictionTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Size _size = MediaQuery.of(context).size;
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 25.0),
-      height: _size.height / 4,
-      child: Row(
-        children: [
-          Column(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: const [
-              Text('4:00PM'),
-              Text('4:00PM'),
-              Text('4:00PM'),
-            ],
+    return GestureDetector(
+      onTap: () {
+        Navigator.push<dynamic>(
+          context,
+          CupertinoPageRoute<dynamic>(
+            builder: (context) {
+              return MatchInfoScreen(prediction);
+            },
           ),
-          const VerticalDivider(),
-          Column(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: [
-              TeamTile(),
-              TeamTile(),
-            ],
-          ),
-          const VerticalDivider(),
-          Center(
-            child: FavouriteIcon(prediction),
-          )
-        ],
+        );
+      },
+      child: Container(
+        padding: const EdgeInsets.symmetric(horizontal: 25.0),
+        height: _size.height / 4,
+        child: Row(
+          children: [
+            Column(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: const [
+                Text('4:00PM'),
+                Text('4:00PM'),
+                Text('4:00PM'),
+              ],
+            ),
+            const VerticalDivider(),
+            Column(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                TeamTile(),
+                TeamTile(),
+              ],
+            ),
+            const VerticalDivider(),
+            Center(
+              child: FavouriteIcon(prediction),
+            )
+          ],
+        ),
       ),
     );
   }
@@ -262,8 +300,8 @@ class TeamTile extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           Image.network('https://picsum.photos/id/237/200/300'),
-          const SizedBox(width: 6.0),
-          Text('Team name')
+          const Gap(6),
+          Text('Team name'),
         ],
       ),
     );
@@ -295,5 +333,3 @@ class FavouriteIcon extends StatelessWidget {
     debugPrint('add to favourites');
   }
 }
-
-

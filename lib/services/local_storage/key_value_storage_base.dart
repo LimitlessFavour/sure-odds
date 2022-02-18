@@ -4,13 +4,16 @@ import 'package:flutter/services.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import 'cache.dart';
+
 /// Base class containing a unified API for key-value pairs' storage.
 /// This class provides low level methods for storing:
 /// - Sensitive keys using [FlutterSecureStorage]
 /// - Insensitive keys using [SharedPreferences]
-class KeyValueStorageBase{
-  /// Instance of shared preferences
-  static SharedPreferences? _sharedPrefs;
+class KeyValueStorageBase {
+  // /// Instance of shared preferences
+  // static SharedPreferences? _sharedPrefs;
+  static CacheClient? _cache;
 
   /// Instance of flutter secure storage
   static FlutterSecureStorage? _secureStorage;
@@ -22,27 +25,22 @@ class KeyValueStorageBase{
   const KeyValueStorageBase._();
 
   /// Get instance of this class
-  static KeyValueStorageBase get instance =>  _instance ?? const KeyValueStorageBase._();
+  static KeyValueStorageBase get instance =>
+      _instance ?? const KeyValueStorageBase._();
 
   /// Initializer for shared prefs and flutter secure storage
   /// Should be called in main before runApp and
   /// after WidgetsBinding.FlutterInitialized(), to allow for synchronous tasks
   /// when possible.
   static Future<void> init() async {
-    _sharedPrefs ??= await SharedPreferences.getInstance();
+    // _sharedPrefs ??= await SharedPreferences.getInstance();
     _secureStorage ??= const FlutterSecureStorage();
+    _cache ??= CacheClient();
   }
 
-  /// Reads the value for the key from common preferences storage
-  T? getCommon<T>(String key) {
-    try{
-      switch(T){
-        case String: return _sharedPrefs!.getString(key) as T?;
-        case int: return _sharedPrefs!.getInt(key) as T?;
-        case bool: return _sharedPrefs!.getBool(key) as T?;
-        case double: return _sharedPrefs!.getDouble(key) as T?;
-        default: return _sharedPrefs!.get(key) as T?;
-      }
+  T? getCommon<T extends Object>(String key) {
+    try {
+      return _cache!.read<T>(key: key);
     } on Exception {
       return null;
     }
@@ -58,13 +56,12 @@ class KeyValueStorageBase{
   }
 
   /// Sets the value for the key to common preferences storage
-  Future<bool> setCommon<T>(String key, T value) {    
-    switch(T){
-      case String: return _sharedPrefs!.setString(key, value as String);
-      case int: return _sharedPrefs!.setInt(key, value as int);
-      case bool: return _sharedPrefs!.setBool(key, value as bool);
-      case double: return _sharedPrefs!.setDouble(key, value as double);
-      default: return _sharedPrefs!.setString(key, value as String);
+  bool setCommon<T extends Object>(String key, T value) {
+    try {
+      _cache!.write<T>(key: key, value: value);
+      return true;
+    } on Exception {
+      return false;
     }
   }
 
@@ -78,8 +75,9 @@ class KeyValueStorageBase{
     }
   }
 
-  /// Erases common preferences keys
-  Future<bool> clearCommon() => _sharedPrefs!.clear();
+  // /// Erases common preferences keys
+  // Future<bool> clearCommon() => _sharedPrefs!.clear();
+  Future<bool> clearCommon() async => true;
 
   /// Erases encrypted keys
   Future<bool> clearEncrypted() async {

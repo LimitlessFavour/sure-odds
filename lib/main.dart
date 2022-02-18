@@ -7,7 +7,6 @@ import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:sure_odds/firebase_options.dart';
 
 import 'helper/utils/custom_theme.dart';
-import 'routes/app_router.dart';
 import 'services/local_storage/key_value_storage_base.dart';
 import 'views/screens/test_screen.dart';
 
@@ -41,7 +40,6 @@ class MyApp extends StatelessWidget {
       enabled: !kReleaseMode,
       builder: (context) => MaterialApp(
         title: 'Sure Odds',
-        // initialRoute: AppRouter.initialRoute,
         home: const TestScreen(),
         useInheritedMediaQuery: true,
         locale: DevicePreview.locale(context),

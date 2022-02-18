@@ -18,12 +18,6 @@ class KeyValueStorageService {
   /// Instance of key-value storage base class
   final _keyValueStorage = KeyValueStorageBase.instance;
 
-  /// Returns last authenticated user
-  // UserModel? getAuthUser() {
-  //   final user = _keyValueStorage.getCommon<String>(_authUserKey);
-  //   if(user == null) return null;
-  //   return UserModel.fromJson(jsonDecode(user) as JSON);
-  // }
 
   PredictionsResponseModel? getTodaysFixtures() {
     final fixtures = _keyValueStorage.getCommon<String>(_todays_fixtures_Key);
@@ -36,14 +30,6 @@ class KeyValueStorageService {
     if (fixtures == null) return null;
     return PredictionsResponseModel.fromJson(jsonDecode(fixtures) as JSON);
   }
-
-  /// Sets the authenticated user to this value. Even though this method is
-  /// asynchronous, we don't care about it's completion which is why we don't
-  /// use `await` and let it execute in the background.
-
-  // void setAuthUser(UserModel user) {
-  //   _keyValueStorage.setCommon<String>(_authUserKey, jsonEncode(user.toJson()));
-  // }
 
 
   //TODO Find a way to save it with the date.

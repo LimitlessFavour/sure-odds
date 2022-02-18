@@ -9,5 +9,4 @@ class AdsRepository {
   final AdManager _adManager;
 
   List<String> get unitIdList => _adManager.unitIdList;
-
 }

@@ -50,7 +50,8 @@ final _apiServiceProvider = Provider<ApiService>((ref) {
 
 final _predictionsRepositoryProvider = Provider<PredictionsRepository>((ref) {
   final _apiService = ref.watch(_apiServiceProvider);
-  return PredictionsRepository(apiService: _apiService);
+  final _storageService = ref.watch(keyValueStorageServiceProvider);
+  return PredictionsRepository(apiService: _apiService, storageService: _storageService);
 });
 
 final _adsRepositoryProvider = Provider<AdsRepository>(
