@@ -26,13 +26,13 @@ class ApiEndpoint {
   /// Returns the path for a prediction [endpoint].
   ///
   static String predictions(PredictionsEndpoint endpoint) {
-    var path = '/predictions';
+    var path = '/prediction';
     switch (endpoint) {
       case PredictionsEndpoint.TODAY:
-        path = '/predictions/today';
+        path = '/prediction/today';
         break;
       case PredictionsEndpoint.TOMORROW:
-        path = '/predictions/tomorrow';
+        path = '/prediction/tomorrow';
         break;
     }
     return path;

@@ -215,6 +215,7 @@ class LeaguesScroll extends HookConsumerWidget {
       flex: 7,
       child: Builder(
         builder: (context) {
+          //TODO change this to provider value
           if (true) return const TodaysLeagueScroll();
           return const TomorrowsLeaguesScroll();
         },
@@ -239,7 +240,7 @@ class TodaysLeagueScroll extends HookConsumerWidget {
             CommonProgressIndicator(color: context.theme.primaryColor),
         error: (error, st) => Center(
           child: Text(
-            'Network error occured',
+            'Network error occured ${error} ${st}',
             style: context.bodyText1,
           ),
         ),
@@ -264,7 +265,7 @@ class TomorrowsLeaguesScroll extends HookConsumerWidget {
             CommonProgressIndicator(color: context.theme.primaryColor),
         error: (error, st) => Center(
           child: Text(
-            'Network error occured',
+            'Network error occured ${error} ${st}',
             style: context.bodyText1,
           ),
         ),
@@ -379,7 +380,7 @@ class TeamTile extends StatelessWidget {
         children: [
           Image.network('https://picsum.photos/id/237/200/300'),
           const Gap(6),
-          Text('Team name'),
+          const Text('Team name'),
         ],
       ),
     );

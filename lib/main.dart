@@ -4,6 +4,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:sure_odds/firebase_options.dart';
 
 import 'helper/utils/custom_theme.dart';
@@ -36,15 +37,17 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return DevicePreview(
-      enabled: !kReleaseMode,
-      builder: (context) => MaterialApp(
-        title: 'Sure Odds',
-        home: const HomeScreen(),
-        useInheritedMediaQuery: true,
-        locale: DevicePreview.locale(context),
-        builder: DevicePreview.appBuilder,
-        theme: CustomTheme.mainTheme,
+    return ProviderScope(
+      child: DevicePreview(
+        enabled: !kReleaseMode,
+        builder: (context) => MaterialApp(
+          title: 'Sure Odds',
+          home: const HomeScreen(),
+          useInheritedMediaQuery: true,
+          locale: DevicePreview.locale(context),
+          builder: DevicePreview.appBuilder,
+          theme: CustomTheme.mainTheme,
+        ),
       ),
     );
   }

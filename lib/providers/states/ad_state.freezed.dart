@@ -33,7 +33,7 @@ class _$AdStateTearOff {
     );
   }
 
-  LOADEDINTERSTITIAL loadedInterstitialAd(
+  LOADEDINTERSTITIAL loadedInterstitial(
       {required int index, required InterstitialAd interstitialAd}) {
     return LOADEDINTERSTITIAL(
       index: index,
@@ -59,7 +59,7 @@ mixin _$AdState {
     required TResult Function() loading,
     required TResult Function(int index, BannerAd bannerAd) loadedBanner,
     required TResult Function(int index, InterstitialAd interstitialAd)
-        loadedInterstitialAd,
+        loadedInterstitial,
     required TResult Function(String reason) failed,
   }) =>
       throw _privateConstructorUsedError;
@@ -69,7 +69,7 @@ mixin _$AdState {
     TResult Function()? loading,
     TResult Function(int index, BannerAd bannerAd)? loadedBanner,
     TResult Function(int index, InterstitialAd interstitialAd)?
-        loadedInterstitialAd,
+        loadedInterstitial,
     TResult Function(String reason)? failed,
   }) =>
       throw _privateConstructorUsedError;
@@ -79,7 +79,7 @@ mixin _$AdState {
     TResult Function()? loading,
     TResult Function(int index, BannerAd bannerAd)? loadedBanner,
     TResult Function(int index, InterstitialAd interstitialAd)?
-        loadedInterstitialAd,
+        loadedInterstitial,
     TResult Function(String reason)? failed,
     required TResult orElse(),
   }) =>
@@ -89,7 +89,7 @@ mixin _$AdState {
     required TResult Function(UNINITIALIZED value) uninitialized,
     required TResult Function(LOADING value) loading,
     required TResult Function(LOADEDBANNER value) loadedBanner,
-    required TResult Function(LOADEDINTERSTITIAL value) loadedInterstitialAd,
+    required TResult Function(LOADEDINTERSTITIAL value) loadedInterstitial,
     required TResult Function(FAILED value) failed,
   }) =>
       throw _privateConstructorUsedError;
@@ -98,7 +98,7 @@ mixin _$AdState {
     TResult Function(UNINITIALIZED value)? uninitialized,
     TResult Function(LOADING value)? loading,
     TResult Function(LOADEDBANNER value)? loadedBanner,
-    TResult Function(LOADEDINTERSTITIAL value)? loadedInterstitialAd,
+    TResult Function(LOADEDINTERSTITIAL value)? loadedInterstitial,
     TResult Function(FAILED value)? failed,
   }) =>
       throw _privateConstructorUsedError;
@@ -107,7 +107,7 @@ mixin _$AdState {
     TResult Function(UNINITIALIZED value)? uninitialized,
     TResult Function(LOADING value)? loading,
     TResult Function(LOADEDBANNER value)? loadedBanner,
-    TResult Function(LOADEDINTERSTITIAL value)? loadedInterstitialAd,
+    TResult Function(LOADEDINTERSTITIAL value)? loadedInterstitial,
     TResult Function(FAILED value)? failed,
     required TResult orElse(),
   }) =>
@@ -173,7 +173,7 @@ class _$UNINITIALIZED implements UNINITIALIZED {
     required TResult Function() loading,
     required TResult Function(int index, BannerAd bannerAd) loadedBanner,
     required TResult Function(int index, InterstitialAd interstitialAd)
-        loadedInterstitialAd,
+        loadedInterstitial,
     required TResult Function(String reason) failed,
   }) {
     return uninitialized();
@@ -186,7 +186,7 @@ class _$UNINITIALIZED implements UNINITIALIZED {
     TResult Function()? loading,
     TResult Function(int index, BannerAd bannerAd)? loadedBanner,
     TResult Function(int index, InterstitialAd interstitialAd)?
-        loadedInterstitialAd,
+        loadedInterstitial,
     TResult Function(String reason)? failed,
   }) {
     return uninitialized?.call();
@@ -199,7 +199,7 @@ class _$UNINITIALIZED implements UNINITIALIZED {
     TResult Function()? loading,
     TResult Function(int index, BannerAd bannerAd)? loadedBanner,
     TResult Function(int index, InterstitialAd interstitialAd)?
-        loadedInterstitialAd,
+        loadedInterstitial,
     TResult Function(String reason)? failed,
     required TResult orElse(),
   }) {
@@ -215,7 +215,7 @@ class _$UNINITIALIZED implements UNINITIALIZED {
     required TResult Function(UNINITIALIZED value) uninitialized,
     required TResult Function(LOADING value) loading,
     required TResult Function(LOADEDBANNER value) loadedBanner,
-    required TResult Function(LOADEDINTERSTITIAL value) loadedInterstitialAd,
+    required TResult Function(LOADEDINTERSTITIAL value) loadedInterstitial,
     required TResult Function(FAILED value) failed,
   }) {
     return uninitialized(this);
@@ -227,7 +227,7 @@ class _$UNINITIALIZED implements UNINITIALIZED {
     TResult Function(UNINITIALIZED value)? uninitialized,
     TResult Function(LOADING value)? loading,
     TResult Function(LOADEDBANNER value)? loadedBanner,
-    TResult Function(LOADEDINTERSTITIAL value)? loadedInterstitialAd,
+    TResult Function(LOADEDINTERSTITIAL value)? loadedInterstitial,
     TResult Function(FAILED value)? failed,
   }) {
     return uninitialized?.call(this);
@@ -239,7 +239,7 @@ class _$UNINITIALIZED implements UNINITIALIZED {
     TResult Function(UNINITIALIZED value)? uninitialized,
     TResult Function(LOADING value)? loading,
     TResult Function(LOADEDBANNER value)? loadedBanner,
-    TResult Function(LOADEDINTERSTITIAL value)? loadedInterstitialAd,
+    TResult Function(LOADEDINTERSTITIAL value)? loadedInterstitial,
     TResult Function(FAILED value)? failed,
     required TResult orElse(),
   }) {
@@ -296,7 +296,7 @@ class _$LOADING implements LOADING {
     required TResult Function() loading,
     required TResult Function(int index, BannerAd bannerAd) loadedBanner,
     required TResult Function(int index, InterstitialAd interstitialAd)
-        loadedInterstitialAd,
+        loadedInterstitial,
     required TResult Function(String reason) failed,
   }) {
     return loading();
@@ -309,7 +309,7 @@ class _$LOADING implements LOADING {
     TResult Function()? loading,
     TResult Function(int index, BannerAd bannerAd)? loadedBanner,
     TResult Function(int index, InterstitialAd interstitialAd)?
-        loadedInterstitialAd,
+        loadedInterstitial,
     TResult Function(String reason)? failed,
   }) {
     return loading?.call();
@@ -322,7 +322,7 @@ class _$LOADING implements LOADING {
     TResult Function()? loading,
     TResult Function(int index, BannerAd bannerAd)? loadedBanner,
     TResult Function(int index, InterstitialAd interstitialAd)?
-        loadedInterstitialAd,
+        loadedInterstitial,
     TResult Function(String reason)? failed,
     required TResult orElse(),
   }) {
@@ -338,7 +338,7 @@ class _$LOADING implements LOADING {
     required TResult Function(UNINITIALIZED value) uninitialized,
     required TResult Function(LOADING value) loading,
     required TResult Function(LOADEDBANNER value) loadedBanner,
-    required TResult Function(LOADEDINTERSTITIAL value) loadedInterstitialAd,
+    required TResult Function(LOADEDINTERSTITIAL value) loadedInterstitial,
     required TResult Function(FAILED value) failed,
   }) {
     return loading(this);
@@ -350,7 +350,7 @@ class _$LOADING implements LOADING {
     TResult Function(UNINITIALIZED value)? uninitialized,
     TResult Function(LOADING value)? loading,
     TResult Function(LOADEDBANNER value)? loadedBanner,
-    TResult Function(LOADEDINTERSTITIAL value)? loadedInterstitialAd,
+    TResult Function(LOADEDINTERSTITIAL value)? loadedInterstitial,
     TResult Function(FAILED value)? failed,
   }) {
     return loading?.call(this);
@@ -362,7 +362,7 @@ class _$LOADING implements LOADING {
     TResult Function(UNINITIALIZED value)? uninitialized,
     TResult Function(LOADING value)? loading,
     TResult Function(LOADEDBANNER value)? loadedBanner,
-    TResult Function(LOADEDINTERSTITIAL value)? loadedInterstitialAd,
+    TResult Function(LOADEDINTERSTITIAL value)? loadedInterstitial,
     TResult Function(FAILED value)? failed,
     required TResult orElse(),
   }) {
@@ -455,7 +455,7 @@ class _$LOADEDBANNER implements LOADEDBANNER {
     required TResult Function() loading,
     required TResult Function(int index, BannerAd bannerAd) loadedBanner,
     required TResult Function(int index, InterstitialAd interstitialAd)
-        loadedInterstitialAd,
+        loadedInterstitial,
     required TResult Function(String reason) failed,
   }) {
     return loadedBanner(index, bannerAd);
@@ -468,7 +468,7 @@ class _$LOADEDBANNER implements LOADEDBANNER {
     TResult Function()? loading,
     TResult Function(int index, BannerAd bannerAd)? loadedBanner,
     TResult Function(int index, InterstitialAd interstitialAd)?
-        loadedInterstitialAd,
+        loadedInterstitial,
     TResult Function(String reason)? failed,
   }) {
     return loadedBanner?.call(index, bannerAd);
@@ -481,7 +481,7 @@ class _$LOADEDBANNER implements LOADEDBANNER {
     TResult Function()? loading,
     TResult Function(int index, BannerAd bannerAd)? loadedBanner,
     TResult Function(int index, InterstitialAd interstitialAd)?
-        loadedInterstitialAd,
+        loadedInterstitial,
     TResult Function(String reason)? failed,
     required TResult orElse(),
   }) {
@@ -497,7 +497,7 @@ class _$LOADEDBANNER implements LOADEDBANNER {
     required TResult Function(UNINITIALIZED value) uninitialized,
     required TResult Function(LOADING value) loading,
     required TResult Function(LOADEDBANNER value) loadedBanner,
-    required TResult Function(LOADEDINTERSTITIAL value) loadedInterstitialAd,
+    required TResult Function(LOADEDINTERSTITIAL value) loadedInterstitial,
     required TResult Function(FAILED value) failed,
   }) {
     return loadedBanner(this);
@@ -509,7 +509,7 @@ class _$LOADEDBANNER implements LOADEDBANNER {
     TResult Function(UNINITIALIZED value)? uninitialized,
     TResult Function(LOADING value)? loading,
     TResult Function(LOADEDBANNER value)? loadedBanner,
-    TResult Function(LOADEDINTERSTITIAL value)? loadedInterstitialAd,
+    TResult Function(LOADEDINTERSTITIAL value)? loadedInterstitial,
     TResult Function(FAILED value)? failed,
   }) {
     return loadedBanner?.call(this);
@@ -521,7 +521,7 @@ class _$LOADEDBANNER implements LOADEDBANNER {
     TResult Function(UNINITIALIZED value)? uninitialized,
     TResult Function(LOADING value)? loading,
     TResult Function(LOADEDBANNER value)? loadedBanner,
-    TResult Function(LOADEDINTERSTITIAL value)? loadedInterstitialAd,
+    TResult Function(LOADEDINTERSTITIAL value)? loadedInterstitial,
     TResult Function(FAILED value)? failed,
     required TResult orElse(),
   }) {
@@ -592,7 +592,7 @@ class _$LOADEDINTERSTITIAL implements LOADEDINTERSTITIAL {
 
   @override
   String toString() {
-    return 'AdState.loadedInterstitialAd(index: $index, interstitialAd: $interstitialAd)';
+    return 'AdState.loadedInterstitial(index: $index, interstitialAd: $interstitialAd)';
   }
 
   @override
@@ -623,10 +623,10 @@ class _$LOADEDINTERSTITIAL implements LOADEDINTERSTITIAL {
     required TResult Function() loading,
     required TResult Function(int index, BannerAd bannerAd) loadedBanner,
     required TResult Function(int index, InterstitialAd interstitialAd)
-        loadedInterstitialAd,
+        loadedInterstitial,
     required TResult Function(String reason) failed,
   }) {
-    return loadedInterstitialAd(index, interstitialAd);
+    return loadedInterstitial(index, interstitialAd);
   }
 
   @override
@@ -636,10 +636,10 @@ class _$LOADEDINTERSTITIAL implements LOADEDINTERSTITIAL {
     TResult Function()? loading,
     TResult Function(int index, BannerAd bannerAd)? loadedBanner,
     TResult Function(int index, InterstitialAd interstitialAd)?
-        loadedInterstitialAd,
+        loadedInterstitial,
     TResult Function(String reason)? failed,
   }) {
-    return loadedInterstitialAd?.call(index, interstitialAd);
+    return loadedInterstitial?.call(index, interstitialAd);
   }
 
   @override
@@ -649,12 +649,12 @@ class _$LOADEDINTERSTITIAL implements LOADEDINTERSTITIAL {
     TResult Function()? loading,
     TResult Function(int index, BannerAd bannerAd)? loadedBanner,
     TResult Function(int index, InterstitialAd interstitialAd)?
-        loadedInterstitialAd,
+        loadedInterstitial,
     TResult Function(String reason)? failed,
     required TResult orElse(),
   }) {
-    if (loadedInterstitialAd != null) {
-      return loadedInterstitialAd(index, interstitialAd);
+    if (loadedInterstitial != null) {
+      return loadedInterstitial(index, interstitialAd);
     }
     return orElse();
   }
@@ -665,10 +665,10 @@ class _$LOADEDINTERSTITIAL implements LOADEDINTERSTITIAL {
     required TResult Function(UNINITIALIZED value) uninitialized,
     required TResult Function(LOADING value) loading,
     required TResult Function(LOADEDBANNER value) loadedBanner,
-    required TResult Function(LOADEDINTERSTITIAL value) loadedInterstitialAd,
+    required TResult Function(LOADEDINTERSTITIAL value) loadedInterstitial,
     required TResult Function(FAILED value) failed,
   }) {
-    return loadedInterstitialAd(this);
+    return loadedInterstitial(this);
   }
 
   @override
@@ -677,10 +677,10 @@ class _$LOADEDINTERSTITIAL implements LOADEDINTERSTITIAL {
     TResult Function(UNINITIALIZED value)? uninitialized,
     TResult Function(LOADING value)? loading,
     TResult Function(LOADEDBANNER value)? loadedBanner,
-    TResult Function(LOADEDINTERSTITIAL value)? loadedInterstitialAd,
+    TResult Function(LOADEDINTERSTITIAL value)? loadedInterstitial,
     TResult Function(FAILED value)? failed,
   }) {
-    return loadedInterstitialAd?.call(this);
+    return loadedInterstitial?.call(this);
   }
 
   @override
@@ -689,12 +689,12 @@ class _$LOADEDINTERSTITIAL implements LOADEDINTERSTITIAL {
     TResult Function(UNINITIALIZED value)? uninitialized,
     TResult Function(LOADING value)? loading,
     TResult Function(LOADEDBANNER value)? loadedBanner,
-    TResult Function(LOADEDINTERSTITIAL value)? loadedInterstitialAd,
+    TResult Function(LOADEDINTERSTITIAL value)? loadedInterstitial,
     TResult Function(FAILED value)? failed,
     required TResult orElse(),
   }) {
-    if (loadedInterstitialAd != null) {
-      return loadedInterstitialAd(this);
+    if (loadedInterstitial != null) {
+      return loadedInterstitial(this);
     }
     return orElse();
   }
@@ -778,7 +778,7 @@ class _$FAILED implements FAILED {
     required TResult Function() loading,
     required TResult Function(int index, BannerAd bannerAd) loadedBanner,
     required TResult Function(int index, InterstitialAd interstitialAd)
-        loadedInterstitialAd,
+        loadedInterstitial,
     required TResult Function(String reason) failed,
   }) {
     return failed(reason);
@@ -791,7 +791,7 @@ class _$FAILED implements FAILED {
     TResult Function()? loading,
     TResult Function(int index, BannerAd bannerAd)? loadedBanner,
     TResult Function(int index, InterstitialAd interstitialAd)?
-        loadedInterstitialAd,
+        loadedInterstitial,
     TResult Function(String reason)? failed,
   }) {
     return failed?.call(reason);
@@ -804,7 +804,7 @@ class _$FAILED implements FAILED {
     TResult Function()? loading,
     TResult Function(int index, BannerAd bannerAd)? loadedBanner,
     TResult Function(int index, InterstitialAd interstitialAd)?
-        loadedInterstitialAd,
+        loadedInterstitial,
     TResult Function(String reason)? failed,
     required TResult orElse(),
   }) {
@@ -820,7 +820,7 @@ class _$FAILED implements FAILED {
     required TResult Function(UNINITIALIZED value) uninitialized,
     required TResult Function(LOADING value) loading,
     required TResult Function(LOADEDBANNER value) loadedBanner,
-    required TResult Function(LOADEDINTERSTITIAL value) loadedInterstitialAd,
+    required TResult Function(LOADEDINTERSTITIAL value) loadedInterstitial,
     required TResult Function(FAILED value) failed,
   }) {
     return failed(this);
@@ -832,7 +832,7 @@ class _$FAILED implements FAILED {
     TResult Function(UNINITIALIZED value)? uninitialized,
     TResult Function(LOADING value)? loading,
     TResult Function(LOADEDBANNER value)? loadedBanner,
-    TResult Function(LOADEDINTERSTITIAL value)? loadedInterstitialAd,
+    TResult Function(LOADEDINTERSTITIAL value)? loadedInterstitial,
     TResult Function(FAILED value)? failed,
   }) {
     return failed?.call(this);
@@ -844,7 +844,7 @@ class _$FAILED implements FAILED {
     TResult Function(UNINITIALIZED value)? uninitialized,
     TResult Function(LOADING value)? loading,
     TResult Function(LOADEDBANNER value)? loadedBanner,
-    TResult Function(LOADEDINTERSTITIAL value)? loadedInterstitialAd,
+    TResult Function(LOADEDINTERSTITIAL value)? loadedInterstitial,
     TResult Function(FAILED value)? failed,
     required TResult orElse(),
   }) {

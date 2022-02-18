@@ -35,6 +35,7 @@ class PredictionsRepository {
         await _apiService.getDocumentData<PredictionsResponseModel>(
       endpoint: ApiEndpoint.predictions(PredictionsEndpoint.TODAY),
       cancelToken: _cancelToken,
+      requiresAuthToken: false,
       converter: (responseBody) =>
           PredictionsResponseModel.fromJson(responseBody),
     );
@@ -54,6 +55,7 @@ class PredictionsRepository {
     PredictionsResponseModel predictions =
         await _apiService.getDocumentData<PredictionsResponseModel>(
       endpoint: ApiEndpoint.predictions(PredictionsEndpoint.TOMORROW),
+      requiresAuthToken: false,
       cancelToken: _cancelToken,
       converter: (responseBody) =>
           PredictionsResponseModel.fromJson(responseBody),

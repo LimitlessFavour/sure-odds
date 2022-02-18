@@ -8,8 +8,7 @@ import 'dio_service.dart';
 import '../../helper/typedefs.dart';
 
 /// A service class implementing methods for basic API requests.
-class ApiService implements ApiInterface{
-
+class ApiService implements ApiInterface {
   /// An instance of [DioService] for network requests
   late final DioService _dioService;
 
@@ -45,7 +44,8 @@ class ApiService implements ApiInterface{
     //Entire map of response
     final data = await _dioService.get(
       endpoint: endpoint,
-      options: Options(headers: <String, Object?>{'requiresAuthToken': requiresAuthToken}),
+      options: Options(
+          headers: <String, Object?>{'requiresAuthToken': requiresAuthToken}),
       queryParams: queryParams,
       cancelToken: cancelToken,
     );
@@ -91,7 +91,7 @@ class ApiService implements ApiInterface{
     );
 
     //Returning the deserialized object
-    return converter(data['body'] as JSON);
+    return converter(data);
   }
 
   /// An implementation of the base method for inserting [data] at
@@ -122,7 +122,8 @@ class ApiService implements ApiInterface{
     final dataMap = await _dioService.post(
       endpoint: endpoint,
       data: data,
-      options: Options(headers: <String, Object?>{'requiresAuthToken': requiresAuthToken}),
+      options: Options(
+          headers: <String, Object?>{'requiresAuthToken': requiresAuthToken}),
       cancelToken: cancelToken,
     );
 
@@ -157,7 +158,8 @@ class ApiService implements ApiInterface{
     final dataMap = await _dioService.patch(
       endpoint: endpoint,
       data: data,
-      options: Options(headers: <String, Object?>{'requiresAuthToken': requiresAuthToken}),
+      options: Options(
+          headers: <String, Object?>{'requiresAuthToken': requiresAuthToken}),
       cancelToken: cancelToken,
     );
 
@@ -192,7 +194,8 @@ class ApiService implements ApiInterface{
     final dataMap = await _dioService.delete(
       endpoint: endpoint,
       data: data,
-      options: Options(headers: <String, Object?>{'requiresAuthToken': requiresAuthToken}),
+      options: Options(
+          headers: <String, Object?>{'requiresAuthToken': requiresAuthToken}),
       cancelToken: cancelToken,
     );
 
@@ -204,7 +207,7 @@ class ApiService implements ApiInterface{
   ///
   /// If null, the **default** [cancelToken] inside [DioService] is used.
   @override
-  void cancelRequests({CancelToken? cancelToken}){
+  void cancelRequests({CancelToken? cancelToken}) {
     _dioService.cancelRequests(cancelToken: cancelToken);
   }
 }

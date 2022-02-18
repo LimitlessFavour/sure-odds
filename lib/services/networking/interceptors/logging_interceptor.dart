@@ -12,7 +12,6 @@ import '../../../helper/typedefs.dart';
 /// ** This interceptor doesn't modify the request or response in any way. And
 /// only works in `debug` mode **
 class LoggingInterceptor extends Interceptor {
-
   /// This method intercepts an out-going request before it reaches the
   /// destination.
   ///
@@ -44,9 +43,10 @@ class LoggingInterceptor extends Interceptor {
     debugPrint('\tHeaders:');
     options.headers.forEach((k, Object? v) => debugPrint('\t\t$k: $v'));
 
-    if(options.queryParameters.isNotEmpty){
+    if (options.queryParameters.isNotEmpty) {
       debugPrint('\tqueryParams:');
-      options.queryParameters.forEach((k, Object? v) => debugPrint('\t\t$k: $v'));
+      options.queryParameters
+          .forEach((k, Object? v) => debugPrint('\t\t$k: $v'));
     }
 
     if (options.data != null) {
@@ -80,7 +80,6 @@ class LoggingInterceptor extends Interceptor {
     Response response,
     ResponseInterceptorHandler handler,
   ) {
-
     debugPrint('<-- RESPONSE');
 
     debugPrint('\tStatus code:${response.statusCode}');
@@ -120,31 +119,30 @@ class LoggingInterceptor extends Interceptor {
     ErrorInterceptorHandler handler,
   ) {
     debugPrint('--> ERROR');
-    if(dioError.response != null){
+    if (dioError.response != null) {
       debugPrint('\tStatus code: ${dioError.response!.statusCode}');
-      if(dioError.response!.data != null){
-        final headers = dioError.response!.data['headers'] as JSON; //API Dependant
+      if (dioError.response!.data != null) {
+        final headers =
+            dioError.response!.data['headers'] as JSON; //API Dependant
         var message = headers['message'] as String; //API Dependant
         var error = headers['error'] as String; //API Dependant
         debugPrint('\tException: $error');
         debugPrint('\tMessage: $message');
-        if(headers.containsKey('data')){ //API Dependant
+        if (headers.containsKey('data')) {
+          //API Dependant
           var data = headers['data'] as List<Object?>;
-          if(data.isNotEmpty) {
+          if (data.isNotEmpty) {
             debugPrint('\tData: $data');
           }
         }
-      }
-      else {
+      } else {
         debugPrint('${dioError.response!.data}');
       }
-    }
-    else if(dioError.error is SocketException){
+    } else if (dioError.error is SocketException) {
       const message = 'No internet connectivity';
       debugPrint('\tException: FetchDataException');
       debugPrint('\tMessage: $message');
-    }
-    else {
+    } else {
       debugPrint('\tUnknown Error');
     }
 
