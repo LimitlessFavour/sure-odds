@@ -8,7 +8,7 @@ import 'package:sure_odds/firebase_options.dart';
 
 import 'helper/utils/custom_theme.dart';
 import 'services/local_storage/key_value_storage_base.dart';
-import 'views/screens/test_screen.dart';
+import 'views/screens/home_screen.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -40,7 +40,7 @@ class MyApp extends StatelessWidget {
       enabled: !kReleaseMode,
       builder: (context) => MaterialApp(
         title: 'Sure Odds',
-        home: const TestScreen(),
+        home: const HomeScreen(),
         useInheritedMediaQuery: true,
         locale: DevicePreview.locale(context),
         builder: DevicePreview.appBuilder,

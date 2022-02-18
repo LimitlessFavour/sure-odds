@@ -24,50 +24,50 @@ class CustomTheme {
       secondary: Constants.primaryColor,
       secondaryVariant: Constants.primaryColor,
     ),
-    scaffoldBackgroundColor: Constants.scaffoldColor,
+    scaffoldBackgroundColor: Constants.scaffoldGreyColor,
     fontFamily: Constants.robotoFont.fontFamily,
     textTheme: TextTheme(
-      headline1: Constants.robotoFont.copyWith(
-        fontWeight: FontWeight.bold,
-        fontSize: 50,
-        height: 1.15,
+
+      ///*expansion tile text, navigation drawer tile active
+      headline1: Constants.solwayFont.copyWith(
+        fontWeight: FontWeight.w700,
+        fontSize: 14,
+        color: Colors.white,
       ),
+
+      ///*navigation drawer tile inactive
       headline2: Constants.solwayFont.copyWith(
-        fontWeight: FontWeight.bold,
-        fontSize: 50,
-        height: 1.15,
+        fontWeight: FontWeight.w700,
+        fontSize: 14,
+        color: Constants.primaryColor,
       ),
+
+      ///*prediction tile
       headline3: Constants.robotoFont.copyWith(
+        fontWeight: FontWeight.w500,
+        fontSize: 12,
+        color: Colors.black,
+      ),
+
+      ///* tips and odds text
+      headline4: Constants.robotoFont.copyWith(
+        fontWeight: FontWeight.w700,
+        fontSize: 12,
+        color: Colors.black
+      ),
+
+      ///* tabs text
+      headline5: Constants.solwayFont.copyWith(
         fontWeight: FontWeight.w400,
-        fontSize: 26,
-        height: 1.15,
+        fontSize: 14,
+        color: Colors.black
       ),
-      headline4: Constants.solwayFont.copyWith(
-        fontWeight: FontWeight.w400,
-        fontSize: 26,
-        height: 1.15,
-      ),
-      headline5: Constants.robotoFont.copyWith(
-        fontWeight: FontWeight.w300,
-        fontSize: 20,
-        height: 1.15,
-      ),
+
+      ///* today/tomorrow switch text active
       headline6: Constants.solwayFont.copyWith(
-        fontWeight: FontWeight.w300,
-        fontSize: 20,
-        height: 1.15,
-      ),
-      subtitle1: Constants.robotoFont.copyWith(
-        fontWeight: FontWeight.w200,
-      ),
-      subtitle2: Constants.solwayFont.copyWith(
-        fontWeight: FontWeight.w200,
-      ),
-      bodyText1: Constants.robotoFont.copyWith(
-        fontWeight: FontWeight.w400,
-      ),
-      bodyText2: Constants.solwayFont.copyWith(
-        fontWeight: FontWeight.w400,
+        fontWeight: FontWeight.w500,
+        fontSize: 12,
+        color: Colors.black
       ),
     ),
     textButtonTheme: TextButtonThemeData(

@@ -1,121 +1,413 @@
-// import 'package:flutter/material.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+import 'package:gap/gap.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:sure_odds/providers/all_providers.dart';
+import 'package:sure_odds/views/screens/match_info_screen.dart';
+import 'package:sure_odds/views/widgets/common_progress_indicator.dart';
 
-// //Helpers
-// import '../../helper/utils/constants.dart';
-// import '../../helper/extensions/context_extensions.dart';
+import '../../enums/enums.dart';
+import '../../helper/extensions/context_extensions.dart';
+import '../../helper/extensions/string_extension.dart';
+import '../../helper/utils/constants.dart';
+import '../../models/leagues.dart';
+import '../../models/prediction.dart';
 
-// //Routing
-// import '../../routes/routes.dart';
-// import '../../routes/app_router.dart';
+class HomeScreen extends HookConsumerWidget {
+  const HomeScreen({Key? key});
 
-// //Widgets
-// // import '../widgets/common/custom_text_button.dart';
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    return Scaffold(
+      // backgroundColor: Colors.white,
+      drawer: Drawer(
+        child: Column(
+          children: const [
+            Icon(Icons.ac_unit),
+          ],
+        ),
+      ),
+      body: Column(
+        children: [
+          //*app bar
+          Expanded(
+            flex: 2,
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 32.0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: const [
+                  DrawerButton(),
+                  DateSwitch(),
+                ],
+              ),
+            ),
+          ),
+          //* content
+          Expanded(
+            flex: 10,
+            child: Column(
+              children: const [
+                //tabs
+                Tabs(),
+                //leagues
+                LeaguesScroll(),
+              ],
+            ),
+          ),
+        ],
 
-// class HomeScreen extends StatelessWidget {
-//   const HomeScreen();
+        // color: Colors.red,
+      ),
+    );
+  }
+}
 
-//   @override
-//   Widget build(BuildContext context) {
-//     return Scaffold(
-//       resizeToAvoidBottomInset: false,
-//       body: Container(
-//         padding: const EdgeInsets.fromLTRB(20, 125, 20, Constants.bottomInsets),
-//         child: Column(
-//           crossAxisAlignment: CrossAxisAlignment.start,
-//           children: [
-//             //Heading text
-//             Text(
-//               'EZ Tickets',
-//               style: context.headline1.copyWith(color: Constants.primaryColor),
-//             ),
+class Tabs extends StatelessWidget {
+  const Tabs({Key? key}) : super(key: key);
 
-//             const SizedBox(height: 35),
+  @override
+  Widget build(BuildContext context) {
+    return Expanded(
+      flex: 3,
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: const [
+          TabItem(TabItems.all),
+          TabItem(TabItems.favourite),
+        ],
+      ),
+    );
+  }
+}
 
-//             //Welcome msg
-//             Text(
-//               'Welcome to\nthe new\nNueplex cinemas',
-//               style: context.headline3,
-//             ),
+class TabItem extends StatelessWidget {
+  const TabItem(this.items, {Key? key}) : super(key: key);
 
-//             const SizedBox(height: 40),
+  final TabItems items;
 
-//             //Experience msg
-//             Text(
-//               'New level of features\nwith the new app',
-//               style: context.headline5.copyWith(
-//                 color: Constants.textGreyColor,
-//                 fontWeight: FontWeight.w400,
-//                 fontSize: 21,
-//               ),
-//             ),
+  @override
+  Widget build(BuildContext context) {
+    //TODO change this to provider value
+    const currentTabItem = TabItems.all;
+    bool isActive = items == currentTabItem;
 
-//             const Spacer(),
+    return Expanded(
+      child: Center(
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            //Text
+            Text(items.modifiedName),
+            const Gap(8),
+            //bar
+            Visibility(
+              visible: isActive,
+              child: Container(
+                width: 72.0,
+                height: 5.0,
+                decoration: BoxDecoration(
+                  color: Constants.primaryColor,
+                  borderRadius: BorderRadius.circular(5.0),
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
 
-//             //Login row
-//             Row(
-//               mainAxisAlignment: MainAxisAlignment.spaceBetween,
-//               children: [
-//                 //Login button
-//                 Expanded(
-//                   child: CustomTextButton.gradient(
-//                     width: double.infinity,
-//                     onPressed: () {
-//                       AppRouter.pushNamed(Routes.LoginScreenRoute);
-//                     },
-//                     gradient: Constants.buttonGradientRed,
-//                     child: const Center(
-//                       child: Text(
-//                         'LOGIN',
-//                         style: TextStyle(
-//                           color: Colors.white,
-//                           fontSize: 15,
-//                           letterSpacing: 0.7,
-//                           fontWeight: FontWeight.w600,
-//                         ),
-//                       ),
-//                     ),
-//                   ),
-//                 ),
+class DrawerButton extends StatelessWidget {
+  const DrawerButton({Key? key}) : super(key: key);
 
-//                 const SizedBox(width: 15),
+  @override
+  Widget build(BuildContext context) {
+    return CustomIconButton(
+      onPressed: () {
+        //TODO
+        print('show drawer');
+      },
+      iconData: Icons.menu,
+    );
+  }
+}
 
-//                 //face id
-//                 CustomTextButton.gradient(
-//                   width: 60,
-//                   onPressed: () {},
-//                   gradient: Constants.buttonGradientRed,
-//                   child: Padding(
-//                     padding: const EdgeInsets.all(10.0),
-//                     child: Image.asset(AssetsHelper.faceId),
-//                   ),
-//                 ),
-//               ],
-//             ),
+class CustomIconButton extends StatelessWidget {
+  const CustomIconButton({
+    Key? key,
+    required this.onPressed,
+    required this.iconData,
+  }) : super(key: key);
 
-//             const SizedBox(height: 17),
+  final VoidCallback onPressed;
+  final IconData iconData;
 
-//             //Register button
-//             CustomTextButton.outlined(
-//               width: double.infinity,
-//               onPressed: () {
-//                 AppRouter.pushNamed(Routes.RegisterScreenRoute);
-//               },
-//               border: Border.all(color: Constants.primaryColor, width: 4),
-//               child: const Center(
-//                 child: Text(
-//                   'REGISTER',
-//                   style: TextStyle(
-//                     color: Constants.primaryColor,
-//                     fontSize: 15,
-//                     letterSpacing: 0.7,
-//                     fontWeight: FontWeight.w600,
-//                   ),
-//                 ),
-//               ),
-//             ),
-//           ],
-//         ),
-//       ),
-//     );
-//   }
-// }
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 6.0, vertical: 15.0),
+      color: Colors.red,
+      child: const Icon(Icons.menu),
+    );
+  }
+}
+
+class DateSwitch extends StatelessWidget {
+  const DateSwitch({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    // final date = Pro
+    final theme = context.theme;
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 6.0, vertical: 15.0),
+      color: theme.primaryColor,
+      child: Row(
+        children: const [
+          DateSwitchTab(PredictionDate.today),
+          DateSwitchTab(PredictionDate.tomorrow),
+        ],
+      ),
+    );
+  }
+}
+
+class DateSwitchTab extends StatelessWidget {
+  const DateSwitchTab(this.date, {Key? key}) : super(key: key);
+
+  final PredictionDate date;
+
+  @override
+  Widget build(BuildContext context) {
+    //TODO change this to provider value
+    const currentDate = PredictionDate.today;
+    bool isActive = currentDate == date;
+
+    return GestureDetector(
+      onTap: () {
+        setPredictionDate(date);
+      },
+      child: Container(
+        padding: const EdgeInsets.symmetric(horizontal: 25.0, vertical: 10.0),
+        color: isActive ? Constants.primaryColor : Colors.transparent,
+        child: Text(
+          date.name.capitalize,
+          style: context.bodyText1,
+        ),
+      ),
+    );
+  }
+
+  void setPredictionDate(PredictionDate date) {
+    debugPrint('set prediction date');
+  }
+}
+
+class LeaguesScroll extends HookConsumerWidget {
+  const LeaguesScroll({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    return Expanded(
+      flex: 7,
+      child: Builder(
+        builder: (context) {
+          if (true) return const TodaysLeagueScroll();
+          return const TomorrowsLeaguesScroll();
+        },
+      ),
+    );
+  }
+}
+
+class TodaysLeagueScroll extends HookConsumerWidget {
+  const TodaysLeagueScroll({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final todaysPredictionsFuture = ref.watch(todayPredictionsProvider);
+    return AnimatedSwitcher(
+      duration: const Duration(milliseconds: 600),
+      switchOutCurve: Curves.easeInBack,
+      child: todaysPredictionsFuture.when(
+        data: (predictionModel) =>
+            LeagueScroll(leagues: predictionModel.leagues),
+        loading: () =>
+            CommonProgressIndicator(color: context.theme.primaryColor),
+        error: (error, st) => Center(
+          child: Text(
+            'Network error occured',
+            style: context.bodyText1,
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class TomorrowsLeaguesScroll extends HookConsumerWidget {
+  const TomorrowsLeaguesScroll({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final tomorrowsPredictionsFuture = ref.watch(tomorrowsPredictionsProvider);
+    return AnimatedSwitcher(
+      duration: const Duration(milliseconds: 600),
+      switchOutCurve: Curves.easeInBack,
+      child: tomorrowsPredictionsFuture.when(
+        data: (predictionModel) =>
+            LeagueScroll(leagues: predictionModel.leagues),
+        loading: () =>
+            CommonProgressIndicator(color: context.theme.primaryColor),
+        error: (error, st) => Center(
+          child: Text(
+            'Network error occured',
+            style: context.bodyText1,
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class LeagueScroll extends StatelessWidget {
+  const LeagueScroll({Key? key, required this.leagues}) : super(key: key);
+
+  final Leagues? leagues;
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        ExpansionTile(
+          title: const Text('epl'),
+          children: leagues == null
+              ? []
+              : leagues!.epl.map((e) => PredictionTile(e)).toList(),
+        ),
+        ExpansionTile(
+          title: const Text('laliga'),
+          children: leagues == null
+              ? []
+              : leagues!.laliga.map((e) => PredictionTile(e)).toList(),
+        ),
+        ExpansionTile(
+          title: const Text('bundesliga'),
+          children: leagues == null
+              ? []
+              : leagues!.bundesliga.map((e) => PredictionTile(e)).toList(),
+        ),
+        ExpansionTile(
+          title: const Text(
+            'seriaA',
+            style: TextStyle(),
+          ),
+          children: leagues == null
+              ? []
+              : leagues!.seriaA.map((e) => PredictionTile(e)).toList(),
+        ),
+      ],
+    );
+  }
+}
+
+class PredictionTile extends StatelessWidget {
+  const PredictionTile(this.prediction, {Key? key}) : super(key: key);
+
+  final Prediction prediction;
+
+  @override
+  Widget build(BuildContext context) {
+    Size _size = MediaQuery.of(context).size;
+    return GestureDetector(
+      onTap: () {
+        Navigator.push<dynamic>(
+          context,
+          CupertinoPageRoute<dynamic>(
+            builder: (context) {
+              return MatchInfoScreen(prediction);
+            },
+          ),
+        );
+      },
+      child: Container(
+        padding: const EdgeInsets.symmetric(horizontal: 25.0),
+        height: _size.height / 4,
+        child: Row(
+          children: [
+            Column(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: const [
+                Text('4:00PM'),
+                Text('4:00PM'),
+                Text('4:00PM'),
+              ],
+            ),
+            const VerticalDivider(),
+            Column(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                TeamTile(),
+                TeamTile(),
+              ],
+            ),
+            const VerticalDivider(),
+            Center(
+              child: FavouriteIcon(prediction),
+            )
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class TeamTile extends StatelessWidget {
+  const TeamTile({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    Size _size = MediaQuery.of(context).size;
+    return SizedBox(
+      height: _size.height / 8,
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          Image.network('https://picsum.photos/id/237/200/300'),
+          const Gap(6),
+          Text('Team name'),
+        ],
+      ),
+    );
+  }
+}
+
+class FavouriteIcon extends StatelessWidget {
+  const FavouriteIcon(this.prediction, {Key? key}) : super(key: key);
+
+  final Prediction prediction;
+
+  @override
+  Widget build(BuildContext context) {
+    bool isAdded = _isAddedInFavourites();
+    return IconButton(
+      icon: const Icon(Icons.star),
+      color: isAdded ? Constants.primaryColor : Colors.white,
+      iconSize: 32.0,
+      onPressed: _addToFavourites,
+    );
+  }
+
+  bool _isAddedInFavourites() {
+    debugPrint(prediction.toString());
+    return true;
+  }
+
+  void _addToFavourites() {
+    debugPrint('add to favourites');
+  }
+}

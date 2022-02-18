@@ -60,3 +60,13 @@ final _adsRepositoryProvider = Provider<AdsRepository>(
     return AdsRepository(adManager: _adManager);
   },
 );
+
+final todayPredictionsProvider = FutureProvider.autoDispose((ref) async {
+  final _predictionsProvider = ref.watch(_predictionsRepositoryProvider);
+  return await _predictionsProvider.fetchTodays();
+});
+
+final tomorrowsPredictionsProvider = FutureProvider.autoDispose((ref) async {
+  final _predictionsProvider = ref.watch(_predictionsRepositoryProvider);
+  return await _predictionsProvider.fetchTomorrows();
+});

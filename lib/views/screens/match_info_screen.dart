@@ -5,7 +5,7 @@ import 'package:sure_odds/helper/extensions/context_extensions.dart';
 import 'package:sure_odds/helper/utils/constants.dart';
 import 'package:sure_odds/models/prediction.dart';
 import 'package:sure_odds/models/teams.dart';
-import 'package:sure_odds/views/screens/test_screen.dart';
+import 'package:sure_odds/views/screens/home_screen.dart';
 
 class MatchInfoScreen extends StatelessWidget {
   const MatchInfoScreen(
@@ -193,7 +193,10 @@ class TipBox extends StatelessWidget {
       ),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        children: [Text('Tip: over 3.5'), Text('Odds: 2.3')],
+        children: [
+          Text('Tip: over 3.5'),
+          Text('Odds: 2.3'),
+        ],
       ),
     );
   }
