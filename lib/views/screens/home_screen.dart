@@ -3,8 +3,8 @@ import 'dart:ui';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
+import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:sure_odds/models/teams.dart';
 
 import '../../enums/enums.dart';
 import '../../helper/extensions/context_extensions.dart';
@@ -13,15 +13,17 @@ import '../../helper/utils/assets_helper.dart';
 import '../../helper/utils/constants.dart';
 import '../../models/leagues.dart';
 import '../../models/prediction.dart';
+import '../../models/teams.dart';
 import '../../providers/all_providers.dart';
 import '../widgets/common_progress_indicator.dart';
+import '../widgets/error_response_handler.dart';
 import 'match_info_screen.dart';
 
-class HomeScreen extends HookConsumerWidget {
+class HomeScreen extends StatelessWidget {
   const HomeScreen({Key? key});
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: context.theme.scaffoldBackgroundColor,
       drawer: Drawer(
@@ -61,8 +63,6 @@ class HomeScreen extends HookConsumerWidget {
             ),
           ),
         ],
-
-        // color: Colors.red,
       ),
     );
   }
@@ -207,8 +207,6 @@ class DateSwitchTab extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    //TODO change this to provider value
-
     return Consumer(
       builder: (BuildContext context, WidgetRef ref, Widget? child) {
         final _dateTabProvider = ref.watch(predictionDateTabStateProvider);
@@ -323,7 +321,10 @@ class FavouriteScroll extends HookConsumerWidget {
     final favouritePredictions = ref.watch(favouritesPredictionsProvider);
     return SingleChildScrollView(
       child: Column(
-        children: favouritePredictions.map((e) => PredictionTile(e)).toList(),
+        children: favouritePredictions
+            .fetchFavourites()
+            .map((e) => PredictionTile(e))
+            .toList(),
       ),
     );
   }
@@ -370,8 +371,44 @@ class LeagueScroll extends StatelessWidget {
               ? []
               : leagues!.seriaA.map((e) => PredictionTile(e)).toList(),
         ),
+        const Gap(42.0),
+        const CustomBannerAd(),
       ],
       // ),
+    );
+  }
+}
+
+class CustomBannerAd extends StatelessWidget {
+  const CustomBannerAd({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      height: 320,
+      child: Consumer(
+        builder: (ctx, ref, child) {
+          final ad = ref.watch(bannerAdsProvider);
+          return AnimatedSwitcher(
+            duration: const Duration(milliseconds: 600),
+            switchOutCurve: Curves.easeInBack,
+            child: ad.when(
+              uninitialized: () => const SizedBox(),
+              loading: () => const SizedBox(),
+              loaded: (ad) => SizedBox(
+                  width: ad.size.width.toDouble(),
+                  height: ad.size.height.toDouble(),
+                  child: AdWidget(ad: ad),
+                ),
+              failed: (error) => ErrorResponseHandler.builder(
+                error: error,
+                stackTrace: null,
+                builder: (error) => Text(error.message),
+              ),
+            ),
+          );
+        },
+      ),
     );
   }
 }
@@ -461,34 +498,34 @@ class PredictionTile extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                Text('4:00PM', style: context.headline4),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text('Tip: ', style: context.headline4),
-                    Text(
-                      'Over 3.5',
-                      style: context.headline4
-                          .copyWith(fontWeight: FontWeight.w700),
+                Container(
+                  constraints: BoxConstraints(maxWidth: _size.width * 0.20),
+                  child: Center(
+                    child: Text(
+                      '${prediction.details.winner.name}',
+                      style: context.headline4,
+                      textAlign: TextAlign.center,
                     ),
-                  ],
+                  ),
                 ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text('Odds: ', style: context.headline4),
-                    Text(
-                      '2.3',
-                      style: context.headline4
-                          .copyWith(fontWeight: FontWeight.w700),
-                    ),
-                  ],
+                Text(
+                  '${prediction.details.winner.comment?.toLowerCase()}',
+                  style: context.headline4,
+                ),
+                Text(
+                  'tap for more',
+                  maxLines: 2,
+                  style: context.headline4.copyWith(
+                    fontWeight: FontWeight.w300,
+                    color: context.theme.primaryColor.withOpacity(0.7),
+                    fontSize: 10.0,
+                  ),
                 ),
               ],
             ),
             const VerticalDivider(
               color: Constants.dividerColor,
-              thickness: 1.0,              
+              thickness: 1.0,
             ),
             Column(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -530,13 +567,20 @@ class TeamTile extends StatelessWidget {
           Builder(
             builder: (context) {
               if (team.logo != null) {
-                return Image.network(team.logo!,height: teamLogoSize,width: teamLogoSize);
+                return Image.network(team.logo!,
+                    height: teamLogoSize, width: teamLogoSize);
               }
               return Gap(teamLogoSize, crossAxisExtent: teamLogoSize);
             },
           ),
           const Gap(7),
-          Text(team.name ?? '',style: context.headline3),
+          Container(
+            constraints: BoxConstraints(maxWidth: _size.width * 0.30),
+            child: Text(
+              team.name ?? '',
+              style: context.headline3,
+            ),
+          ),
         ],
       ),
     );
@@ -550,21 +594,23 @@ class FavouriteIcon extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    bool isAdded = _isAddedInFavourites();
-    return IconButton(
-      icon: const Icon(Icons.star),
-      color: isAdded ? Constants.primaryColor : Colors.white,
-      iconSize: 32.0,
-      onPressed: _addToFavourites,
-    );
-  }
+    return Consumer(
+        builder: (BuildContext context, WidgetRef ref, Widget? child) {
+      var _favouritesPredProvider = ref.watch(favouritesPredictionsProvider);
 
-  bool _isAddedInFavourites() {
-    debugPrint(prediction.toString());
-    return true;
-  }
+      final isFavourite =
+          _favouritesPredProvider.fetchFavourites().contains(prediction);
 
-  void _addToFavourites() {
-    debugPrint('add to favourites');
+      return IconButton(
+        icon: Icon(isFavourite ? Icons.star : Icons.star_outline),
+        color: Constants.primaryColor,
+        iconSize: 32.0,
+        onPressed: () {
+          !isFavourite
+              ? _favouritesPredProvider.addToFavourite(prediction)
+              : _favouritesPredProvider.removeFromFavourite(prediction);
+        },
+      );
+    });
   }
 }

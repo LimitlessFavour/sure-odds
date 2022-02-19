@@ -1,12 +1,10 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:sure_odds/enums/enums.dart';
-import 'package:sure_odds/models/prediction.dart';
-import 'package:sure_odds/services/repositories/favourites_repository.dart';
-import 'package:sure_odds/views/screens/home_screen.dart';
 
+import '../enums/enums.dart';
 import '../helper/utils/ad_manager.dart';
+import '../models/prediction.dart';
 import '../services/local_storage/key_value_storage_service.dart';
 import '../services/networking/api_endpoint.dart';
 import '../services/networking/api_service.dart';
@@ -15,7 +13,12 @@ import '../services/networking/interceptors/api_interceptor.dart';
 import '../services/networking/interceptors/logging_interceptor.dart';
 import '../services/networking/interceptors/refresh_token_interceptor.dart';
 import '../services/repositories/ads_repository.dart';
+import '../services/repositories/favourites_repository.dart';
 import '../services/repositories/predictions_repository.dart';
+import '../views/screens/home_screen.dart';
+import 'ad_providers.dart';
+import 'favourites_provider.dart';
+import 'states/ad_state.dart';
 
 //Services
 
@@ -80,10 +83,31 @@ final tomorrowsPredictionsProvider = FutureProvider.autoDispose((ref) async {
   return await _predictionsProvider.fetchTomorrows();
 });
 
-//favourites provider
-final favouritesPredictionsProvider = Provider.autoDispose((ref) {
-  final _predictionsProvider = ref.watch(_favouritesRepositoryProvider);
-  return _predictionsProvider.fetchFavourites();
+
+final bannerAdsProvider = StateNotifierProvider<BannerAdProvider, BannerAdState>((ref) {
+  final _adsRepository = ref.watch(_adsRepositoryProvider);
+  return BannerAdProvider(
+    ref: ref,
+    adsRepository: _adsRepository,
+  );
+});
+
+final interstitialAdsProvider = StateNotifierProvider<InterstitialAdProvider, InterstitialAdState>((ref) {
+  final _adsRepository = ref.watch(_adsRepositoryProvider);
+  return InterstitialAdProvider(
+    ref: ref,
+    adsRepository: _adsRepository,
+  );
+});
+
+
+
+final favouritesPredictionsProvider = Provider<FavouritesProvider>((ref) {
+  final _favouritesRepository = ref.watch(_favouritesRepositoryProvider);
+  return FavouritesProvider(
+    ref: ref,
+    favouritesRepository: _favouritesRepository,
+  );
 });
 
 //tabs

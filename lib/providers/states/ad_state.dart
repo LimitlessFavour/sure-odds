@@ -5,17 +5,25 @@ import 'package:google_mobile_ads/google_mobile_ads.dart';
 part 'ad_state.freezed.dart';
 
 @freezed
-class AdState with _$AdState {
-  const factory AdState.uninitialized() = UNINITIALIZED;
+class BannerAdState with _$BannerAdState {
+  const factory BannerAdState.uninitialized() = UNINITIALIZED_BANNER;
 
-  const factory AdState.loading() = LOADING;
-  // const factory AdState.loading({required int index}) = AUTHENTICATING;
+  const factory BannerAdState.loading() = LOADING_BANNER;
 
-  const factory AdState.loadedBanner(
-      {required int index, required BannerAd bannerAd}) = LOADEDBANNER;
+  const factory BannerAdState.loaded({required BannerAd bannerAd}) =
+      LOADED_BANNER;
 
-  const factory AdState.loadedInterstitial(
-      {required int index, required InterstitialAd interstitialAd}) = LOADEDINTERSTITIAL;
+  const factory BannerAdState.failed({required String reason}) = FAILED_BANNER;
+}
 
-  const factory AdState.failed({required String reason}) = FAILED;
+@freezed
+class InterstitialAdState with _$InterstitialAdState {
+  const factory InterstitialAdState.uninitialized() = UNINITIALIZED_INTERSTITIAL;
+
+  const factory InterstitialAdState.loading() = LOADING_INTERSTITIAL;
+
+  const factory InterstitialAdState.loaded(
+      {required InterstitialAd interstitialAd}) = LOADED_INTERSTITIAL;
+
+  const factory InterstitialAdState.failed({required String reason}) = FAILED_INTERSTITIAL;
 }

@@ -34,7 +34,7 @@ class KeyValueStorageService {
     return PredictionsResponseModel.fromJson(jsonDecode(fixtures) as JSON);
   }
 
-  List<Prediction> getFavourites() {
+  List<Prediction>? getFavourites() {
     final predictions = _keyValueStorage.getPersisted<String>(_favourites_key);
     if (predictions == null) return [];
     return decode(predictions);
@@ -65,6 +65,6 @@ String encode(List<Prediction> predictions) => json.encode(
           .map<Map<String, dynamic>>((prediction) => prediction.toJson())
           .toList(),
     );
-List<Prediction> decode(String predictions) => (json.decode(predictions) as List<Map<String, dynamic>>)
-    .map<Prediction>((prediction) => Prediction.fromJson(prediction))
+List<Prediction> decode(String predictions) => (json.decode(predictions) as List)
+    .map((dynamic prediction) => Prediction.fromJson(prediction as Map<String, dynamic>))
     .toList();
