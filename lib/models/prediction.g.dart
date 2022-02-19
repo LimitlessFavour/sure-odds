@@ -23,7 +23,7 @@ _$_PredictionDetails _$$_PredictionDetailsFromJson(Map<String, dynamic> json) =>
     _$_PredictionDetails(
       winner: Winner.fromJson(json['winner'] as Map<String, dynamic>),
       winOrDraw: json['win_or_draw'] as bool? ?? false,
-      underOver: (json['under_over'] as num?)?.toDouble() ?? 0,
+      underOver: json['under_over'] as String? ?? '',
       advice: json['advice'] as String? ?? '',
       goals: Goals.fromJson(json['goals'] as Map<String, dynamic>),
       percentWinProbability:

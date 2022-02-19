@@ -21,8 +21,8 @@ class CustomTheme {
     colorScheme: const ColorScheme.dark().copyWith(
       primary: Constants.primaryColor,
       primaryVariant: Constants.primaryColor,
-      secondary: Constants.primaryColor,
-      secondaryVariant: Constants.primaryColor,
+      secondary: Constants.secondaryColor,
+      secondaryVariant: Constants.secondaryColor,
     ),
     scaffoldBackgroundColor: Constants.scaffoldGreyColor,
     fontFamily: Constants.robotoFont.fontFamily,

@@ -1,17 +1,21 @@
+import 'dart:ui';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:sure_odds/providers/all_providers.dart';
-import 'package:sure_odds/views/screens/match_info_screen.dart';
-import 'package:sure_odds/views/widgets/common_progress_indicator.dart';
+import 'package:sure_odds/models/teams.dart';
 
 import '../../enums/enums.dart';
 import '../../helper/extensions/context_extensions.dart';
 import '../../helper/extensions/string_extension.dart';
+import '../../helper/utils/assets_helper.dart';
 import '../../helper/utils/constants.dart';
 import '../../models/leagues.dart';
 import '../../models/prediction.dart';
+import '../../providers/all_providers.dart';
+import '../widgets/common_progress_indicator.dart';
+import 'match_info_screen.dart';
 
 class HomeScreen extends HookConsumerWidget {
   const HomeScreen({Key? key});
@@ -19,7 +23,7 @@ class HomeScreen extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return Scaffold(
-      // backgroundColor: Colors.white,
+      backgroundColor: context.theme.scaffoldBackgroundColor,
       drawer: Drawer(
         child: Column(
           children: const [
@@ -70,7 +74,7 @@ class Tabs extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Expanded(
-      flex: 3,
+      flex: 1,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: const [
@@ -83,40 +87,52 @@ class Tabs extends StatelessWidget {
 }
 
 class TabItem extends StatelessWidget {
-  const TabItem(this.items, {Key? key}) : super(key: key);
+  const TabItem(this.tab, {Key? key}) : super(key: key);
 
-  final TabItems items;
+  final TabItems tab;
 
   @override
   Widget build(BuildContext context) {
-    //TODO change this to provider value
-    const currentTabItem = TabItems.all;
-    bool isActive = items == currentTabItem;
-
-    return Expanded(
-      child: Center(
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            //Text
-            Text(items.modifiedName),
-            const Gap(8),
-            //bar
-            Visibility(
-              visible: isActive,
-              child: Container(
-                width: 72.0,
-                height: 5.0,
-                decoration: BoxDecoration(
-                  color: Constants.primaryColor,
-                  borderRadius: BorderRadius.circular(5.0),
+    return Consumer(
+        builder: (BuildContext context, WidgetRef ref, Widget? child) {
+      final _tabProvider = ref.watch(tabStateProvider);
+      final currentTab = _tabProvider;
+      bool isActive = currentTab == tab;
+      Size size = MediaQuery.of(context).size;
+      return Expanded(
+        child: GestureDetector(
+          onTap: () {
+            var _tab = ref.read(tabStateProvider.state);
+            _tab.state = tab;
+          },
+          child: Center(
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                //Text
+                Text(
+                  tab.modifiedName,
+                  style: context.headline5,
                 ),
-              ),
+                const Gap(8),
+                //bar
+                Visibility(
+                  visible: isActive,
+                  child: Container(
+                    width: size.width / 5.5,
+                    height: 6.0,
+                    decoration: BoxDecoration(
+                      color: Constants.primaryColor,
+                      borderRadius: BorderRadius.circular(5.0),
+                    ),
+                  ),
+                ),
+              ],
             ),
-          ],
+          ),
         ),
-      ),
-    );
+      );
+    });
   }
 }
 
@@ -148,9 +164,16 @@ class CustomIconButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 6.0, vertical: 15.0),
-      color: Colors.red,
-      child: const Icon(Icons.menu),
+      padding: const EdgeInsets.symmetric(horizontal: 6.0, vertical: 9.0),
+      decoration: BoxDecoration(
+        color: context.theme.colorScheme.secondary,
+        borderRadius: BorderRadius.circular(4.0),
+      ),
+      child: const Icon(
+        Icons.menu_sharp,
+        color: Constants.textBlackColor,
+        size: 20,
+      ),
     );
   }
 }
@@ -160,11 +183,13 @@ class DateSwitch extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // final date = Pro
     final theme = context.theme;
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 6.0, vertical: 15.0),
-      color: theme.primaryColor,
+      padding: const EdgeInsets.symmetric(horizontal: 6.0, vertical: 5.0),
+      decoration: BoxDecoration(
+        color: theme.colorScheme.secondary,
+        borderRadius: BorderRadius.circular(4.0),
+      ),
       child: Row(
         children: const [
           DateSwitchTab(PredictionDate.today),
@@ -183,26 +208,34 @@ class DateSwitchTab extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     //TODO change this to provider value
-    const currentDate = PredictionDate.today;
-    bool isActive = currentDate == date;
 
-    return GestureDetector(
-      onTap: () {
-        setPredictionDate(date);
+    return Consumer(
+      builder: (BuildContext context, WidgetRef ref, Widget? child) {
+        final _dateTabProvider = ref.watch(predictionDateTabStateProvider);
+        final currentDate = _dateTabProvider;
+        bool isActive = currentDate == date;
+        return GestureDetector(
+          onTap: () {
+            var _prov = ref.read(predictionDateTabStateProvider.state);
+            _prov.state = date;
+          },
+          child: Container(
+            padding:
+                const EdgeInsets.symmetric(horizontal: 25.0, vertical: 10.0),
+            decoration: BoxDecoration(
+              color: isActive ? Constants.primaryColor : Colors.transparent,
+              borderRadius: BorderRadius.circular(4.0),
+            ),
+            child: Text(
+              date.name.capitalize,
+              style: isActive
+                  ? context.headline6.copyWith(color: Colors.white)
+                  : context.headline6,
+            ),
+          ),
+        );
       },
-      child: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 25.0, vertical: 10.0),
-        color: isActive ? Constants.primaryColor : Colors.transparent,
-        child: Text(
-          date.name.capitalize,
-          style: context.bodyText1,
-        ),
-      ),
     );
-  }
-
-  void setPredictionDate(PredictionDate date) {
-    debugPrint('set prediction date');
   }
 }
 
@@ -211,13 +244,21 @@ class LeaguesScroll extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final _tabProvider = ref.watch(tabStateProvider);
+    final _predictionDateTabStateProvider =
+        ref.watch(predictionDateTabStateProvider);
     return Expanded(
-      flex: 7,
+      flex: 8,
       child: Builder(
         builder: (context) {
-          //TODO change this to provider value
-          if (true) return const TodaysLeagueScroll();
-          return const TomorrowsLeaguesScroll();
+          if (_tabProvider == TabItems.all) {
+            if (_predictionDateTabStateProvider == PredictionDate.today) {
+              return const TodaysLeagueScroll();
+            }
+            return const TomorrowsLeaguesScroll();
+          } else {
+            return const FavouriteScroll();
+          }
         },
       ),
     );
@@ -240,7 +281,7 @@ class TodaysLeagueScroll extends HookConsumerWidget {
             CommonProgressIndicator(color: context.theme.primaryColor),
         error: (error, st) => Center(
           child: Text(
-            'Network error occured ${error} ${st}',
+            'Network error occured $error $st',
             style: context.bodyText1,
           ),
         ),
@@ -265,10 +306,24 @@ class TomorrowsLeaguesScroll extends HookConsumerWidget {
             CommonProgressIndicator(color: context.theme.primaryColor),
         error: (error, st) => Center(
           child: Text(
-            'Network error occured ${error} ${st}',
+            'Network error occured $error $st',
             style: context.bodyText1,
           ),
         ),
+      ),
+    );
+  }
+}
+
+class FavouriteScroll extends HookConsumerWidget {
+  const FavouriteScroll({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final favouritePredictions = ref.watch(favouritesPredictionsProvider);
+    return SingleChildScrollView(
+      child: Column(
+        children: favouritePredictions.map((e) => PredictionTile(e)).toList(),
       ),
     );
   }
@@ -281,36 +336,98 @@ class LeagueScroll extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
+    return ListView(
+      padding: const EdgeInsets.only(top: 2.0, left: 10.0, right: 10.0),
       children: [
-        ExpansionTile(
-          title: const Text('epl'),
+        CustomExpansionTile(
+          assetPath: AssetsHelper.eplLogo,
+          name: 'epl',
           children: leagues == null
               ? []
               : leagues!.epl.map((e) => PredictionTile(e)).toList(),
         ),
-        ExpansionTile(
-          title: const Text('laliga'),
+        const Gap(8.0),
+        CustomExpansionTile(
+          assetPath: AssetsHelper.laLigaLogo,
+          name: 'laliga',
           children: leagues == null
               ? []
               : leagues!.laliga.map((e) => PredictionTile(e)).toList(),
         ),
-        ExpansionTile(
-          title: const Text('bundesliga'),
+        const Gap(8.0),
+        CustomExpansionTile(
+          assetPath: AssetsHelper.bundesligaLogo,
+          name: 'bundesliga',
           children: leagues == null
               ? []
               : leagues!.bundesliga.map((e) => PredictionTile(e)).toList(),
         ),
-        ExpansionTile(
-          title: const Text(
-            'seriaA',
-            style: TextStyle(),
-          ),
+        const Gap(8.0),
+        CustomExpansionTile(
+          assetPath: AssetsHelper.seriaALogo,
+          name: 'seria A',
           children: leagues == null
               ? []
               : leagues!.seriaA.map((e) => PredictionTile(e)).toList(),
         ),
       ],
+      // ),
+    );
+  }
+}
+
+class CustomExpansionTile extends StatefulWidget {
+  const CustomExpansionTile({
+    Key? key,
+    required this.name,
+    required this.assetPath,
+    required this.children,
+  }) : super(key: key);
+
+  final String name;
+  final String assetPath;
+  final List<PredictionTile> children;
+
+  @override
+  State createState() => CustomExpansionTileState();
+}
+
+class CustomExpansionTileState extends State<CustomExpansionTile> {
+  bool isExpanded = false;
+
+  @override
+  Widget build(BuildContext context) {
+    return ClipRRect(
+      borderRadius: BorderRadius.circular(4.0),
+      child: ExpansionTile(
+        iconColor: context.theme.scaffoldBackgroundColor,
+        textColor: context.theme.scaffoldBackgroundColor,
+        backgroundColor: context.theme.primaryColor,
+        collapsedIconColor: context.theme.primaryColor,
+        collapsedTextColor: context.theme.primaryColor,
+        collapsedBackgroundColor: context.theme.scaffoldBackgroundColor,
+        title: Text(
+          widget.name,
+          style: isExpanded
+              ? context.headline1
+              : context.headline1.copyWith(color: context.theme.primaryColor),
+        ),
+        leading: Image.asset(
+          widget.assetPath,
+          height: 40,
+          width: 40,
+        ),
+        children: widget.children
+            .map(
+              (e) => Container(
+                color: context.theme.scaffoldBackgroundColor,
+                child: e,
+              ),
+            )
+            .toList(),
+        onExpansionChanged: (bool expanding) =>
+            setState(() => isExpanded = expanding),
+      ),
     );
   }
 }
@@ -335,27 +452,55 @@ class PredictionTile extends StatelessWidget {
         );
       },
       child: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 25.0),
-        height: _size.height / 4,
+        margin: const EdgeInsets.symmetric(vertical: 35.0),
+        height: _size.height / 8,
         child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Column(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: const [
-                Text('4:00PM'),
-                Text('4:00PM'),
-                Text('4:00PM'),
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Text('4:00PM', style: context.headline4),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text('Tip: ', style: context.headline4),
+                    Text(
+                      'Over 3.5',
+                      style: context.headline4
+                          .copyWith(fontWeight: FontWeight.w700),
+                    ),
+                  ],
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text('Odds: ', style: context.headline4),
+                    Text(
+                      '2.3',
+                      style: context.headline4
+                          .copyWith(fontWeight: FontWeight.w700),
+                    ),
+                  ],
+                ),
               ],
             ),
-            const VerticalDivider(),
+            const VerticalDivider(
+              color: Constants.dividerColor,
+              thickness: 1.0,              
+            ),
             Column(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
-                TeamTile(),
-                TeamTile(),
+                TeamTile(prediction.teams.home),
+                TeamTile(prediction.teams.away),
               ],
             ),
-            const VerticalDivider(),
+            const VerticalDivider(
+              color: Constants.dividerColor,
+              thickness: 1.0,
+            ),
             Center(
               child: FavouriteIcon(prediction),
             )
@@ -367,20 +512,31 @@ class PredictionTile extends StatelessWidget {
 }
 
 class TeamTile extends StatelessWidget {
-  const TeamTile({Key? key}) : super(key: key);
+  const TeamTile(this.team, {Key? key}) : super(key: key);
+
+  final Team team;
 
   @override
   Widget build(BuildContext context) {
     Size _size = MediaQuery.of(context).size;
+    double teamLogoSize = 28;
     return SizedBox(
-      height: _size.height / 8,
+      height: _size.height / 18,
+      width: _size.width * 0.5,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.start,
-        crossAxisAlignment: CrossAxisAlignment.stretch,
+        // crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          Image.network('https://picsum.photos/id/237/200/300'),
-          const Gap(6),
-          const Text('Team name'),
+          Builder(
+            builder: (context) {
+              if (team.logo != null) {
+                return Image.network(team.logo!,height: teamLogoSize,width: teamLogoSize);
+              }
+              return Gap(teamLogoSize, crossAxisExtent: teamLogoSize);
+            },
+          ),
+          const Gap(7),
+          Text(team.name ?? '',style: context.headline3),
         ],
       ),
     );

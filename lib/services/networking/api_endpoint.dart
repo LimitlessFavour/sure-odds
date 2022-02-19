@@ -2,6 +2,7 @@
 // DO NOT USE 'dartfmt' on this file for formatting
 
 import 'package:flutter/material.dart';
+import '../../.env.dart';
 
 /// A utility class for getting paths for API endpoints.
 /// This class has no constructor and all methods are `static`.
@@ -18,10 +19,13 @@ class ApiEndpoint {
   /// ```
   /// flutter run --dart-define=BASE_URL=www.some_url.com
   /// ```
-  static const baseUrl = String.fromEnvironment(
-    'BASE_URL',
-    defaultValue: 'localhost:3000/api/v1',
-  );
+  // static const baseUrl = String.fromEnvironment(
+  //   'BASE_URL',
+  //   defaultValue: 'localhost:3000/api/v1',
+  // );
+
+//add env.dart file
+  static const baseUrl = Env.BASE_URL;
 
   /// Returns the path for a prediction [endpoint].
   ///

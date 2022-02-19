@@ -53,15 +53,14 @@ class Constants {
   /// The main orange-red color used for theming the app.
   static const Color primaryColor = Color(0xff800020);
 
-  static final Color secondaryColor = primaryColor.withOpacity(0.10);
+  static final Color secondaryColor = primaryColor.withOpacity(0.15);
 
   static final Color primary50OpacityColor = primaryColor.withOpacity(0.50);
   static final Color primary20OpacityColor = primaryColor.withOpacity(0.20);
 
-
-
   /// The color value for red color in the app.
   static const Color redColor = Color(0xFFed0000);
+  
 
   /// The color value for orange color in the app.
   static const Color yellowColor = Color(0xFFDDE105);
@@ -72,8 +71,13 @@ class Constants {
   /// The color value for dark grey skeleton containers in the app.
   static const Color greyColor = Color(0xFF656565);
 
+  /// The color value for vertical divider in the app.
+  static const Color dividerColor = Color(0xFFC4C4C4);
+
+
   /// The color value for light grey scaffold in the app.
-  static const Color scaffoldGreyColor = Color(0xFFE5E5E5);
+  static const Color scaffoldGreyColor = Colors.white;
+  // static const Color scaffoldGreyColor =  Color(0xFFE5E5E5);
 
   static const Color textBlackColor = Colors.black;
 

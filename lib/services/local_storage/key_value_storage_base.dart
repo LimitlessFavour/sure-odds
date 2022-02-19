@@ -11,8 +11,10 @@ import 'cache.dart';
 /// - Sensitive keys using [FlutterSecureStorage]
 /// - Insensitive keys using [SharedPreferences]
 class KeyValueStorageBase {
-  // /// Instance of shared preferences
-  // static SharedPreferences? _sharedPrefs;
+  /// Instance of shared preferences
+  static SharedPreferences? _sharedPrefs;
+
+  ///Instance of in-memory cache.
   static CacheClient? _cache;
 
   /// Instance of flutter secure storage
@@ -33,7 +35,7 @@ class KeyValueStorageBase {
   /// after WidgetsBinding.FlutterInitialized(), to allow for synchronous tasks
   /// when possible.
   static Future<void> init() async {
-    // _sharedPrefs ??= await SharedPreferences.getInstance();
+    _sharedPrefs ??= await SharedPreferences.getInstance();
     _secureStorage ??= const FlutterSecureStorage();
     _cache ??= CacheClient();
   }
@@ -43,6 +45,33 @@ class KeyValueStorageBase {
       return _cache!.read<T>(key: key);
     } on Exception {
       return null;
+    }
+  }
+
+    /// Reads the value for the key from persisted preferences storage
+  T? getPersisted<T>(String key) {
+    try{
+      switch(T){
+        case String: return _sharedPrefs!.getString(key) as T?;
+        case int: return _sharedPrefs!.getInt(key) as T?;
+        case bool: return _sharedPrefs!.getBool(key) as T?;
+        case double: return _sharedPrefs!.getDouble(key) as T?;
+        default: return _sharedPrefs!.get(key) as T?;
+      }
+    } on Exception {
+      return null;
+    }
+  }
+
+
+  /// Sets the value for the key to persisted preferences storage
+  Future<bool> setPersisted<T>(String key, T value) {
+    switch(T){
+      case String: return _sharedPrefs!.setString(key, value as String);
+      case int: return _sharedPrefs!.setInt(key, value as int);
+      case bool: return _sharedPrefs!.setBool(key, value as bool);
+      case double: return _sharedPrefs!.setDouble(key, value as double);
+      default: return _sharedPrefs!.setString(key, value as String);
     }
   }
 

@@ -225,7 +225,7 @@ class _$PredictionDetailsTearOff {
   _PredictionDetails call(
       {required Winner winner,
       @JsonKey(name: 'win_or_draw') bool? winOrDraw = false,
-      @JsonKey(name: 'under_over') double? underOver = 0,
+      @JsonKey(name: 'under_over') String? underOver = '',
       String? advice = '',
       @JsonKey(name: 'goals') required Goals goals,
       @JsonKey(name: 'percent') required Percent percentWinProbability}) {
@@ -253,7 +253,7 @@ mixin _$PredictionDetails {
   @JsonKey(name: 'win_or_draw')
   bool? get winOrDraw => throw _privateConstructorUsedError;
   @JsonKey(name: 'under_over')
-  double? get underOver => throw _privateConstructorUsedError;
+  String? get underOver => throw _privateConstructorUsedError;
   String? get advice => throw _privateConstructorUsedError;
   @JsonKey(name: 'goals')
   Goals get goals => throw _privateConstructorUsedError;
@@ -274,7 +274,7 @@ abstract class $PredictionDetailsCopyWith<$Res> {
   $Res call(
       {Winner winner,
       @JsonKey(name: 'win_or_draw') bool? winOrDraw,
-      @JsonKey(name: 'under_over') double? underOver,
+      @JsonKey(name: 'under_over') String? underOver,
       String? advice,
       @JsonKey(name: 'goals') Goals goals,
       @JsonKey(name: 'percent') Percent percentWinProbability});
@@ -314,7 +314,7 @@ class _$PredictionDetailsCopyWithImpl<$Res>
       underOver: underOver == freezed
           ? _value.underOver
           : underOver // ignore: cast_nullable_to_non_nullable
-              as double?,
+              as String?,
       advice: advice == freezed
           ? _value.advice
           : advice // ignore: cast_nullable_to_non_nullable
@@ -362,7 +362,7 @@ abstract class _$PredictionDetailsCopyWith<$Res>
   $Res call(
       {Winner winner,
       @JsonKey(name: 'win_or_draw') bool? winOrDraw,
-      @JsonKey(name: 'under_over') double? underOver,
+      @JsonKey(name: 'under_over') String? underOver,
       String? advice,
       @JsonKey(name: 'goals') Goals goals,
       @JsonKey(name: 'percent') Percent percentWinProbability});
@@ -407,7 +407,7 @@ class __$PredictionDetailsCopyWithImpl<$Res>
       underOver: underOver == freezed
           ? _value.underOver
           : underOver // ignore: cast_nullable_to_non_nullable
-              as double?,
+              as String?,
       advice: advice == freezed
           ? _value.advice
           : advice // ignore: cast_nullable_to_non_nullable
@@ -430,7 +430,7 @@ class _$_PredictionDetails extends _PredictionDetails {
   const _$_PredictionDetails(
       {required this.winner,
       @JsonKey(name: 'win_or_draw') this.winOrDraw = false,
-      @JsonKey(name: 'under_over') this.underOver = 0,
+      @JsonKey(name: 'under_over') this.underOver = '',
       this.advice = '',
       @JsonKey(name: 'goals') required this.goals,
       @JsonKey(name: 'percent') required this.percentWinProbability})
@@ -446,7 +446,7 @@ class _$_PredictionDetails extends _PredictionDetails {
   final bool? winOrDraw;
   @override
   @JsonKey(name: 'under_over')
-  final double? underOver;
+  final String? underOver;
   @JsonKey()
   @override
   final String? advice;
@@ -501,7 +501,7 @@ abstract class _PredictionDetails extends PredictionDetails {
   const factory _PredictionDetails(
           {required Winner winner,
           @JsonKey(name: 'win_or_draw') bool? winOrDraw,
-          @JsonKey(name: 'under_over') double? underOver,
+          @JsonKey(name: 'under_over') String? underOver,
           String? advice,
           @JsonKey(name: 'goals') required Goals goals,
           @JsonKey(name: 'percent') required Percent percentWinProbability}) =
@@ -518,7 +518,7 @@ abstract class _PredictionDetails extends PredictionDetails {
   bool? get winOrDraw;
   @override
   @JsonKey(name: 'under_over')
-  double? get underOver;
+  String? get underOver;
   @override
   String? get advice;
   @override

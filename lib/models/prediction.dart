@@ -27,7 +27,7 @@ class PredictionDetails with _$PredictionDetails {
   const factory PredictionDetails({
   required Winner winner,
   @Default(false) @JsonKey(name: 'win_or_draw') bool? winOrDraw,
-  @Default(0) @JsonKey(name: 'under_over') double? underOver,
+  @Default('') @JsonKey(name: 'under_over') String? underOver,
   @Default('') String? advice,
   @JsonKey(name: 'goals') required Goals goals,
   @JsonKey(name: 'percent') required Percent percentWinProbability,

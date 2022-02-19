@@ -1,6 +1,10 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:sure_odds/enums/enums.dart';
+import 'package:sure_odds/models/prediction.dart';
+import 'package:sure_odds/services/repositories/favourites_repository.dart';
+import 'package:sure_odds/views/screens/home_screen.dart';
 
 import '../helper/utils/ad_manager.dart';
 import '../services/local_storage/key_value_storage_service.dart';
@@ -54,6 +58,11 @@ final _predictionsRepositoryProvider = Provider<PredictionsRepository>((ref) {
   return PredictionsRepository(apiService: _apiService, storageService: _storageService);
 });
 
+final _favouritesRepositoryProvider = Provider<FavouritesRepository>((ref) {
+  final _storageService = ref.watch(keyValueStorageServiceProvider);
+  return FavouritesRepository(storageService: _storageService);
+});
+
 final _adsRepositoryProvider = Provider<AdsRepository>(
   (ref) {
     final _adManager = ref.watch(_adManagerProvider);
@@ -69,4 +78,19 @@ final todayPredictionsProvider = FutureProvider.autoDispose((ref) async {
 final tomorrowsPredictionsProvider = FutureProvider.autoDispose((ref) async {
   final _predictionsProvider = ref.watch(_predictionsRepositoryProvider);
   return await _predictionsProvider.fetchTomorrows();
+});
+
+//favourites provider
+final favouritesPredictionsProvider = Provider.autoDispose((ref) {
+  final _predictionsProvider = ref.watch(_favouritesRepositoryProvider);
+  return _predictionsProvider.fetchFavourites();
+});
+
+//tabs
+final predictionDateTabStateProvider = StateProvider<PredictionDate>((ref){
+  return PredictionDate.today;
+});
+
+final tabStateProvider = StateProvider<TabItems>((ref){
+  return TabItems.all;
 });
