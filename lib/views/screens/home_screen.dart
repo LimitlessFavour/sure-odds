@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:sure_odds/views/widgets/icons/favourite_icon.dart';
 
 import '../../enums/enums.dart';
 import '../../helper/extensions/context_extensions.dart';
@@ -14,53 +15,53 @@ import '../widgets/buttons/drawer_button.dart';
 import '../widgets/date_switch.dart';
 import '../widgets/leagues_scroll.dart';
 import '../widgets/navigation_drawer.dart';
+import '../widgets/ticker/ticker_builder.dart';
 import 'match_info_screen.dart';
-
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({Key? key});
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      key: scaffoldKey,
-      backgroundColor: context.theme.scaffoldBackgroundColor,
-      drawer: const ScaffoldDrawer(),
-      body: Column(
-        children: [
-          //*app bar
-          Expanded(
-            flex: 2,
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 32.0),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                crossAxisAlignment: CrossAxisAlignment.center,
+    return TickerBuilder(
+      limitDuration: DateTime.fromMillisecondsSinceEpoch(1646244305321),
+      child: Scaffold(
+        key: scaffoldKey,
+        backgroundColor: context.theme.scaffoldBackgroundColor,
+        drawer: const ScaffoldDrawer(),
+        body: Column(
+          children: [
+            //*app bar
+            Expanded(
+              flex: 2,
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 32.0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: const [
+                    DrawerButton(),
+                    DateSwitch(),
+                  ],
+                ),
+              ),
+            ),
+            //* content
+            Expanded(
+              flex: 10,
+              child: Column(
                 children: const [
-                  DrawerButton(),
-                  DateSwitch(),
+                  Tabs(),
+                  LeaguesScroll(),
                 ],
               ),
             ),
-          ),
-          //* content
-          Expanded(
-            flex: 10,
-            child: Column(
-              children: const [
-                Tabs(),
-                LeaguesScroll(),
-              ],
-            ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
 }
-
-
-
 
 class Tabs extends StatelessWidget {
   const Tabs({Key? key}) : super(key: key);
@@ -129,7 +130,6 @@ class TabItem extends StatelessWidget {
     });
   }
 }
-
 
 class PredictionTile extends StatelessWidget {
   const PredictionTile(this.prediction, {Key? key}) : super(key: key);
@@ -269,30 +269,3 @@ class TeamTile extends StatelessWidget {
   }
 }
 
-class FavouriteIcon extends StatelessWidget {
-  const FavouriteIcon(this.prediction, {Key? key}) : super(key: key);
-
-  final Prediction prediction;
-
-  @override
-  Widget build(BuildContext context) {
-    return Consumer(
-      builder: (BuildContext context, WidgetRef ref, Widget? child) {
-        var _favouritesPredProvider = ref.watch(favouritesProvider);
-        final isFavourite = _favouritesPredProvider.contains(prediction);
-        return IconButton(
-          icon: Icon(isFavourite ? Icons.star : Icons.star_outline),
-          color: Constants.primaryColor,
-          iconSize: 32.0,
-          onPressed: () {
-            var _favouritePreditionState =
-                ref.read(favouritesProvider.notifier);
-            !isFavourite
-                ? _favouritePreditionState.addToFavourite(prediction)
-                : _favouritePreditionState.removeFromFavourite(prediction);
-          },
-        );
-      },
-    );
-  }
-}
