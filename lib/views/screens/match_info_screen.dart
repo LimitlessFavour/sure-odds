@@ -6,6 +6,9 @@ import '../../helper/extensions/string_extension.dart';
 import '../../helper/utils/constants.dart';
 import '../../models/prediction.dart';
 import '../../models/teams.dart';
+import '../widgets/buttons/leading_button.dart';
+import '../widgets/containers/advice.dart';
+import '../widgets/tiles/custom_tile.dart';
 import 'home_screen.dart';
 
 class MatchInfoScreen extends StatelessWidget {
@@ -128,33 +131,7 @@ class Probabilities extends StatelessWidget {
   }
 }
 
-class Advice extends StatelessWidget {
-  const Advice(this.advice, {Key? key}) : super(key: key);
 
-  final String? advice;
-
-  @override
-  Widget build(BuildContext context) {
-    Size size = MediaQuery.of(context).size;
-    return Visibility(
-      visible: advice != null,
-      child: Center(
-        child: Container(
-          width: size.width * 0.7,
-          height: 48.0,
-          margin: const EdgeInsets.only(top: 16.0, bottom: 8.0),
-          decoration: BoxDecoration(
-            color: context.theme.colorScheme.secondary,
-            borderRadius: BorderRadius.circular(4.0),
-          ),
-          child: Center(
-            child: Text(advice ?? '', style: context.headline4),
-          ),
-        ),
-      ),
-    );
-  }
-}
 
 class LastFive extends StatelessWidget {
   const LastFive(this.teams, {Key? key}) : super(key: key);
@@ -202,49 +179,6 @@ class LastFive extends StatelessWidget {
               (awayLast5.goalsForAgainst?.goalsAgainst?.total ?? 0).toString(),
         ),
       ],
-    );
-  }
-}
-
-class CustomTile extends StatelessWidget {
-  const CustomTile({
-    Key? key,
-    required this.leftValue,
-    required this.label,
-    required this.rightValue,
-  }) : super(key: key);
-
-  final String leftValue;
-  final String label;
-  final String rightValue;
-
-  @override
-  Widget build(BuildContext context) {
-    Size size = MediaQuery.of(context).size;
-
-    return Container(
-      padding: EdgeInsets.symmetric(
-        horizontal: size.width * 0.056,
-      ),
-      margin: const EdgeInsets.symmetric(vertical: 6.0),
-      height: 60,
-      width: size.width * 0.80,
-      decoration: BoxDecoration(
-        color: Constants.greyColor,
-        borderRadius: BorderRadius.circular(4.0),
-      ),
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Text(leftValue, style: context.headline5),
-          Text(
-            label,
-            style: context.headline1.copyWith(color: Constants.textBlackColor),
-          ),
-          Text(rightValue, style: context.headline5),
-        ],
-      ),
     );
   }
 }
@@ -332,17 +266,6 @@ class FormBox extends StatelessWidget {
   }
 }
 
-class Header extends StatelessWidget {
-  const Header(this.text, {Key? key}) : super(key: key);
-
-  final String text;
-
-  @override
-  Widget build(BuildContext context) {
-    return Text(text);
-  }
-}
-
 class TeamNameLogo extends StatelessWidget {
   const TeamNameLogo(this.team, {Key? key}) : super(key: key);
 
@@ -388,16 +311,3 @@ class Last5Tab extends StatelessWidget {
   }
 }
 
-class LeadingButton extends StatelessWidget {
-  const LeadingButton({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return CustomIconButton(
-      iconData: Icons.arrow_back,
-      onPressed: () {
-        if (Navigator.canPop(context)) Navigator.pop(context);
-      },
-    );
-  }
-}

@@ -3,23 +3,19 @@ import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:url_launcher/url_launcher.dart';
-
 
 import '../../enums/enums.dart';
 import '../../helper/extensions/context_extensions.dart';
-import '../../helper/extensions/string_extension.dart';
-import '../../helper/utils/assets_helper.dart';
 import '../../helper/utils/constants.dart';
-import '../../models/leagues.dart';
 import '../../models/prediction.dart';
 import '../../models/teams.dart';
 import '../../providers/all_providers.dart';
-import '../widgets/common_progress_indicator.dart';
-import '../widgets/error_response_handler.dart';
+import '../widgets/buttons/drawer_button.dart';
+import '../widgets/date_switch.dart';
+import '../widgets/leagues_scroll.dart';
+import '../widgets/navigation_drawer.dart';
 import 'match_info_screen.dart';
 
-final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey();
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({Key? key});
@@ -27,7 +23,7 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      key: _scaffoldKey,
+      key: scaffoldKey,
       backgroundColor: context.theme.scaffoldBackgroundColor,
       drawer: const ScaffoldDrawer(),
       body: Column(
@@ -52,9 +48,7 @@ class HomeScreen extends StatelessWidget {
             flex: 10,
             child: Column(
               children: const [
-                //tabs
                 Tabs(),
-                //leagues
                 LeaguesScroll(),
               ],
             ),
@@ -65,173 +59,8 @@ class HomeScreen extends StatelessWidget {
   }
 }
 
-class ScaffoldDrawer extends StatelessWidget {
-  const ScaffoldDrawer({
-    Key? key,
-  }) : super(key: key);
 
-  @override
-  Widget build(BuildContext context) {
-    Size _size;
-    _size = MediaQuery.of(context).size;
-    return OrientationBuilder(
-      builder: (context, orientation) {
-        bool isLandscape = orientation == Orientation.landscape;
-        double marginValue = isLandscape ? 30 : 0; //safearea
-        return SizedBox(
-          width: (isLandscape ? 0.4 : 0.6) * _size.width,
-          child: Drawer(
-            backgroundColor: Constants.scaffoldGreyColor,
-            child: Row(
-              children: [
-                Gap(marginValue),
-                Expanded(
-                  child: ListView(
-                    padding: EdgeInsets.zero,
-                    children: <Widget>[
-                      DrawerHeader(
-                        child: Image.asset(
-                          AssetsHelper.appLogo,
-                          height: 55,
-                          width: 90,
-                        ),
-                      ),
-                      const DrawerTiles(),
-                      const Gap(40),
-                      const SupportButton(),
-                      const Gap(60),
-                      const ExitDrawerButton(),
-                      const Gap(60),
-                    ],
-                  ),
-                ),
-              ],
-            ),
-          ),
-        );
-      },
-    );
-  }
-}
 
-class DrawerTiles extends StatelessWidget {
-  const DrawerTiles({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      margin: const EdgeInsets.symmetric(horizontal: 14.0),
-      padding: const EdgeInsets.symmetric(horizontal: 6.0, vertical: 17.0),
-      decoration: BoxDecoration(
-        color: context.theme.colorScheme.secondary,
-        borderRadius: BorderRadius.circular(4.0),
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Padding(
-            padding: const EdgeInsets.only(left: 6.0),
-            child: Text(
-              'Leagues',
-              style: context.headline2.copyWith(fontWeight: FontWeight.normal),
-            ),
-          ),
-          const Gap(14),
-          DrawerListTile(
-            leadingImage: AssetsHelper.eplLogo,
-            title: 'Premier League',
-            onPressed: () {},
-          ),
-          const Gap(14),
-          DrawerListTile(
-            leadingImage: AssetsHelper.bundesligaLogo,
-            title: 'Bundesliga',
-            onPressed: () {},
-          ),
-          const Gap(14),
-          DrawerListTile(
-            leadingImage: AssetsHelper.laLigaLogo,
-            title: 'Laliga',
-            onPressed: () {},
-          ),
-          const Gap(14),
-          DrawerListTile(
-            leadingImage: AssetsHelper.seriaALogo,
-            title: 'Seria A',
-            onPressed: () {},
-          ),
-          const Gap(14),
-        ],
-      ),
-    );
-  }
-}
-
-class SupportButton extends StatelessWidget {
-  const SupportButton({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Center(
-      child: CustomIconButton(
-        iconData: Icons.mail_outline,
-        onPressed: _sendMail,
-      ),
-    );
-  }
-
-   void _sendMail() async {
-    const url =
-        'mailto:sureoddsofficial@gmail.com?subject=Contact SureOdds';
-    if (await canLaunch(url)) {
-      await launch(url);
-    }
-  }
-}
-
-class ExitDrawerButton extends StatelessWidget {
-  const ExitDrawerButton({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Center(
-      child: CustomIconButton(
-        iconData: Icons.exit_to_app,
-        onPressed: () {
-          if (_scaffoldKey.currentState!.isDrawerOpen) {
-            Navigator.pop(context);
-          }
-        },
-      ),
-    );
-  }
-}
-
-class DrawerListTile extends StatelessWidget {
-  const DrawerListTile({
-    Key? key,
-    required this.onPressed,
-    required this.leadingImage,
-    required this.title,
-  }) : super(key: key);
-
-  final VoidCallback onPressed;
-  final String leadingImage;
-  final String title;
-
-  @override
-  Widget build(BuildContext context) {
-    return ListTile(
-      leading: Image.asset(
-        leadingImage,
-        height: 40,
-        width: 40,
-      ),
-      title: Text(title, style: context.headline1),
-      onTap: onPressed,
-    );
-  }
-}
 
 class Tabs extends StatelessWidget {
   const Tabs({Key? key}) : super(key: key);
@@ -301,334 +130,6 @@ class TabItem extends StatelessWidget {
   }
 }
 
-class DrawerButton extends StatelessWidget {
-  const DrawerButton({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return CustomIconButton(
-      onPressed: () => _scaffoldKey.currentState!.openDrawer(),
-      iconData: Icons.menu,
-    );
-  }
-}
-
-class CustomIconButton extends StatelessWidget {
-  const CustomIconButton({
-    Key? key,
-    required this.onPressed,
-    required this.iconData,
-  }) : super(key: key);
-
-  final VoidCallback onPressed;
-  final IconData iconData;
-
-  @override
-  Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: onPressed,
-      child: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 6.0, vertical: 9.0),
-        decoration: BoxDecoration(
-          color: context.theme.colorScheme.secondary,
-          borderRadius: BorderRadius.circular(4.0),
-        ),
-        child: Icon(
-          iconData,
-          color: Constants.textBlackColor,
-          size: 20,
-        ),
-      ),
-    );
-  }
-}
-
-class DateSwitch extends StatelessWidget {
-  const DateSwitch({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    final theme = context.theme;
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 6.0, vertical: 5.0),
-      decoration: BoxDecoration(
-        color: theme.colorScheme.secondary,
-        borderRadius: BorderRadius.circular(4.0),
-      ),
-      child: Row(
-        children: const [
-          DateSwitchTab(PredictionDate.today),
-          DateSwitchTab(PredictionDate.tomorrow),
-        ],
-      ),
-    );
-  }
-}
-
-class DateSwitchTab extends StatelessWidget {
-  const DateSwitchTab(this.date, {Key? key}) : super(key: key);
-
-  final PredictionDate date;
-
-  @override
-  Widget build(BuildContext context) {
-    return Consumer(
-      builder: (BuildContext context, WidgetRef ref, Widget? child) {
-        final _dateTabProvider = ref.watch(predictionDateTabStateProvider);
-        final currentDate = _dateTabProvider;
-        bool isActive = currentDate == date;
-        return GestureDetector(
-          onTap: () {
-            var _prov = ref.read(predictionDateTabStateProvider.state);
-            _prov.state = date;
-          },
-          child: Container(
-            padding:
-                const EdgeInsets.symmetric(horizontal: 25.0, vertical: 10.0),
-            decoration: BoxDecoration(
-              color: isActive ? Constants.primaryColor : Colors.transparent,
-              borderRadius: BorderRadius.circular(4.0),
-            ),
-            child: Text(
-              date.name.capitalize,
-              style: isActive
-                  ? context.headline6.copyWith(color: Colors.white)
-                  : context.headline6,
-            ),
-          ),
-        );
-      },
-    );
-  }
-}
-
-class LeaguesScroll extends HookConsumerWidget {
-  const LeaguesScroll({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    final _tabProvider = ref.watch(tabStateProvider);
-    final _predictionDateTabStateProvider =
-        ref.watch(predictionDateTabStateProvider);
-    return Expanded(
-      flex: 8,
-      child: Builder(
-        builder: (context) {
-          if (_tabProvider == TabItems.all) {
-            if (_predictionDateTabStateProvider == PredictionDate.today) {
-              return const TodaysLeagueScroll();
-            }
-            return const TomorrowsLeaguesScroll();
-          } else {
-            return const FavouriteScroll();
-          }
-        },
-      ),
-    );
-  }
-}
-
-class TodaysLeagueScroll extends HookConsumerWidget {
-  const TodaysLeagueScroll({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    final todaysPredictionsFuture = ref.watch(todayPredictionsProvider);
-    return AnimatedSwitcher(
-      duration: const Duration(milliseconds: 600),
-      switchOutCurve: Curves.easeInBack,
-      child: todaysPredictionsFuture.when(
-        data: (predictionModel) =>
-            LeagueScroll(leagues: predictionModel.leagues),
-        loading: () =>
-            CommonProgressIndicator(color: context.theme.primaryColor),
-        error: (error, st) => Center(
-          child: Text(
-            'Network error occured $error $st',
-            style: context.bodyText1,
-          ),
-        ),
-      ),
-    );
-  }
-}
-
-class TomorrowsLeaguesScroll extends HookConsumerWidget {
-  const TomorrowsLeaguesScroll({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    final tomorrowsPredictionsFuture = ref.watch(tomorrowsPredictionsProvider);
-    return AnimatedSwitcher(
-      duration: const Duration(milliseconds: 600),
-      switchOutCurve: Curves.easeInBack,
-      child: tomorrowsPredictionsFuture.when(
-        data: (predictionModel) =>
-            LeagueScroll(leagues: predictionModel.leagues),
-        loading: () =>
-            CommonProgressIndicator(color: context.theme.primaryColor),
-        error: (error, st) => Center(
-          child: Text(
-            'Network error occured $error $st',
-            style: context.bodyText1,
-          ),
-        ),
-      ),
-    );
-  }
-}
-
-class FavouriteScroll extends HookConsumerWidget {
-  const FavouriteScroll({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    final favouritePredictions = ref.watch(favouritesProvider);
-    return SingleChildScrollView(
-      child: Column(
-        children: favouritePredictions.map((e) => PredictionTile(e)).toList(),
-      ),
-    );
-  }
-}
-
-class LeagueScroll extends StatelessWidget {
-  const LeagueScroll({Key? key, required this.leagues}) : super(key: key);
-
-  final Leagues? leagues;
-
-  @override
-  Widget build(BuildContext context) {
-    return ListView(
-      padding: const EdgeInsets.only(top: 2.0, left: 10.0, right: 10.0),
-      children: [
-        CustomExpansionTile(
-          assetPath: AssetsHelper.eplLogo,
-          name: 'England - Premier League',
-          children: leagues == null
-              ? []
-              : leagues!.epl.map((e) => PredictionTile(e)).toList(),
-        ),
-        const Gap(8.0),
-        CustomExpansionTile(
-          assetPath: AssetsHelper.laLigaLogo,
-          name: 'Spain - Laliga',
-          children: leagues == null
-              ? []
-              : leagues!.laliga.map((e) => PredictionTile(e)).toList(),
-        ),
-        const Gap(8.0),
-        CustomExpansionTile(
-          assetPath: AssetsHelper.bundesligaLogo,
-          name: 'Germany - Bundesliga',
-          children: leagues == null
-              ? []
-              : leagues!.bundesliga.map((e) => PredictionTile(e)).toList(),
-        ),
-        const Gap(8.0),
-        CustomExpansionTile(
-          assetPath: AssetsHelper.seriaALogo,
-          name: 'Italy - Seria A',
-          children: leagues == null
-              ? []
-              : leagues!.seriaA.map((e) => PredictionTile(e)).toList(),
-        ),
-        const Gap(42.0),
-        const CustomBannerAd(),
-      ],
-    );
-  }
-}
-
-class CustomBannerAd extends StatelessWidget {
-  const CustomBannerAd({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return SizedBox(
-      height: 320,
-      child: Consumer(
-        builder: (ctx, ref, child) {
-          final ad = ref.watch(bannerAdsProvider);
-          return AnimatedSwitcher(
-            duration: const Duration(milliseconds: 600),
-            switchOutCurve: Curves.easeInBack,
-            child: ad.when(
-              uninitialized: () => const SizedBox(),
-              loading: () => const SizedBox(),
-              loaded: (ad) => SizedBox(
-                width: ad.size.width.toDouble(),
-                height: ad.size.height.toDouble(),
-                child: AdWidget(ad: ad),
-              ),
-              failed: (error) => ErrorResponseHandler.builder(
-                error: error,
-                stackTrace: null,
-                builder: (error) => Text(error.message),
-              ),
-            ),
-          );
-        },
-      ),
-    );
-  }
-}
-
-class CustomExpansionTile extends StatefulWidget {
-  const CustomExpansionTile({
-    Key? key,
-    required this.name,
-    required this.assetPath,
-    required this.children,
-  }) : super(key: key);
-
-  final String name;
-  final String assetPath;
-  final List<PredictionTile> children;
-
-  @override
-  State createState() => CustomExpansionTileState();
-}
-
-class CustomExpansionTileState extends State<CustomExpansionTile> {
-  bool isExpanded = false;
-
-  @override
-  Widget build(BuildContext context) {
-    return ClipRRect(
-      borderRadius: BorderRadius.circular(4.0),
-      child: ExpansionTile(
-        iconColor: context.theme.scaffoldBackgroundColor,
-        textColor: context.theme.scaffoldBackgroundColor,
-        backgroundColor: context.theme.primaryColor,
-        collapsedIconColor: context.theme.primaryColor,
-        collapsedTextColor: context.theme.primaryColor,
-        collapsedBackgroundColor: context.theme.scaffoldBackgroundColor,
-        title: Text(
-          widget.name,
-          style: isExpanded
-              ? context.headline1
-              : context.headline1.copyWith(color: context.theme.primaryColor),
-        ),
-        leading: Image.asset(
-          widget.assetPath,
-          height: 40,
-          width: 40,
-        ),
-        children: widget.children
-            .map(
-              (e) => Container(
-                color: context.theme.scaffoldBackgroundColor,
-                child: e,
-              ),
-            )
-            .toList(),
-        onExpansionChanged: (bool expanding) =>
-            setState(() => isExpanded = expanding),
-      ),
-    );
-  }
-}
 
 class PredictionTile extends StatelessWidget {
   const PredictionTile(this.prediction, {Key? key}) : super(key: key);
@@ -779,7 +280,6 @@ class FavouriteIcon extends StatelessWidget {
       builder: (BuildContext context, WidgetRef ref, Widget? child) {
         var _favouritesPredProvider = ref.watch(favouritesProvider);
         final isFavourite = _favouritesPredProvider.contains(prediction);
-
         return IconButton(
           icon: Icon(isFavourite ? Icons.star : Icons.star_outline),
           color: Constants.primaryColor,

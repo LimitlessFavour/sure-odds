@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../enums/enums.dart';
@@ -15,10 +16,13 @@ import '../services/networking/interceptors/refresh_token_interceptor.dart';
 import '../services/repositories/ads_repository.dart';
 import '../services/repositories/favourites_repository.dart';
 import '../services/repositories/predictions_repository.dart';
-import '../views/screens/home_screen.dart';
 import 'ad_providers.dart';
 import 'favourites_provider.dart';
+import 'league_tab_provider.dart';
 import 'states/ad_state.dart';
+
+
+final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey();
 
 //Services
 
@@ -111,9 +115,7 @@ final favouritesProvider =  StateNotifierProvider<FavouritesProvider, List<Predi
   );
 });
 
-// final favouritesPredictionsProvider = StateProvider<List<Prediction>>((ref){
-//   return TabItems.all;
-// });
+
 
 //tabs
 final predictionDateTabStateProvider = StateProvider<PredictionDate>((ref){
@@ -123,3 +125,9 @@ final predictionDateTabStateProvider = StateProvider<PredictionDate>((ref){
 final tabStateProvider = StateProvider<TabItems>((ref){
   return TabItems.all;
 });
+
+
+final leagueTileProvider =  StateNotifierProvider<LeagueTabProvider, List<LeaguesEnum>>((ref) {
+  return LeagueTabProvider();
+});
+
