@@ -1,10 +1,10 @@
-import 'dart:ui';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:url_launcher/url_launcher.dart';
+
 
 import '../../enums/enums.dart';
 import '../../helper/extensions/context_extensions.dart';
@@ -19,20 +19,17 @@ import '../widgets/common_progress_indicator.dart';
 import '../widgets/error_response_handler.dart';
 import 'match_info_screen.dart';
 
+final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey();
+
 class HomeScreen extends StatelessWidget {
   const HomeScreen({Key? key});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      key: _scaffoldKey,
       backgroundColor: context.theme.scaffoldBackgroundColor,
-      drawer: Drawer(
-        child: Column(
-          children: const [
-            Icon(Icons.ac_unit),
-          ],
-        ),
-      ),
+      drawer: const ScaffoldDrawer(),
       body: Column(
         children: [
           //*app bar
@@ -64,6 +61,174 @@ class HomeScreen extends StatelessWidget {
           ),
         ],
       ),
+    );
+  }
+}
+
+class ScaffoldDrawer extends StatelessWidget {
+  const ScaffoldDrawer({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    Size _size;
+    _size = MediaQuery.of(context).size;
+    return OrientationBuilder(
+      builder: (context, orientation) {
+        bool isLandscape = orientation == Orientation.landscape;
+        double marginValue = isLandscape ? 30 : 0; //safearea
+        return SizedBox(
+          width: (isLandscape ? 0.4 : 0.6) * _size.width,
+          child: Drawer(
+            backgroundColor: Constants.scaffoldGreyColor,
+            child: Row(
+              children: [
+                Gap(marginValue),
+                Expanded(
+                  child: ListView(
+                    padding: EdgeInsets.zero,
+                    children: <Widget>[
+                      DrawerHeader(
+                        child: Image.asset(
+                          AssetsHelper.appLogo,
+                          height: 55,
+                          width: 90,
+                        ),
+                      ),
+                      const DrawerTiles(),
+                      const Gap(40),
+                      const SupportButton(),
+                      const Gap(60),
+                      const ExitDrawerButton(),
+                      const Gap(60),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          ),
+        );
+      },
+    );
+  }
+}
+
+class DrawerTiles extends StatelessWidget {
+  const DrawerTiles({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      margin: const EdgeInsets.symmetric(horizontal: 14.0),
+      padding: const EdgeInsets.symmetric(horizontal: 6.0, vertical: 17.0),
+      decoration: BoxDecoration(
+        color: context.theme.colorScheme.secondary,
+        borderRadius: BorderRadius.circular(4.0),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Padding(
+            padding: const EdgeInsets.only(left: 6.0),
+            child: Text(
+              'Leagues',
+              style: context.headline2.copyWith(fontWeight: FontWeight.normal),
+            ),
+          ),
+          const Gap(14),
+          DrawerListTile(
+            leadingImage: AssetsHelper.eplLogo,
+            title: 'Premier League',
+            onPressed: () {},
+          ),
+          const Gap(14),
+          DrawerListTile(
+            leadingImage: AssetsHelper.bundesligaLogo,
+            title: 'Bundesliga',
+            onPressed: () {},
+          ),
+          const Gap(14),
+          DrawerListTile(
+            leadingImage: AssetsHelper.laLigaLogo,
+            title: 'Laliga',
+            onPressed: () {},
+          ),
+          const Gap(14),
+          DrawerListTile(
+            leadingImage: AssetsHelper.seriaALogo,
+            title: 'Seria A',
+            onPressed: () {},
+          ),
+          const Gap(14),
+        ],
+      ),
+    );
+  }
+}
+
+class SupportButton extends StatelessWidget {
+  const SupportButton({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Center(
+      child: CustomIconButton(
+        iconData: Icons.mail_outline,
+        onPressed: _sendMail,
+      ),
+    );
+  }
+
+   void _sendMail() async {
+    const url =
+        'mailto:sureoddsofficial@gmail.com?subject=Contact SureOdds';
+    if (await canLaunch(url)) {
+      await launch(url);
+    }
+  }
+}
+
+class ExitDrawerButton extends StatelessWidget {
+  const ExitDrawerButton({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Center(
+      child: CustomIconButton(
+        iconData: Icons.exit_to_app,
+        onPressed: () {
+          if (_scaffoldKey.currentState!.isDrawerOpen) {
+            Navigator.pop(context);
+          }
+        },
+      ),
+    );
+  }
+}
+
+class DrawerListTile extends StatelessWidget {
+  const DrawerListTile({
+    Key? key,
+    required this.onPressed,
+    required this.leadingImage,
+    required this.title,
+  }) : super(key: key);
+
+  final VoidCallback onPressed;
+  final String leadingImage;
+  final String title;
+
+  @override
+  Widget build(BuildContext context) {
+    return ListTile(
+      leading: Image.asset(
+        leadingImage,
+        height: 40,
+        width: 40,
+      ),
+      title: Text(title, style: context.headline1),
+      onTap: onPressed,
     );
   }
 }
@@ -142,10 +307,7 @@ class DrawerButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return CustomIconButton(
-      onPressed: () {
-        //TODO
-        print('show drawer');
-      },
+      onPressed: () => _scaffoldKey.currentState!.openDrawer(),
       iconData: Icons.menu,
     );
   }
@@ -342,7 +504,7 @@ class LeagueScroll extends StatelessWidget {
       children: [
         CustomExpansionTile(
           assetPath: AssetsHelper.eplLogo,
-          name: 'epl',
+          name: 'England - Premier League',
           children: leagues == null
               ? []
               : leagues!.epl.map((e) => PredictionTile(e)).toList(),
@@ -350,7 +512,7 @@ class LeagueScroll extends StatelessWidget {
         const Gap(8.0),
         CustomExpansionTile(
           assetPath: AssetsHelper.laLigaLogo,
-          name: 'laliga',
+          name: 'Spain - Laliga',
           children: leagues == null
               ? []
               : leagues!.laliga.map((e) => PredictionTile(e)).toList(),
@@ -358,7 +520,7 @@ class LeagueScroll extends StatelessWidget {
         const Gap(8.0),
         CustomExpansionTile(
           assetPath: AssetsHelper.bundesligaLogo,
-          name: 'bundesliga',
+          name: 'Germany - Bundesliga',
           children: leagues == null
               ? []
               : leagues!.bundesliga.map((e) => PredictionTile(e)).toList(),
@@ -366,7 +528,7 @@ class LeagueScroll extends StatelessWidget {
         const Gap(8.0),
         CustomExpansionTile(
           assetPath: AssetsHelper.seriaALogo,
-          name: 'seria A',
+          name: 'Italy - Seria A',
           children: leagues == null
               ? []
               : leagues!.seriaA.map((e) => PredictionTile(e)).toList(),
@@ -493,7 +655,6 @@ class PredictionTile extends StatelessWidget {
         return GestureDetector(
           onTap: () {
             if (_isLoaded) {
-              print('trying to display interstitial ad..');
               ref
                   .read(interstitialAdsProvider.notifier)
                   .showInterstitialAd(loadedAd);
