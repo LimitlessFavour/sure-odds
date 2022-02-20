@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-class TickerScaffold extends StatelessWidget {
-  const TickerScaffold({
+class TickerContent extends StatelessWidget {
+  const TickerContent({
     Key? key,
   }) : super(key: key);
 

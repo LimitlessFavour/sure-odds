@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:sure_odds/views/widgets/icons/favourite_icon.dart';
 
 import '../../enums/enums.dart';
 import '../../helper/extensions/context_extensions.dart';
@@ -13,6 +12,7 @@ import '../../models/teams.dart';
 import '../../providers/all_providers.dart';
 import '../widgets/buttons/drawer_button.dart';
 import '../widgets/date_switch.dart';
+import '../widgets/icons/favourite_icon.dart';
 import '../widgets/leagues_scroll.dart';
 import '../widgets/navigation_drawer.dart';
 import '../widgets/ticker/ticker_builder.dart';
@@ -89,45 +89,46 @@ class TabItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Consumer(
-        builder: (BuildContext context, WidgetRef ref, Widget? child) {
-      final _tabProvider = ref.watch(tabStateProvider);
-      final currentTab = _tabProvider;
-      bool isActive = currentTab == tab;
-      Size size = MediaQuery.of(context).size;
-      return Expanded(
-        child: GestureDetector(
-          onTap: () {
-            var _tab = ref.read(tabStateProvider.state);
-            _tab.state = tab;
-          },
-          child: Center(
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                //Text
-                Text(
-                  tab.modifiedName,
-                  style: context.headline5,
-                ),
-                const Gap(8),
-                //bar
-                Visibility(
-                  visible: isActive,
-                  child: Container(
-                    width: size.width / 5.5,
-                    height: 6.0,
-                    decoration: BoxDecoration(
-                      color: Constants.primaryColor,
-                      borderRadius: BorderRadius.circular(5.0),
+      builder: (BuildContext context, WidgetRef ref, Widget? child) {
+        final _tabProvider = ref.watch(tabStateProvider);
+        final currentTab = _tabProvider;
+        bool isActive = currentTab == tab;
+        Size size = MediaQuery.of(context).size;
+        return Expanded(
+          child: GestureDetector(
+            onTap: () {
+              var _tab = ref.read(tabStateProvider.state);
+              _tab.state = tab;
+            },
+            child: Center(
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  //Text
+                  Text(
+                    tab.modifiedName,
+                    style: context.headline5,
+                  ),
+                  const Gap(8),
+                  //bar
+                  Visibility(
+                    visible: isActive,
+                    child: Container(
+                      width: size.width / 5.5,
+                      height: 6.0,
+                      decoration: BoxDecoration(
+                        color: Constants.primaryColor,
+                        borderRadius: BorderRadius.circular(5.0),
+                      ),
                     ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
           ),
-        ),
-      );
-    });
+        );
+      },
+    );
   }
 }
 
@@ -268,4 +269,3 @@ class TeamTile extends StatelessWidget {
     );
   }
 }
-

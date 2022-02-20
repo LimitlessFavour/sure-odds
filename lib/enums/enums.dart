@@ -9,7 +9,7 @@ enum LeaguesEnum { epl, bundesliga, laliga, seria}
 
 /// A utility with extensions for enum name and serialized value.
 extension TabItemsX on TabItems{
-  String get modifiedName => this == TabItems.all ? 'All Tips' : 'Favourites';
+  String get modifiedName => this == TabItems.all ? 'ALL TIPS' : 'FAVOURITES';
 }
 
 /// A utility with extensions for enum name and serialized value.

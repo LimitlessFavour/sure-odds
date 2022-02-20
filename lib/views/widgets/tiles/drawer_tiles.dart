@@ -37,15 +37,15 @@ class DrawerTiles extends StatelessWidget {
           ),
           const Gap(14),
           const DrawerListTile(
-            leadingImage: AssetsHelper.bundesligaLogo,
-            title: 'Bundesliga',
-            league: LeaguesEnum.bundesliga,
-          ),
-          const Gap(14),
-          const DrawerListTile(
             leadingImage: AssetsHelper.laLigaLogo,
             title: 'Laliga',
             league: LeaguesEnum.laliga,
+          ),
+          const Gap(14),
+          const DrawerListTile(
+            leadingImage: AssetsHelper.bundesligaLogo,
+            title: 'Bundesliga',
+            league: LeaguesEnum.bundesliga,
           ),
           const Gap(14),
           const DrawerListTile(
@@ -53,7 +53,6 @@ class DrawerTiles extends StatelessWidget {
             title: 'Seria A',
             league: LeaguesEnum.seria,
           ),
-          const Gap(14),
         ],
       ),
     );
