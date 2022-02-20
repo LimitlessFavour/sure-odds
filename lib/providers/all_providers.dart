@@ -103,13 +103,17 @@ final interstitialAdsProvider = StateNotifierProvider<InterstitialAdProvider, In
 
 
 
-final favouritesPredictionsProvider = Provider<FavouritesProvider>((ref) {
+final favouritesProvider =  StateNotifierProvider<FavouritesProvider, List<Prediction>>((ref) {
   final _favouritesRepository = ref.watch(_favouritesRepositoryProvider);
   return FavouritesProvider(
     ref: ref,
     favouritesRepository: _favouritesRepository,
   );
 });
+
+// final favouritesPredictionsProvider = StateProvider<List<Prediction>>((ref){
+//   return TabItems.all;
+// });
 
 //tabs
 final predictionDateTabStateProvider = StateProvider<PredictionDate>((ref){

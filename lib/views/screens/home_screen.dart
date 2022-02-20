@@ -321,13 +321,10 @@ class FavouriteScroll extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final favouritePredictions = ref.watch(favouritesPredictionsProvider);
+    final favouritePredictions = ref.watch(favouritesProvider);
     return SingleChildScrollView(
       child: Column(
-        children: favouritePredictions
-            .fetchFavourites()
-            .map((e) => PredictionTile(e))
-            .toList(),
+        children: favouritePredictions.map((e) => PredictionTile(e)).toList(),
       ),
     );
   }
@@ -618,22 +615,23 @@ class FavouriteIcon extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Consumer(
-        builder: (BuildContext context, WidgetRef ref, Widget? child) {
-      var _favouritesPredProvider = ref.watch(favouritesPredictionsProvider);
+      builder: (BuildContext context, WidgetRef ref, Widget? child) {
+        var _favouritesPredProvider = ref.watch(favouritesProvider);
+        final isFavourite = _favouritesPredProvider.contains(prediction);
 
-      final isFavourite =
-          _favouritesPredProvider.fetchFavourites().contains(prediction);
-
-      return IconButton(
-        icon: Icon(isFavourite ? Icons.star : Icons.star_outline),
-        color: Constants.primaryColor,
-        iconSize: 32.0,
-        onPressed: () {
-          !isFavourite
-              ? _favouritesPredProvider.addToFavourite(prediction)
-              : _favouritesPredProvider.removeFromFavourite(prediction);
-        },
-      );
-    });
+        return IconButton(
+          icon: Icon(isFavourite ? Icons.star : Icons.star_outline),
+          color: Constants.primaryColor,
+          iconSize: 32.0,
+          onPressed: () {
+            var _favouritePreditionState =
+                ref.read(favouritesProvider.notifier);
+            !isFavourite
+                ? _favouritePreditionState.addToFavourite(prediction)
+                : _favouritePreditionState.removeFromFavourite(prediction);
+          },
+        );
+      },
+    );
   }
 }

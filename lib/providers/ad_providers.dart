@@ -5,9 +5,6 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import '../services/repositories/ads_repository.dart';
 import 'states/ad_state.dart';
 
-// final bannerAdProvider = StateProvider<BannerAd?>((ref) {
-//   return null;
-// });
 
 class InterstitialAdProvider extends StateNotifier<InterstitialAdState> {
   InterstitialAdProvider({

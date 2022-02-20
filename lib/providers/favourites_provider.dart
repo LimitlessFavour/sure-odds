@@ -3,7 +3,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import '../models/prediction.dart';
 import '../services/repositories/favourites_repository.dart';
 
-class FavouritesProvider {
+class FavouritesProvider extends StateNotifier<List<Prediction>> {
   final FavouritesRepository _favouritesRepository;
   final Ref _ref;
 
@@ -12,19 +12,22 @@ class FavouritesProvider {
     required Ref ref,
   })  : _favouritesRepository = favouritesRepository,
         _ref = ref,
-        super();
+        super([]);
 
-  List<Prediction> fetchFavourites() {
+  void fetchFavourites() {
     List<Prediction> currentFavourites =
         _favouritesRepository.fetchFavourites();
-    return currentFavourites;
+    state = currentFavourites;
+    // return currentFavourites;
   }
 
-  List<Prediction> addToFavourite(Prediction prediction) {
-    return _favouritesRepository.addToFavourite(prediction);
+  void addToFavourite(Prediction prediction) {
+    state = _favouritesRepository.addToFavourite(prediction);
+    // return state;
   }
 
-  List<Prediction> removeFromFavourite(Prediction prediction) {
-    return _favouritesRepository.removeFromFavourite(prediction);
+  void removeFromFavourite(Prediction prediction) {
+    state = _favouritesRepository.removeFromFavourite(prediction);
+    // return state;
   }
 }
