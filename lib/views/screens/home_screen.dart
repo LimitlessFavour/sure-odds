@@ -163,16 +163,19 @@ class CustomIconButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 6.0, vertical: 9.0),
-      decoration: BoxDecoration(
-        color: context.theme.colorScheme.secondary,
-        borderRadius: BorderRadius.circular(4.0),
-      ),
-      child: const Icon(
-        Icons.menu_sharp,
-        color: Constants.textBlackColor,
-        size: 20,
+    return GestureDetector(
+      onTap: onPressed,
+      child: Container(
+        padding: const EdgeInsets.symmetric(horizontal: 6.0, vertical: 9.0),
+        decoration: BoxDecoration(
+          color: context.theme.colorScheme.secondary,
+          borderRadius: BorderRadius.circular(4.0),
+        ),
+        child: Icon(
+          iconData,
+          color: Constants.textBlackColor,
+          size: 20,
+        ),
       ),
     );
   }
@@ -374,7 +377,6 @@ class LeagueScroll extends StatelessWidget {
         const Gap(42.0),
         const CustomBannerAd(),
       ],
-      // ),
     );
   }
 }
@@ -396,10 +398,10 @@ class CustomBannerAd extends StatelessWidget {
               uninitialized: () => const SizedBox(),
               loading: () => const SizedBox(),
               loaded: (ad) => SizedBox(
-                  width: ad.size.width.toDouble(),
-                  height: ad.size.height.toDouble(),
-                  child: AdWidget(ad: ad),
-                ),
+                width: ad.size.width.toDouble(),
+                height: ad.size.height.toDouble(),
+                child: AdWidget(ad: ad),
+              ),
               failed: (error) => ErrorResponseHandler.builder(
                 error: error,
                 stackTrace: null,
@@ -477,73 +479,94 @@ class PredictionTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Size _size = MediaQuery.of(context).size;
-    return GestureDetector(
-      onTap: () {
-        Navigator.push<dynamic>(
-          context,
-          CupertinoPageRoute<dynamic>(
-            builder: (context) {
-              return MatchInfoScreen(prediction);
-            },
+    bool _isLoaded = false;
+    late InterstitialAd loadedAd;
+    return Consumer(
+      builder: (context, ref, child) {
+        final ad = ref.watch(interstitialAdsProvider);
+        ad.maybeWhen(
+          loaded: (ad) {
+            _isLoaded = true;
+            loadedAd = ad;
+          },
+          orElse: () {
+            _isLoaded = false;
+          },
+        );
+        return GestureDetector(
+          onTap: () {
+            // if (_isLoaded) {
+            //   ref
+            //       .read(interstitialAdsProvider.notifier)
+            //       .showInterstitialAd(loadedAd);
+            // }
+            Navigator.push<dynamic>(
+              context,
+              CupertinoPageRoute<dynamic>(
+                builder: (context) {
+                  return MatchInfoScreen(prediction);
+                },
+              ),
+            );
+          },
+          child: Container(
+            margin: const EdgeInsets.symmetric(vertical: 35.0),
+            height: _size.height / 8,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Container(
+                      constraints: BoxConstraints(maxWidth: _size.width * 0.20),
+                      child: Center(
+                        child: Text(
+                          '${prediction.details.winner.name}',
+                          style: context.headline4,
+                          textAlign: TextAlign.center,
+                        ),
+                      ),
+                    ),
+                    Text(
+                      '${prediction.details.winner.comment?.toLowerCase()}',
+                      style: context.headline4,
+                    ),
+                    Text(
+                      'tap for more',
+                      maxLines: 2,
+                      style: context.headline4.copyWith(
+                        fontWeight: FontWeight.w300,
+                        color: context.theme.primaryColor.withOpacity(0.7),
+                        fontSize: 10.0,
+                      ),
+                    ),
+                  ],
+                ),
+                const VerticalDivider(
+                  color: Constants.dividerColor,
+                  thickness: 1.0,
+                ),
+                Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    TeamTile(prediction.teams.home),
+                    TeamTile(prediction.teams.away),
+                  ],
+                ),
+                const VerticalDivider(
+                  color: Constants.dividerColor,
+                  thickness: 1.0,
+                ),
+                Center(
+                  child: FavouriteIcon(prediction),
+                )
+              ],
+            ),
           ),
         );
       },
-      child: Container(
-        margin: const EdgeInsets.symmetric(vertical: 35.0),
-        height: _size.height / 8,
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Column(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Container(
-                  constraints: BoxConstraints(maxWidth: _size.width * 0.20),
-                  child: Center(
-                    child: Text(
-                      '${prediction.details.winner.name}',
-                      style: context.headline4,
-                      textAlign: TextAlign.center,
-                    ),
-                  ),
-                ),
-                Text(
-                  '${prediction.details.winner.comment?.toLowerCase()}',
-                  style: context.headline4,
-                ),
-                Text(
-                  'tap for more',
-                  maxLines: 2,
-                  style: context.headline4.copyWith(
-                    fontWeight: FontWeight.w300,
-                    color: context.theme.primaryColor.withOpacity(0.7),
-                    fontSize: 10.0,
-                  ),
-                ),
-              ],
-            ),
-            const VerticalDivider(
-              color: Constants.dividerColor,
-              thickness: 1.0,
-            ),
-            Column(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                TeamTile(prediction.teams.home),
-                TeamTile(prediction.teams.away),
-              ],
-            ),
-            const VerticalDivider(
-              color: Constants.dividerColor,
-              thickness: 1.0,
-            ),
-            Center(
-              child: FavouriteIcon(prediction),
-            )
-          ],
-        ),
-      ),
     );
   }
 }

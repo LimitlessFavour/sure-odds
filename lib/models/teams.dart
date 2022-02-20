@@ -49,12 +49,44 @@ class Last5 with _$Last5 {
     @Default('') @JsonKey(name: 'att') String? attPercentage,
     @Default('') @JsonKey(name: 'def') String? defPercentage,
    //ignoring what's left here
+     @JsonKey(name: 'goals') GoalsForAgainst? goalsForAgainst,
+
   }) = _Last5;
 
 
   factory Last5.fromJson(JSON json) =>
       _$Last5FromJson(json);
 }
+
+@freezed
+class GoalsForAgainst with _$GoalsForAgainst {
+  const GoalsForAgainst._();
+
+  const factory GoalsForAgainst({
+     @JsonKey(name: 'for') required GoalsFA? goalsFor,
+     @JsonKey(name: 'against') required GoalsFA? goalsAgainst,
+
+  }) = _GoalsForAgainst;
+
+
+  factory GoalsForAgainst.fromJson(JSON json) =>
+      _$GoalsForAgainstFromJson(json);
+}
+
+@freezed
+class GoalsFA with _$GoalsFA {
+  const GoalsFA._();
+
+  const factory GoalsFA({
+    @Default(0) @JsonKey(name: 'total') num? total,
+
+  }) = _GoalsFA;
+
+
+  factory GoalsFA.fromJson(JSON json) =>
+      _$GoalsFAFromJson(json);
+}
+
 
 @freezed
 class RecentLeagueMatches with _$RecentLeagueMatches {

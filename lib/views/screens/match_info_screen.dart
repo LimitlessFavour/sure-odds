@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
-import 'package:sure_odds/enums/enums.dart';
-import 'package:sure_odds/helper/extensions/context_extensions.dart';
-import 'package:sure_odds/helper/utils/constants.dart';
-import 'package:sure_odds/models/prediction.dart';
-import 'package:sure_odds/models/teams.dart';
-import 'package:sure_odds/views/screens/home_screen.dart';
+import 'package:sure_odds/helper/extensions/string_extension.dart';
+
+import '../../helper/extensions/context_extensions.dart';
+import '../../helper/utils/constants.dart';
+import '../../models/prediction.dart';
+import '../../models/teams.dart';
+import 'home_screen.dart';
 
 class MatchInfoScreen extends StatelessWidget {
   const MatchInfoScreen(
@@ -24,7 +25,7 @@ class MatchInfoScreen extends StatelessWidget {
           //*app bar
           Expanded(
             flex: 2,
-            child: Padding(
+            child: Container(
               padding: const EdgeInsets.symmetric(horizontal: 32.0),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -37,118 +38,326 @@ class MatchInfoScreen extends StatelessWidget {
             ),
           ),
           //* content
+          Center(
+            child: Container(
+              padding:
+                  const EdgeInsets.symmetric(horizontal: 32.0, vertical: 5.0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  TeamNameLogo(prediction.teams.home),
+                  TeamNameLogo(prediction.teams.away),
+                ],
+              ),
+            ),
+          ),
           Expanded(
             flex: 10,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: const [
-                //tabs
-                Tabs(),
-                Gap(8),
-                TipBox(),
-                Gap(8),
-                MatchInfoTabs(),
-                Gap(8),
-                MatchInfoContent(),
-                //leagues
-                LeaguesScroll(),
+            child: ListView(
+              padding:
+                  const EdgeInsets.only(top: 24.0, left: 10.0, right: 10.0),
+              children: [
+                Probabilities(prediction.details.percentWinProbability),
+                Advice(prediction.details.advice),
+                LastFive(prediction.teams),
+                const Gap(24),
+                TeamsForm(prediction.teams),
+                const Gap(32),
               ],
             ),
           ),
         ],
-
-        // color: Colors.red,
       ),
     );
   }
 }
 
-class MatchInfoTabs extends StatelessWidget {
-  const MatchInfoTabs({Key? key}) : super(key: key);
+class Probabilities extends StatelessWidget {
+  const Probabilities(this.winProbabilitites, {Key? key}) : super(key: key);
+
+  final Percent winProbabilitites;
 
   @override
   Widget build(BuildContext context) {
-    return Expanded(
-      flex: 3,
+    Size size = MediaQuery.of(context).size;
+    return Container(
+      padding: EdgeInsets.symmetric(horizontal: size.width / 15),
       child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceAround,
         crossAxisAlignment: CrossAxisAlignment.center,
-        children: const [
-          MatchInfoItem(MatchInfoItems.predictions),
-          MatchInfoItem(MatchInfoItems.last_5),
+        children: [
+          Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Text('Home win', style: context.headline4),
+              const Gap(6.0),
+              Text(
+                '${winProbabilitites.homeProbability}',
+                style: context.headline5,
+              ),
+            ],
+          ),
+          // const Gap(6.0),
+          Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Text('Draw', style: context.headline4),
+              const Gap(6.0),
+              Text(
+                '${winProbabilitites.drawProbability}',
+                style: context.headline5,
+              ),
+            ],
+          ),
+          // const Gap(6.0),
+          Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Text('Away win', style: context.headline4),
+              const Gap(6.0),
+              Text(
+                '${winProbabilitites.awayProbability}',
+                style: context.headline5,
+              ),
+            ],
+          ),
         ],
       ),
     );
   }
 }
 
-class MatchInfoItem extends StatelessWidget {
-  const MatchInfoItem(this.items, {Key? key}) : super(key: key);
+class Advice extends StatelessWidget {
+  const Advice(this.advice, {Key? key}) : super(key: key);
 
-  final MatchInfoItems items;
+  final String? advice;
 
   @override
   Widget build(BuildContext context) {
-    //TODO change this to provider value
-    const currentTabItem = MatchInfoItems.predictions;
-    bool isActive = items == currentTabItem;
-
-    return Expanded(
+    Size size = MediaQuery.of(context).size;
+    return Visibility(
+      visible: advice != null,
       child: Center(
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            //Text
-            Text(items.modifiedName),
-            const Gap(8),
-            //bar
-            Visibility(
-              visible: isActive,
-              child: Container(
-                width: 72.0,
-                height: 5.0,
-                decoration: BoxDecoration(
-                  color: Constants.primaryColor,
-                  borderRadius: BorderRadius.circular(5.0),
-                ),
-              ),
-            ),
-          ],
+        child: Container(
+          width: size.width * 0.7,
+          height: 48.0,
+          margin: const EdgeInsets.only(top: 16.0, bottom: 8.0),
+          decoration: BoxDecoration(
+            color: context.theme.colorScheme.secondary,
+            borderRadius: BorderRadius.circular(4.0),
+          ),
+          child: Center(
+            child: Text(advice ?? '', style: context.headline4),
+          ),
         ),
       ),
     );
   }
 }
 
-class MatchInfoContent extends StatelessWidget {
-  const MatchInfoContent({Key? key}) : super(key: key);
+class LastFive extends StatelessWidget {
+  const LastFive(this.teams, {Key? key}) : super(key: key);
+
+  final Teams teams;
 
   @override
   Widget build(BuildContext context) {
-    //TODO update from provider value
-    const currentTabItem = MatchInfoItems.predictions;
-    //TODO update from provider value
-    const prediction = Prediction(
-      details: PredictionDetails(
-        winner: Winner(),
-        goals: Goals(),
-        percentWinProbability: Percent(),
+    Last5 homeLast5 = teams.home.last5;
+    Last5 awayLast5 = teams.away.last5;
+    return Column(
+      children: [
+        //form
+        CustomTile(
+          leftValue: homeLast5.formPercentage ?? '',
+          label: 'Form',
+          rightValue: awayLast5.formPercentage ?? '',
+        ),
+        //attk
+        CustomTile(
+          leftValue: homeLast5.attPercentage ?? '',
+          label: 'Attack',
+          rightValue: awayLast5.attPercentage ?? '',
+        ),
+        //def
+        CustomTile(
+          leftValue: homeLast5.defPercentage ?? '',
+          label: 'Defence',
+          rightValue: awayLast5.defPercentage ?? '',
+        ),
+        //goals for
+        CustomTile(
+          leftValue:
+              (homeLast5.goalsForAgainst?.goalsFor?.total ?? 0).toString(),
+          label: 'Goals for',
+          rightValue:
+              (awayLast5.goalsForAgainst?.goalsFor?.total ?? 0).toString(),
+        ),
+        //goals against
+        CustomTile(
+          leftValue:
+              (homeLast5.goalsForAgainst?.goalsAgainst?.total ?? 0).toString(),
+          label: 'Goals against',
+          rightValue:
+              (awayLast5.goalsForAgainst?.goalsAgainst?.total ?? 0).toString(),
+        ),
+      ],
+    );
+  }
+}
+
+class CustomTile extends StatelessWidget {
+  const CustomTile({
+    Key? key,
+    required this.leftValue,
+    required this.label,
+    required this.rightValue,
+  }) : super(key: key);
+
+  final String leftValue;
+  final String label;
+  final String rightValue;
+
+  @override
+  Widget build(BuildContext context) {
+    Size size = MediaQuery.of(context).size;
+
+    return Container(
+      padding: EdgeInsets.symmetric(
+        horizontal: size.width * 0.056,
       ),
-      teams: Teams(
-        home: Team(last5: Last5(), name: 'name', id: 1),
-        away: Team(last5: Last5(), name: 'name2', id: 2),
+      margin: const EdgeInsets.symmetric(vertical: 6.0),
+      height: 60,
+      width: size.width * 0.80,
+      decoration: BoxDecoration(
+        color: Constants.greyColor,
+        borderRadius: BorderRadius.circular(4.0),
+      ),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Text(leftValue, style: context.headline5),
+          Text(
+            label,
+            style: context.headline1.copyWith(color: Constants.textBlackColor),
+          ),
+          Text(rightValue, style: context.headline5),
+        ],
       ),
     );
+  }
+}
 
-    return Expanded(
-      flex: 7,
-      child: Builder(
-        builder: (context) {
-          if (currentTabItem == MatchInfoItems.predictions) {
-            return PredictionsTab(prediction);
-          }
-          return Last5Tab(prediction);
-        },
+class TeamsForm extends StatelessWidget {
+  const TeamsForm(this.teams, {Key? key}) : super(key: key);
+
+  final Teams teams;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      height: 120,
+      width: double.infinity,
+      decoration: const BoxDecoration(
+        color: Constants.greyColor,
       ),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          TeamForm(teams.home),
+          TeamForm(teams.away),
+        ],
+      ),
+    );
+  }
+}
+
+class TeamForm extends StatelessWidget {
+  const TeamForm(this.team, {Key? key}) : super(key: key);
+
+  final Team team;
+
+  @override
+  Widget build(BuildContext context) {
+    double size = 30;
+    return Row(
+      children: [
+        Padding(
+          padding: const EdgeInsets.only(left: 8.0, right: 4.0),
+          child: Image.network(
+            team.logo ?? '',
+            height: size,
+            width: size,
+          ),
+        ),
+        Expanded(
+          child: SizedBox(
+            height: size,
+            child: Center(
+              child: ListView(
+                padding: const EdgeInsets.all(0),
+                scrollDirection: Axis.horizontal,
+                children: (team.recentLeagueMatches?.form ?? '')
+                    .characters
+                    .map((e) => FormBox(e, const Size(27, 22)))
+                    .toList(),
+              ),
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+}
+
+class FormBox extends StatelessWidget {
+  const FormBox(this.formString, this.size, {Key? key}) : super(key: key);
+
+  final String formString;
+  final Size size;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      margin: const EdgeInsets.symmetric(horizontal: 3.0),
+      height: size.height,
+      width: size.width,
+      decoration: BoxDecoration(
+        color: formString.formColor,
+        borderRadius: BorderRadius.circular(4.0),
+      ),
+    );
+  }
+}
+
+class Header extends StatelessWidget {
+  const Header(this.text, {Key? key}) : super(key: key);
+
+  final String text;
+
+  @override
+  Widget build(BuildContext context) {
+    return Text(text);
+  }
+}
+
+class TeamNameLogo extends StatelessWidget {
+  const TeamNameLogo(this.team, {Key? key}) : super(key: key);
+
+  final Team team;
+
+  @override
+  Widget build(BuildContext context) {
+    Size size = MediaQuery.of(context).size;
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+      children: [
+        Image.network(team.logo ?? '', height: size.height * 0.08),
+        Gap(size.height * 0.015),
+        Text(team.name ?? '', style: context.headline4),
+      ],
     );
   }
 }
@@ -175,29 +384,6 @@ class Last5Tab extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       color: Colors.red,
-    );
-  }
-}
-
-class TipBox extends StatelessWidget {
-  const TipBox({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    Size _size = MediaQuery.of(context).size;
-    return Container(
-      width: _size.width / 1.2,
-      height: 50,
-      decoration: BoxDecoration(
-        color: context.theme.canvasColor,
-      ),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        children: [
-          Text('Tip: over 3.5'),
-          Text('Odds: 2.3'),
-        ],
-      ),
     );
   }
 }

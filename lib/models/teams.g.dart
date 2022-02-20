@@ -39,12 +39,41 @@ _$_Last5 _$$_Last5FromJson(Map<String, dynamic> json) => _$_Last5(
       formPercentage: json['form'] as String? ?? '',
       attPercentage: json['att'] as String? ?? '',
       defPercentage: json['def'] as String? ?? '',
+      goalsForAgainst: json['goals'] == null
+          ? null
+          : GoalsForAgainst.fromJson(json['goals'] as Map<String, dynamic>),
     );
 
 Map<String, dynamic> _$$_Last5ToJson(_$_Last5 instance) => <String, dynamic>{
       'form': instance.formPercentage,
       'att': instance.attPercentage,
       'def': instance.defPercentage,
+      'goals': instance.goalsForAgainst,
+    };
+
+_$_GoalsForAgainst _$$_GoalsForAgainstFromJson(Map<String, dynamic> json) =>
+    _$_GoalsForAgainst(
+      goalsFor: json['for'] == null
+          ? null
+          : GoalsFA.fromJson(json['for'] as Map<String, dynamic>),
+      goalsAgainst: json['against'] == null
+          ? null
+          : GoalsFA.fromJson(json['against'] as Map<String, dynamic>),
+    );
+
+Map<String, dynamic> _$$_GoalsForAgainstToJson(_$_GoalsForAgainst instance) =>
+    <String, dynamic>{
+      'for': instance.goalsFor,
+      'against': instance.goalsAgainst,
+    };
+
+_$_GoalsFA _$$_GoalsFAFromJson(Map<String, dynamic> json) => _$_GoalsFA(
+      total: json['total'] as num? ?? 0,
+    );
+
+Map<String, dynamic> _$$_GoalsFAToJson(_$_GoalsFA instance) =>
+    <String, dynamic>{
+      'total': instance.total,
     };
 
 _$_RecentLeagueMatches _$$_RecentLeagueMatchesFromJson(

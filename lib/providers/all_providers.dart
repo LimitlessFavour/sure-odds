@@ -92,6 +92,7 @@ final bannerAdsProvider = StateNotifierProvider<BannerAdProvider, BannerAdState>
   );
 });
 
+
 final interstitialAdsProvider = StateNotifierProvider<InterstitialAdProvider, InterstitialAdState>((ref) {
   final _adsRepository = ref.watch(_adsRepositoryProvider);
   return InterstitialAdProvider(

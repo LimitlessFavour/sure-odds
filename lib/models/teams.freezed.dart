@@ -485,11 +485,13 @@ class _$Last5TearOff {
   _Last5 call(
       {@JsonKey(name: 'form') String? formPercentage = '',
       @JsonKey(name: 'att') String? attPercentage = '',
-      @JsonKey(name: 'def') String? defPercentage = ''}) {
+      @JsonKey(name: 'def') String? defPercentage = '',
+      @JsonKey(name: 'goals') GoalsForAgainst? goalsForAgainst}) {
     return _Last5(
       formPercentage: formPercentage,
       attPercentage: attPercentage,
       defPercentage: defPercentage,
+      goalsForAgainst: goalsForAgainst,
     );
   }
 
@@ -508,7 +510,10 @@ mixin _$Last5 {
   @JsonKey(name: 'att')
   String? get attPercentage => throw _privateConstructorUsedError;
   @JsonKey(name: 'def')
-  String? get defPercentage => throw _privateConstructorUsedError;
+  String? get defPercentage =>
+      throw _privateConstructorUsedError; //ignoring what's left here
+  @JsonKey(name: 'goals')
+  GoalsForAgainst? get goalsForAgainst => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -522,7 +527,10 @@ abstract class $Last5CopyWith<$Res> {
   $Res call(
       {@JsonKey(name: 'form') String? formPercentage,
       @JsonKey(name: 'att') String? attPercentage,
-      @JsonKey(name: 'def') String? defPercentage});
+      @JsonKey(name: 'def') String? defPercentage,
+      @JsonKey(name: 'goals') GoalsForAgainst? goalsForAgainst});
+
+  $GoalsForAgainstCopyWith<$Res>? get goalsForAgainst;
 }
 
 /// @nodoc
@@ -538,6 +546,7 @@ class _$Last5CopyWithImpl<$Res> implements $Last5CopyWith<$Res> {
     Object? formPercentage = freezed,
     Object? attPercentage = freezed,
     Object? defPercentage = freezed,
+    Object? goalsForAgainst = freezed,
   }) {
     return _then(_value.copyWith(
       formPercentage: formPercentage == freezed
@@ -552,7 +561,22 @@ class _$Last5CopyWithImpl<$Res> implements $Last5CopyWith<$Res> {
           ? _value.defPercentage
           : defPercentage // ignore: cast_nullable_to_non_nullable
               as String?,
+      goalsForAgainst: goalsForAgainst == freezed
+          ? _value.goalsForAgainst
+          : goalsForAgainst // ignore: cast_nullable_to_non_nullable
+              as GoalsForAgainst?,
     ));
+  }
+
+  @override
+  $GoalsForAgainstCopyWith<$Res>? get goalsForAgainst {
+    if (_value.goalsForAgainst == null) {
+      return null;
+    }
+
+    return $GoalsForAgainstCopyWith<$Res>(_value.goalsForAgainst!, (value) {
+      return _then(_value.copyWith(goalsForAgainst: value));
+    });
   }
 }
 
@@ -564,7 +588,11 @@ abstract class _$Last5CopyWith<$Res> implements $Last5CopyWith<$Res> {
   $Res call(
       {@JsonKey(name: 'form') String? formPercentage,
       @JsonKey(name: 'att') String? attPercentage,
-      @JsonKey(name: 'def') String? defPercentage});
+      @JsonKey(name: 'def') String? defPercentage,
+      @JsonKey(name: 'goals') GoalsForAgainst? goalsForAgainst});
+
+  @override
+  $GoalsForAgainstCopyWith<$Res>? get goalsForAgainst;
 }
 
 /// @nodoc
@@ -581,6 +609,7 @@ class __$Last5CopyWithImpl<$Res> extends _$Last5CopyWithImpl<$Res>
     Object? formPercentage = freezed,
     Object? attPercentage = freezed,
     Object? defPercentage = freezed,
+    Object? goalsForAgainst = freezed,
   }) {
     return _then(_Last5(
       formPercentage: formPercentage == freezed
@@ -595,6 +624,10 @@ class __$Last5CopyWithImpl<$Res> extends _$Last5CopyWithImpl<$Res>
           ? _value.defPercentage
           : defPercentage // ignore: cast_nullable_to_non_nullable
               as String?,
+      goalsForAgainst: goalsForAgainst == freezed
+          ? _value.goalsForAgainst
+          : goalsForAgainst // ignore: cast_nullable_to_non_nullable
+              as GoalsForAgainst?,
     ));
   }
 }
@@ -605,7 +638,8 @@ class _$_Last5 extends _Last5 {
   const _$_Last5(
       {@JsonKey(name: 'form') this.formPercentage = '',
       @JsonKey(name: 'att') this.attPercentage = '',
-      @JsonKey(name: 'def') this.defPercentage = ''})
+      @JsonKey(name: 'def') this.defPercentage = '',
+      @JsonKey(name: 'goals') this.goalsForAgainst})
       : super._();
 
   factory _$_Last5.fromJson(Map<String, dynamic> json) =>
@@ -620,10 +654,13 @@ class _$_Last5 extends _Last5 {
   @override
   @JsonKey(name: 'def')
   final String? defPercentage;
+  @override //ignoring what's left here
+  @JsonKey(name: 'goals')
+  final GoalsForAgainst? goalsForAgainst;
 
   @override
   String toString() {
-    return 'Last5(formPercentage: $formPercentage, attPercentage: $attPercentage, defPercentage: $defPercentage)';
+    return 'Last5(formPercentage: $formPercentage, attPercentage: $attPercentage, defPercentage: $defPercentage, goalsForAgainst: $goalsForAgainst)';
   }
 
   @override
@@ -636,7 +673,9 @@ class _$_Last5 extends _Last5 {
             const DeepCollectionEquality()
                 .equals(other.attPercentage, attPercentage) &&
             const DeepCollectionEquality()
-                .equals(other.defPercentage, defPercentage));
+                .equals(other.defPercentage, defPercentage) &&
+            const DeepCollectionEquality()
+                .equals(other.goalsForAgainst, goalsForAgainst));
   }
 
   @override
@@ -644,7 +683,8 @@ class _$_Last5 extends _Last5 {
       runtimeType,
       const DeepCollectionEquality().hash(formPercentage),
       const DeepCollectionEquality().hash(attPercentage),
-      const DeepCollectionEquality().hash(defPercentage));
+      const DeepCollectionEquality().hash(defPercentage),
+      const DeepCollectionEquality().hash(goalsForAgainst));
 
   @JsonKey(ignore: true)
   @override
@@ -661,7 +701,8 @@ abstract class _Last5 extends Last5 {
   const factory _Last5(
       {@JsonKey(name: 'form') String? formPercentage,
       @JsonKey(name: 'att') String? attPercentage,
-      @JsonKey(name: 'def') String? defPercentage}) = _$_Last5;
+      @JsonKey(name: 'def') String? defPercentage,
+      @JsonKey(name: 'goals') GoalsForAgainst? goalsForAgainst}) = _$_Last5;
   const _Last5._() : super._();
 
   factory _Last5.fromJson(Map<String, dynamic> json) = _$_Last5.fromJson;
@@ -675,9 +716,375 @@ abstract class _Last5 extends Last5 {
   @override
   @JsonKey(name: 'def')
   String? get defPercentage;
+  @override //ignoring what's left here
+  @JsonKey(name: 'goals')
+  GoalsForAgainst? get goalsForAgainst;
   @override
   @JsonKey(ignore: true)
   _$Last5CopyWith<_Last5> get copyWith => throw _privateConstructorUsedError;
+}
+
+GoalsForAgainst _$GoalsForAgainstFromJson(Map<String, dynamic> json) {
+  return _GoalsForAgainst.fromJson(json);
+}
+
+/// @nodoc
+class _$GoalsForAgainstTearOff {
+  const _$GoalsForAgainstTearOff();
+
+  _GoalsForAgainst call(
+      {@JsonKey(name: 'for') required GoalsFA? goalsFor,
+      @JsonKey(name: 'against') required GoalsFA? goalsAgainst}) {
+    return _GoalsForAgainst(
+      goalsFor: goalsFor,
+      goalsAgainst: goalsAgainst,
+    );
+  }
+
+  GoalsForAgainst fromJson(Map<String, Object?> json) {
+    return GoalsForAgainst.fromJson(json);
+  }
+}
+
+/// @nodoc
+const $GoalsForAgainst = _$GoalsForAgainstTearOff();
+
+/// @nodoc
+mixin _$GoalsForAgainst {
+  @JsonKey(name: 'for')
+  GoalsFA? get goalsFor => throw _privateConstructorUsedError;
+  @JsonKey(name: 'against')
+  GoalsFA? get goalsAgainst => throw _privateConstructorUsedError;
+
+  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+  @JsonKey(ignore: true)
+  $GoalsForAgainstCopyWith<GoalsForAgainst> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $GoalsForAgainstCopyWith<$Res> {
+  factory $GoalsForAgainstCopyWith(
+          GoalsForAgainst value, $Res Function(GoalsForAgainst) then) =
+      _$GoalsForAgainstCopyWithImpl<$Res>;
+  $Res call(
+      {@JsonKey(name: 'for') GoalsFA? goalsFor,
+      @JsonKey(name: 'against') GoalsFA? goalsAgainst});
+
+  $GoalsFACopyWith<$Res>? get goalsFor;
+  $GoalsFACopyWith<$Res>? get goalsAgainst;
+}
+
+/// @nodoc
+class _$GoalsForAgainstCopyWithImpl<$Res>
+    implements $GoalsForAgainstCopyWith<$Res> {
+  _$GoalsForAgainstCopyWithImpl(this._value, this._then);
+
+  final GoalsForAgainst _value;
+  // ignore: unused_field
+  final $Res Function(GoalsForAgainst) _then;
+
+  @override
+  $Res call({
+    Object? goalsFor = freezed,
+    Object? goalsAgainst = freezed,
+  }) {
+    return _then(_value.copyWith(
+      goalsFor: goalsFor == freezed
+          ? _value.goalsFor
+          : goalsFor // ignore: cast_nullable_to_non_nullable
+              as GoalsFA?,
+      goalsAgainst: goalsAgainst == freezed
+          ? _value.goalsAgainst
+          : goalsAgainst // ignore: cast_nullable_to_non_nullable
+              as GoalsFA?,
+    ));
+  }
+
+  @override
+  $GoalsFACopyWith<$Res>? get goalsFor {
+    if (_value.goalsFor == null) {
+      return null;
+    }
+
+    return $GoalsFACopyWith<$Res>(_value.goalsFor!, (value) {
+      return _then(_value.copyWith(goalsFor: value));
+    });
+  }
+
+  @override
+  $GoalsFACopyWith<$Res>? get goalsAgainst {
+    if (_value.goalsAgainst == null) {
+      return null;
+    }
+
+    return $GoalsFACopyWith<$Res>(_value.goalsAgainst!, (value) {
+      return _then(_value.copyWith(goalsAgainst: value));
+    });
+  }
+}
+
+/// @nodoc
+abstract class _$GoalsForAgainstCopyWith<$Res>
+    implements $GoalsForAgainstCopyWith<$Res> {
+  factory _$GoalsForAgainstCopyWith(
+          _GoalsForAgainst value, $Res Function(_GoalsForAgainst) then) =
+      __$GoalsForAgainstCopyWithImpl<$Res>;
+  @override
+  $Res call(
+      {@JsonKey(name: 'for') GoalsFA? goalsFor,
+      @JsonKey(name: 'against') GoalsFA? goalsAgainst});
+
+  @override
+  $GoalsFACopyWith<$Res>? get goalsFor;
+  @override
+  $GoalsFACopyWith<$Res>? get goalsAgainst;
+}
+
+/// @nodoc
+class __$GoalsForAgainstCopyWithImpl<$Res>
+    extends _$GoalsForAgainstCopyWithImpl<$Res>
+    implements _$GoalsForAgainstCopyWith<$Res> {
+  __$GoalsForAgainstCopyWithImpl(
+      _GoalsForAgainst _value, $Res Function(_GoalsForAgainst) _then)
+      : super(_value, (v) => _then(v as _GoalsForAgainst));
+
+  @override
+  _GoalsForAgainst get _value => super._value as _GoalsForAgainst;
+
+  @override
+  $Res call({
+    Object? goalsFor = freezed,
+    Object? goalsAgainst = freezed,
+  }) {
+    return _then(_GoalsForAgainst(
+      goalsFor: goalsFor == freezed
+          ? _value.goalsFor
+          : goalsFor // ignore: cast_nullable_to_non_nullable
+              as GoalsFA?,
+      goalsAgainst: goalsAgainst == freezed
+          ? _value.goalsAgainst
+          : goalsAgainst // ignore: cast_nullable_to_non_nullable
+              as GoalsFA?,
+    ));
+  }
+}
+
+/// @nodoc
+@JsonSerializable()
+class _$_GoalsForAgainst extends _GoalsForAgainst {
+  const _$_GoalsForAgainst(
+      {@JsonKey(name: 'for') required this.goalsFor,
+      @JsonKey(name: 'against') required this.goalsAgainst})
+      : super._();
+
+  factory _$_GoalsForAgainst.fromJson(Map<String, dynamic> json) =>
+      _$$_GoalsForAgainstFromJson(json);
+
+  @override
+  @JsonKey(name: 'for')
+  final GoalsFA? goalsFor;
+  @override
+  @JsonKey(name: 'against')
+  final GoalsFA? goalsAgainst;
+
+  @override
+  String toString() {
+    return 'GoalsForAgainst(goalsFor: $goalsFor, goalsAgainst: $goalsAgainst)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _GoalsForAgainst &&
+            const DeepCollectionEquality().equals(other.goalsFor, goalsFor) &&
+            const DeepCollectionEquality()
+                .equals(other.goalsAgainst, goalsAgainst));
+  }
+
+  @override
+  int get hashCode => Object.hash(
+      runtimeType,
+      const DeepCollectionEquality().hash(goalsFor),
+      const DeepCollectionEquality().hash(goalsAgainst));
+
+  @JsonKey(ignore: true)
+  @override
+  _$GoalsForAgainstCopyWith<_GoalsForAgainst> get copyWith =>
+      __$GoalsForAgainstCopyWithImpl<_GoalsForAgainst>(this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$_GoalsForAgainstToJson(this);
+  }
+}
+
+abstract class _GoalsForAgainst extends GoalsForAgainst {
+  const factory _GoalsForAgainst(
+          {@JsonKey(name: 'for') required GoalsFA? goalsFor,
+          @JsonKey(name: 'against') required GoalsFA? goalsAgainst}) =
+      _$_GoalsForAgainst;
+  const _GoalsForAgainst._() : super._();
+
+  factory _GoalsForAgainst.fromJson(Map<String, dynamic> json) =
+      _$_GoalsForAgainst.fromJson;
+
+  @override
+  @JsonKey(name: 'for')
+  GoalsFA? get goalsFor;
+  @override
+  @JsonKey(name: 'against')
+  GoalsFA? get goalsAgainst;
+  @override
+  @JsonKey(ignore: true)
+  _$GoalsForAgainstCopyWith<_GoalsForAgainst> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+GoalsFA _$GoalsFAFromJson(Map<String, dynamic> json) {
+  return _GoalsFA.fromJson(json);
+}
+
+/// @nodoc
+class _$GoalsFATearOff {
+  const _$GoalsFATearOff();
+
+  _GoalsFA call({@JsonKey(name: 'total') num? total = 0}) {
+    return _GoalsFA(
+      total: total,
+    );
+  }
+
+  GoalsFA fromJson(Map<String, Object?> json) {
+    return GoalsFA.fromJson(json);
+  }
+}
+
+/// @nodoc
+const $GoalsFA = _$GoalsFATearOff();
+
+/// @nodoc
+mixin _$GoalsFA {
+  @JsonKey(name: 'total')
+  num? get total => throw _privateConstructorUsedError;
+
+  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+  @JsonKey(ignore: true)
+  $GoalsFACopyWith<GoalsFA> get copyWith => throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $GoalsFACopyWith<$Res> {
+  factory $GoalsFACopyWith(GoalsFA value, $Res Function(GoalsFA) then) =
+      _$GoalsFACopyWithImpl<$Res>;
+  $Res call({@JsonKey(name: 'total') num? total});
+}
+
+/// @nodoc
+class _$GoalsFACopyWithImpl<$Res> implements $GoalsFACopyWith<$Res> {
+  _$GoalsFACopyWithImpl(this._value, this._then);
+
+  final GoalsFA _value;
+  // ignore: unused_field
+  final $Res Function(GoalsFA) _then;
+
+  @override
+  $Res call({
+    Object? total = freezed,
+  }) {
+    return _then(_value.copyWith(
+      total: total == freezed
+          ? _value.total
+          : total // ignore: cast_nullable_to_non_nullable
+              as num?,
+    ));
+  }
+}
+
+/// @nodoc
+abstract class _$GoalsFACopyWith<$Res> implements $GoalsFACopyWith<$Res> {
+  factory _$GoalsFACopyWith(_GoalsFA value, $Res Function(_GoalsFA) then) =
+      __$GoalsFACopyWithImpl<$Res>;
+  @override
+  $Res call({@JsonKey(name: 'total') num? total});
+}
+
+/// @nodoc
+class __$GoalsFACopyWithImpl<$Res> extends _$GoalsFACopyWithImpl<$Res>
+    implements _$GoalsFACopyWith<$Res> {
+  __$GoalsFACopyWithImpl(_GoalsFA _value, $Res Function(_GoalsFA) _then)
+      : super(_value, (v) => _then(v as _GoalsFA));
+
+  @override
+  _GoalsFA get _value => super._value as _GoalsFA;
+
+  @override
+  $Res call({
+    Object? total = freezed,
+  }) {
+    return _then(_GoalsFA(
+      total: total == freezed
+          ? _value.total
+          : total // ignore: cast_nullable_to_non_nullable
+              as num?,
+    ));
+  }
+}
+
+/// @nodoc
+@JsonSerializable()
+class _$_GoalsFA extends _GoalsFA {
+  const _$_GoalsFA({@JsonKey(name: 'total') this.total = 0}) : super._();
+
+  factory _$_GoalsFA.fromJson(Map<String, dynamic> json) =>
+      _$$_GoalsFAFromJson(json);
+
+  @override
+  @JsonKey(name: 'total')
+  final num? total;
+
+  @override
+  String toString() {
+    return 'GoalsFA(total: $total)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _GoalsFA &&
+            const DeepCollectionEquality().equals(other.total, total));
+  }
+
+  @override
+  int get hashCode =>
+      Object.hash(runtimeType, const DeepCollectionEquality().hash(total));
+
+  @JsonKey(ignore: true)
+  @override
+  _$GoalsFACopyWith<_GoalsFA> get copyWith =>
+      __$GoalsFACopyWithImpl<_GoalsFA>(this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$_GoalsFAToJson(this);
+  }
+}
+
+abstract class _GoalsFA extends GoalsFA {
+  const factory _GoalsFA({@JsonKey(name: 'total') num? total}) = _$_GoalsFA;
+  const _GoalsFA._() : super._();
+
+  factory _GoalsFA.fromJson(Map<String, dynamic> json) = _$_GoalsFA.fromJson;
+
+  @override
+  @JsonKey(name: 'total')
+  num? get total;
+  @override
+  @JsonKey(ignore: true)
+  _$GoalsFACopyWith<_GoalsFA> get copyWith =>
+      throw _privateConstructorUsedError;
 }
 
 RecentLeagueMatches _$RecentLeagueMatchesFromJson(Map<String, dynamic> json) {

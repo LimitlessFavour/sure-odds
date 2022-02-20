@@ -32,7 +32,7 @@ class Constants {
     //banner
     'ca-app-pub-3940256099942544/2934735716',
     //interstitial
-    '	ca-app-pub-3940256099942544/4411468910',
+    'ca-app-pub-3940256099942544/4411468910',
   ];
 
   /// Production list
@@ -69,7 +69,7 @@ class Constants {
   static const Color greenColor = Color(0xFF0DCE09);
 
   /// The color value for dark grey skeleton containers in the app.
-  static const Color greyColor = Color(0xFF656565);
+  static const Color greyColor = Color(0xFFF0F0F0);
 
   /// The color value for vertical divider in the app.
   static const Color dividerColor = Color(0xFFC4C4C4);
