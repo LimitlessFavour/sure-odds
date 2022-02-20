@@ -495,11 +495,12 @@ class PredictionTile extends StatelessWidget {
         );
         return GestureDetector(
           onTap: () {
-            // if (_isLoaded) {
-            //   ref
-            //       .read(interstitialAdsProvider.notifier)
-            //       .showInterstitialAd(loadedAd);
-            // }
+            if (_isLoaded) {
+              print('trying to display interstitial ad..');
+              ref
+                  .read(interstitialAdsProvider.notifier)
+                  .showInterstitialAd(loadedAd);
+            }
             Navigator.push<dynamic>(
               context,
               CupertinoPageRoute<dynamic>(
@@ -585,7 +586,6 @@ class TeamTile extends StatelessWidget {
       width: _size.width * 0.5,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.start,
-        // crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           Builder(
             builder: (context) {

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
-import 'package:sure_odds/helper/extensions/string_extension.dart';
 
 import '../../helper/extensions/context_extensions.dart';
+import '../../helper/extensions/string_extension.dart';
 import '../../helper/utils/constants.dart';
 import '../../models/prediction.dart';
 import '../../models/teams.dart';
