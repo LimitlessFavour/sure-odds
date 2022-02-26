@@ -53,6 +53,18 @@ class DrawerTiles extends StatelessWidget {
             title: 'Seria A',
             league: LeaguesEnum.seria,
           ),
+          const Gap(14),
+         const DrawerListTile(
+            leadingImage: AssetsHelper.ligueOneLogo,
+            title: 'Ligue One',
+            league: LeaguesEnum.ligue1,
+          ),
+          const Gap(8.0),
+          const DrawerListTile(
+            leadingImage: AssetsHelper.primeriaLogo,
+            title: 'Primeria Liga',
+            league: LeaguesEnum.primerialiga,
+          ),
         ],
       ),
     );

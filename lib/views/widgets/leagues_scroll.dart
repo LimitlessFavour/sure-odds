@@ -143,10 +143,27 @@ class LeagueScroll extends StatelessWidget {
           assetPath: AssetsHelper.seriaALogo,
           name: 'Italy - Seria A',
           league: LeaguesEnum.seria,
-
           children: leagues == null
               ? []
               : leagues!.seriaA.map((e) => PredictionTile(e)).toList(),
+        ),
+        const Gap(8.0),
+        CustomExpansionTile(
+          assetPath: AssetsHelper.ligueOneLogo,
+          name: 'France - Ligue One',
+          league: LeaguesEnum.ligue1,
+          children: leagues == null
+              ? []
+              : leagues!.ligue1.map((e) => PredictionTile(e)).toList(),
+        ),
+        const Gap(8.0),
+        CustomExpansionTile(
+          assetPath: AssetsHelper.primeriaLogo,
+          name: 'Portugal - Primeria Liga',
+          league: LeaguesEnum.primerialiga,
+          children: leagues == null
+              ? []
+              : leagues!.primeriaLiga.map((e) => PredictionTile(e)).toList(),
         ),
         const Gap(42.0),
         const CustomBannerAd(),

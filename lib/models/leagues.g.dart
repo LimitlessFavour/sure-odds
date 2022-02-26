@@ -23,6 +23,14 @@ _$_Leagues _$$_LeaguesFromJson(Map<String, dynamic> json) => _$_Leagues(
               ?.map((e) => Prediction.fromJson(e as Map<String, dynamic>))
               .toList() ??
           const <Prediction>[],
+      ligue1: (json['france'] as List<dynamic>?)
+              ?.map((e) => Prediction.fromJson(e as Map<String, dynamic>))
+              .toList() ??
+          const <Prediction>[],
+      primeriaLiga: (json['portugal'] as List<dynamic>?)
+              ?.map((e) => Prediction.fromJson(e as Map<String, dynamic>))
+              .toList() ??
+          const <Prediction>[],
     );
 
 Map<String, dynamic> _$$_LeaguesToJson(_$_Leagues instance) =>
@@ -31,4 +39,6 @@ Map<String, dynamic> _$$_LeaguesToJson(_$_Leagues instance) =>
       'laliga': instance.laliga,
       'bund': instance.bundesliga,
       'seria': instance.seriaA,
+      'france': instance.ligue1,
+      'portugal': instance.primeriaLiga,
     };

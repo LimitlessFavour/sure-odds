@@ -14,7 +14,8 @@ class Leagues with _$Leagues {
       @Default(<Prediction>[]) @JsonKey(name: 'laliga') List<Prediction> laliga,
       @Default(<Prediction>[]) @JsonKey(name: 'bund') List<Prediction> bundesliga,
       @Default(<Prediction>[]) @JsonKey(name: 'seria') List<Prediction> seriaA,
-
+      @Default(<Prediction>[]) @JsonKey(name: 'france') List<Prediction> ligue1,
+      @Default(<Prediction>[]) @JsonKey(name: 'portugal') List<Prediction> primeriaLiga,
 
   }) = _Leagues;
 
