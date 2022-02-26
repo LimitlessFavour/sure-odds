@@ -23,15 +23,25 @@ class _$LeaguesTearOff {
   const _$LeaguesTearOff();
 
   _Leagues call(
-      {@JsonKey(name: 'epl') List<Prediction> epl = const <Prediction>[],
-      @JsonKey(name: 'laliga') List<Prediction> laliga = const <Prediction>[],
-      @JsonKey(name: 'bund') List<Prediction> bundesliga = const <Prediction>[],
-      @JsonKey(name: 'seria') List<Prediction> seriaA = const <Prediction>[]}) {
+      {@JsonKey(name: 'epl')
+          List<Prediction> epl = const <Prediction>[],
+      @JsonKey(name: 'laliga')
+          List<Prediction> laliga = const <Prediction>[],
+      @JsonKey(name: 'bund')
+          List<Prediction> bundesliga = const <Prediction>[],
+      @JsonKey(name: 'seria')
+          List<Prediction> seriaA = const <Prediction>[],
+      @JsonKey(name: 'france')
+          List<Prediction> ligue1 = const <Prediction>[],
+      @JsonKey(name: 'portugal')
+          List<Prediction> primeriaLiga = const <Prediction>[]}) {
     return _Leagues(
       epl: epl,
       laliga: laliga,
       bundesliga: bundesliga,
       seriaA: seriaA,
+      ligue1: ligue1,
+      primeriaLiga: primeriaLiga,
     );
   }
 
@@ -53,6 +63,10 @@ mixin _$Leagues {
   List<Prediction> get bundesliga => throw _privateConstructorUsedError;
   @JsonKey(name: 'seria')
   List<Prediction> get seriaA => throw _privateConstructorUsedError;
+  @JsonKey(name: 'france')
+  List<Prediction> get ligue1 => throw _privateConstructorUsedError;
+  @JsonKey(name: 'portugal')
+  List<Prediction> get primeriaLiga => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -67,7 +81,9 @@ abstract class $LeaguesCopyWith<$Res> {
       {@JsonKey(name: 'epl') List<Prediction> epl,
       @JsonKey(name: 'laliga') List<Prediction> laliga,
       @JsonKey(name: 'bund') List<Prediction> bundesliga,
-      @JsonKey(name: 'seria') List<Prediction> seriaA});
+      @JsonKey(name: 'seria') List<Prediction> seriaA,
+      @JsonKey(name: 'france') List<Prediction> ligue1,
+      @JsonKey(name: 'portugal') List<Prediction> primeriaLiga});
 }
 
 /// @nodoc
@@ -84,6 +100,8 @@ class _$LeaguesCopyWithImpl<$Res> implements $LeaguesCopyWith<$Res> {
     Object? laliga = freezed,
     Object? bundesliga = freezed,
     Object? seriaA = freezed,
+    Object? ligue1 = freezed,
+    Object? primeriaLiga = freezed,
   }) {
     return _then(_value.copyWith(
       epl: epl == freezed
@@ -102,6 +120,14 @@ class _$LeaguesCopyWithImpl<$Res> implements $LeaguesCopyWith<$Res> {
           ? _value.seriaA
           : seriaA // ignore: cast_nullable_to_non_nullable
               as List<Prediction>,
+      ligue1: ligue1 == freezed
+          ? _value.ligue1
+          : ligue1 // ignore: cast_nullable_to_non_nullable
+              as List<Prediction>,
+      primeriaLiga: primeriaLiga == freezed
+          ? _value.primeriaLiga
+          : primeriaLiga // ignore: cast_nullable_to_non_nullable
+              as List<Prediction>,
     ));
   }
 }
@@ -115,7 +141,9 @@ abstract class _$LeaguesCopyWith<$Res> implements $LeaguesCopyWith<$Res> {
       {@JsonKey(name: 'epl') List<Prediction> epl,
       @JsonKey(name: 'laliga') List<Prediction> laliga,
       @JsonKey(name: 'bund') List<Prediction> bundesliga,
-      @JsonKey(name: 'seria') List<Prediction> seriaA});
+      @JsonKey(name: 'seria') List<Prediction> seriaA,
+      @JsonKey(name: 'france') List<Prediction> ligue1,
+      @JsonKey(name: 'portugal') List<Prediction> primeriaLiga});
 }
 
 /// @nodoc
@@ -133,6 +161,8 @@ class __$LeaguesCopyWithImpl<$Res> extends _$LeaguesCopyWithImpl<$Res>
     Object? laliga = freezed,
     Object? bundesliga = freezed,
     Object? seriaA = freezed,
+    Object? ligue1 = freezed,
+    Object? primeriaLiga = freezed,
   }) {
     return _then(_Leagues(
       epl: epl == freezed
@@ -151,6 +181,14 @@ class __$LeaguesCopyWithImpl<$Res> extends _$LeaguesCopyWithImpl<$Res>
           ? _value.seriaA
           : seriaA // ignore: cast_nullable_to_non_nullable
               as List<Prediction>,
+      ligue1: ligue1 == freezed
+          ? _value.ligue1
+          : ligue1 // ignore: cast_nullable_to_non_nullable
+              as List<Prediction>,
+      primeriaLiga: primeriaLiga == freezed
+          ? _value.primeriaLiga
+          : primeriaLiga // ignore: cast_nullable_to_non_nullable
+              as List<Prediction>,
     ));
   }
 }
@@ -162,7 +200,9 @@ class _$_Leagues extends _Leagues {
       {@JsonKey(name: 'epl') this.epl = const <Prediction>[],
       @JsonKey(name: 'laliga') this.laliga = const <Prediction>[],
       @JsonKey(name: 'bund') this.bundesliga = const <Prediction>[],
-      @JsonKey(name: 'seria') this.seriaA = const <Prediction>[]})
+      @JsonKey(name: 'seria') this.seriaA = const <Prediction>[],
+      @JsonKey(name: 'france') this.ligue1 = const <Prediction>[],
+      @JsonKey(name: 'portugal') this.primeriaLiga = const <Prediction>[]})
       : super._();
 
   factory _$_Leagues.fromJson(Map<String, dynamic> json) =>
@@ -180,10 +220,16 @@ class _$_Leagues extends _Leagues {
   @override
   @JsonKey(name: 'seria')
   final List<Prediction> seriaA;
+  @override
+  @JsonKey(name: 'france')
+  final List<Prediction> ligue1;
+  @override
+  @JsonKey(name: 'portugal')
+  final List<Prediction> primeriaLiga;
 
   @override
   String toString() {
-    return 'Leagues(epl: $epl, laliga: $laliga, bundesliga: $bundesliga, seriaA: $seriaA)';
+    return 'Leagues(epl: $epl, laliga: $laliga, bundesliga: $bundesliga, seriaA: $seriaA, ligue1: $ligue1, primeriaLiga: $primeriaLiga)';
   }
 
   @override
@@ -195,7 +241,10 @@ class _$_Leagues extends _Leagues {
             const DeepCollectionEquality().equals(other.laliga, laliga) &&
             const DeepCollectionEquality()
                 .equals(other.bundesliga, bundesliga) &&
-            const DeepCollectionEquality().equals(other.seriaA, seriaA));
+            const DeepCollectionEquality().equals(other.seriaA, seriaA) &&
+            const DeepCollectionEquality().equals(other.ligue1, ligue1) &&
+            const DeepCollectionEquality()
+                .equals(other.primeriaLiga, primeriaLiga));
   }
 
   @override
@@ -204,7 +253,9 @@ class _$_Leagues extends _Leagues {
       const DeepCollectionEquality().hash(epl),
       const DeepCollectionEquality().hash(laliga),
       const DeepCollectionEquality().hash(bundesliga),
-      const DeepCollectionEquality().hash(seriaA));
+      const DeepCollectionEquality().hash(seriaA),
+      const DeepCollectionEquality().hash(ligue1),
+      const DeepCollectionEquality().hash(primeriaLiga));
 
   @JsonKey(ignore: true)
   @override
@@ -222,7 +273,9 @@ abstract class _Leagues extends Leagues {
       {@JsonKey(name: 'epl') List<Prediction> epl,
       @JsonKey(name: 'laliga') List<Prediction> laliga,
       @JsonKey(name: 'bund') List<Prediction> bundesliga,
-      @JsonKey(name: 'seria') List<Prediction> seriaA}) = _$_Leagues;
+      @JsonKey(name: 'seria') List<Prediction> seriaA,
+      @JsonKey(name: 'france') List<Prediction> ligue1,
+      @JsonKey(name: 'portugal') List<Prediction> primeriaLiga}) = _$_Leagues;
   const _Leagues._() : super._();
 
   factory _Leagues.fromJson(Map<String, dynamic> json) = _$_Leagues.fromJson;
@@ -239,6 +292,12 @@ abstract class _Leagues extends Leagues {
   @override
   @JsonKey(name: 'seria')
   List<Prediction> get seriaA;
+  @override
+  @JsonKey(name: 'france')
+  List<Prediction> get ligue1;
+  @override
+  @JsonKey(name: 'portugal')
+  List<Prediction> get primeriaLiga;
   @override
   @JsonKey(ignore: true)
   _$LeaguesCopyWith<_Leagues> get copyWith =>
