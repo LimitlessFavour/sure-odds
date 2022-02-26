@@ -15,12 +15,14 @@ class TickerBuilder extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Builder(builder: (context) {
-        if (DateTime.now().isAfter(limitDuration)) {
-          return const TickerContent();
-        }
-        return child;
-      }),
+      body: Builder(
+        builder: (context) {
+          if (DateTime.now().isAfter(limitDuration)) {
+            return const TickerContent();
+          }
+          return child;
+        },
+      ),
     );
   }
 }
