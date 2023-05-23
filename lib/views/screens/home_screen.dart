@@ -23,41 +23,40 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return TickerBuilder(
-      limitDuration: DateTime.fromMillisecondsSinceEpoch(1646244305321),
-      child: Scaffold(
-        key: scaffoldKey,
-        backgroundColor: context.theme.scaffoldBackgroundColor,
-        drawer: const ScaffoldDrawer(),
-        body: Column(
-          children: [
-            //*app bar
-            Expanded(
-              flex: 2,
-              child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 32.0),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: const [
-                    DrawerButton(),
-                    DateSwitch(),
-                  ],
-                ),
-              ),
-            ),
-            //* content
-            Expanded(
-              flex: 10,
-              child: Column(
+    // return TickerBuilder(
+    // limitDuration: DateTime.fromMillisecondsSinceEpoch(1646244305321),
+    return Scaffold(
+      key: scaffoldKey,
+      backgroundColor: context.theme.scaffoldBackgroundColor,
+      drawer: const ScaffoldDrawer(),
+      body: Column(
+        children: [
+          //*app bar
+          Expanded(
+            flex: 2,
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 32.0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                crossAxisAlignment: CrossAxisAlignment.center,
                 children: const [
-                  Tabs(),
-                  LeaguesScroll(),
+                  DrawerButton(),
+                  DateSwitch(),
                 ],
               ),
             ),
-          ],
-        ),
+          ),
+          //* content
+          Expanded(
+            flex: 10,
+            child: Column(
+              children: const [
+                Tabs(),
+                LeaguesScroll(),
+              ],
+            ),
+          ),
+        ],
       ),
     );
   }
