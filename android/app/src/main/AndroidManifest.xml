@@ -1,7 +1,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.sure_odds_official.sure_odds">
    <application
-        android:label="sure_odds"
+        android:label="Sure odds"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity

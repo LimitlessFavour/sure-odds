@@ -49,7 +49,8 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return ProviderScope(
       child: DevicePreview(
-        enabled: !kReleaseMode,
+        enabled: false,
+        // enabled: !kReleaseMode,
         builder: (context) => MaterialApp(
           title: 'Sure Odds',
           home: const HomeScreen(),
